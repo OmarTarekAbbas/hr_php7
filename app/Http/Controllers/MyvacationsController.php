@@ -131,12 +131,12 @@ class MyvacationsController extends Controller
 
     public function getShow($id = null)
     {
-        // echo 'yy'; die;
-        // if ($this->access['is_detail'] == 0) {
-        //     return Redirect::to('dashboard')
-        //         ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // }
-        
+
+        if ($this->access['is_detail'] == 0) {
+            return Redirect::to('dashboard')
+                ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus', 'error');
+        }
+
 // to let each employees see his vacation only
         $MyVacation = Myvacations::where('id', '=', $id)->where('employee_id', '=', \Auth::user()->id)->first();
         if ($MyVacation === null) {

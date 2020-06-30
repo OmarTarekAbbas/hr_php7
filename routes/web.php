@@ -220,14 +220,15 @@ Route::get('subscribe_liftime/search', 'SubscribersLifeTimeController@search');
 //my vacations
 Route::get('myvacations', 'MyvacationsController@getIndex');
 Route::get('myvacations/update', 'MyvacationsController@getUpdate');
-Route::get('myvacations/show/{id}', 'MyvacationsController@getShow');
 Route::get('myvacations/update/{id}', 'MyvacationsController@getUpdate');
-Route::post('myvacations/save/{one?}/{two?}/{three?}/{four?}/{five?}', 'MyvacationsController@postSave');
-Route::post('myvacations/comboselectuser/{one?}/{two?}/{three?}/{four?}/{five?}', 'MyvacationsController@postComboselectuser');
-Route::get('myvacations/combotable/{one?}/{two?}/{three?}/{four?}/{five?}', 'MyvacationsController@getCombotable');
-Route::get('myvacations/combotablefield/{one?}/{two?}/{three?}/{four?}/{five?}', 'MyvacationsController@getCombotablefield');
-Route::post('myvacations/delete/{one?}/{two?}/{three?}/{four?}/{five?}', 'MyvacationsController@postDelete');
-Route::get('myvacations/download/{one?}/{two?}/{three?}/{four?}/{five?}', 'MyvacationsController@getDownload');
+Route::get('myvacations/show/{id}', 'MyvacationsController@getShow');
+Route::post('myvacations/save', 'MyvacationsController@postSave');
+Route::post('myvacations/delete', 'MyvacationsController@postDelete');
+Route::get('myvacations/download', 'MyvacationsController@getDownload');
+Route::post('myvacations/comboselect', 'MyvacationsController@postComboselect');
+Route::post('myvacations/comboselectuser', 'MyvacationsController@postComboselectuser');
+Route::get('myvacations/combotable', 'MyvacationsController@getCombotable');
+Route::get('myvacations/combotablefield', 'MyvacationsController@getCombotablefield');
 
 
 require base_path('setting.php');
