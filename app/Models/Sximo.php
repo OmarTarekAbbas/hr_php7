@@ -19,9 +19,13 @@ class Sximo extends Model
             'global' => 1,
         ), $args));
 
+        if(empty($page)){
+            $page = 0;
+        }
+        
         $offset = ($page - 1) * $limit;
         $limitConditional = ($page != 0 && $limit != 0) ? "LIMIT  $offset , $limit" : '';
-        $orderConditional = ($sort != '' && $order != '') ? " ORDER BY {$sort} {$order} " : '';
+        $orderConditional = ($sort != '' && $order != '') ? " ORDER BY `{$sort}` {$order} " : '';
 
         // Update permission global / own access new ver 1.1
         $table = with(new static )->table;

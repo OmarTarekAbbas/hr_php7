@@ -13,13 +13,12 @@
 
 // Route::resource('/home', 'HomeController');
 Route::get('home', 'HomeController@index');
-Route::get('home/lang/{one?}/{two?}/{three?}/{four?}/{five?}','HomeController@getLang');
+Route::get('home/lang/{one?}/{two?}/{three?}/{four?}/{five?}', 'HomeController@getLang');
 Route::get('service', 'HomeController@index');
 Route::get('about-us', 'HomeController@index');
 Route::get('contact-us', 'HomeController@index');
 Route::get('faq', 'HomeController@index');
 Route::get('portpolio', 'HomeController@index');
-
 
 // Route::resource('/user', 'UserController');
 Route::get('/user/login', 'UserController@getlogin')->name('login');
@@ -112,14 +111,14 @@ Route::group(['middleware' => 'auth', 'middleware' => 'sximoauth'], function () 
     Route::get('/sximo/tables', 'Sximo\TablesController@getIndex');
     Route::get('/sximo/tables/tableconfig/{table}', 'Sximo\TablesController@getTableconfig');
     Route::get('/sximo/tables/sximo/tables/mysqleditor', 'Sximo\TablesController@getMysqleditor');
-    Route::get('sximo/tables/tableconfig','Sximo\TablesController@getTableconfig');
-    Route::get('sximo/tables/tablefieldedit/{any}','Sximo\TablesController@getTablefieldedit');
-    Route::get('sximo/tables/tablefieldremove/{id?}/{id2?}','Sximo\TablesController@getTablefieldremove');
-    Route::post('sximo/tables/tableremove','Sximo\TablesController@postTableremove');
-    Route::post('sximo/tables/tableinfo/{any}','Sximo\TablesController@postTableinfo');
-    Route::get('sximo/tables/mysqleditor','Sximo\TablesController@postMysqleditor');
-    Route::post('sximo/tables/tablefieldsave/{any?}','Sximo\TablesController@postTablefieldsave');
-    Route::post('sximo/tables/tables','Sximo\TablesController@postTables');
+    Route::get('sximo/tables/tableconfig', 'Sximo\TablesController@getTableconfig');
+    Route::get('sximo/tables/tablefieldedit/{any}', 'Sximo\TablesController@getTablefieldedit');
+    Route::get('sximo/tables/tablefieldremove/{id?}/{id2?}', 'Sximo\TablesController@getTablefieldremove');
+    Route::post('sximo/tables/tableremove', 'Sximo\TablesController@postTableremove');
+    Route::post('sximo/tables/tableinfo/{any}', 'Sximo\TablesController@postTableinfo');
+    Route::get('sximo/tables/mysqleditor', 'Sximo\TablesController@postMysqleditor');
+    Route::post('sximo/tables/tablefieldsave/{any?}', 'Sximo\TablesController@postTablefieldsave');
+    Route::post('sximo/tables/tables', 'Sximo\TablesController@postTables');
 
     //'sximo/menu'        => 'Sximo\MenuController',
     Route::get('/sximo/menu', 'Sximo\MenuController@getIndex');
@@ -224,11 +223,45 @@ Route::get('myvacations/update/{id}', 'MyvacationsController@getUpdate');
 Route::get('myvacations/show/{id}', 'MyvacationsController@getShow');
 Route::post('myvacations/save', 'MyvacationsController@postSave');
 Route::post('myvacations/delete', 'MyvacationsController@postDelete');
+Route::post('myvacations/multisearch', 'MyvacationsController@postMultisearch');
+Route::post('myvacations/filter', 'MyvacationsController@postFilter');
 Route::get('myvacations/download', 'MyvacationsController@getDownload');
 Route::post('myvacations/comboselect', 'MyvacationsController@postComboselect');
 Route::post('myvacations/comboselectuser', 'MyvacationsController@postComboselectuser');
 Route::get('myvacations/combotable', 'MyvacationsController@getCombotable');
 Route::get('myvacations/combotablefield', 'MyvacationsController@getCombotablefield');
 
+//my vacations
+Route::get('mypermissions', 'MypermissionsController@getIndex');
+Route::get('mypermissions/update', 'MypermissionsController@getUpdate');
+Route::get('mypermissions/update/{id}', 'MypermissionsController@getUpdate');
+Route::get('mypermissions/show/{id}', 'MypermissionsController@getShow');
+Route::post('mypermissions/save', 'MypermissionsController@postSave');
+Route::post('mypermissions/delete', 'MypermissionsController@postDelete');
+Route::post('mypermissions/multisearch', 'MypermissionsController@postMultisearch');
+Route::post('mypermissions/filter', 'MypermissionsController@postFilter');
+Route::get('mypermissions/download', 'MypermissionsController@getDownload');
+Route::post('mypermissions/comboselect', 'MypermissionsController@postComboselect');
+Route::post('mypermissions/comboselectuser', 'MypermissionsController@postComboselectuser');
+Route::get('mypermissions/combotable', 'MypermissionsController@getCombotable');
+Route::get('mypermissions/combotablefield', 'MypermissionsController@getCombotablefield');
+
+Route::get('hr', function () {
+    return redirect('dashboard');
+});
+
+define('MANAGER_DEPARTMENT_ID', 21);
+define('ADMIN_USER_ID', 109); // Mayar
+define('CFO_USER_ID', 59); // Tamer
+define('CFO_BACKUP_ID', 64); // Rana
+define('CEO_USER_ID', 2); // Haitham
+define('CEO_USER_ID2', 65); // Reem
+define('HR_USER_ID', 24); // Sara
+
+define('DEV_SMS_SEND_MESSAGE', 'http://sms.ivashosting.com/hr_notify');
+define('DEV_SMS_HR_PUNCH', 'http://sms.ivashosting.com/hr_punch');
+// define('DEV_SMS_HR_PUNCH','http://localhost/sms_backend/hr_punch');
+
+define('ContractMonthCheck', 4);
 
 require base_path('setting.php');

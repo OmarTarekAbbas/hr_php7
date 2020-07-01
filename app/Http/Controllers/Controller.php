@@ -15,6 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Input;
 use Redirect;
 use Symfony\Component\HttpFoundation\Response;
+
 // note to add this
 
 abstract class Controller extends BaseController
@@ -1018,66 +1019,81 @@ abstract class Controller extends BaseController
         })->download('xlsx');
     }
 
-    public function getDownload()
-    {
+    function getDownload(Request $request) {
+        $today = date("Y-m-d");
+        if ($this->access['is_excel'] == 0)
+            return Redirect::to('')->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
 
+        ;
         $info = $this->model->makeInfo($this->module);
-        $table = $info['table'];
+
+        $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
+        if ($this->module == "groups") {
+            $sort = "group_id";
+        }
+        $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
+        $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+        // handle the report type by adding conditions 
+        if ($request->input('model_name') !== NULL) {
+            if ($request->input('model_name') == "employees_vacations") {
+                $managerId = \Auth::user()->id;
+                $filter .= " AND manager_id =  '{$managerId}'   AND  employee_id <>  {$managerId} ";
+            }
+        }
+
+
+        $page = "";  // to get all result as this   $page = $request->input('page', 1); get result from first page only 
+        $params = array(
+            'page' => $page,
+            'limit' => (!is_null($request->input('rows')) ? filter_var($request->input('rows'), FILTER_VALIDATE_INT) : static::$per_page ),
+            'sort' => $sort,
+            'order' => $order,
+            'params' => $filter,
+            'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+        );
+        // Get Query 
+        $results = $this->model->getRows($params);
         $fields = $info['config']['grid'];
+        $rows = $results['rows'];
+        $label_arr = array();
 
         $content = $this->data['pageTitle'];
-        $query = \DB::table($table)->get();
-        
-        $content .= '<table border="1">';
-        $content .= '<tr>';
 
-        foreach ($fields as $f) {
-            $content .= '<th style="background:#f9f9f9;">' . $f['label'] . '</th>';
-        }
-        $content .= '</tr>';
-        foreach($query as $record){
-            foreach($record as $key => $value){
-                $content .= '<th style="background:#f9f9f9;">' . $record->$key. '</th>';
+        $arr2 = array();
+        foreach ($rows as $row) {
+            foreach ($fields as $f) {
+                if ($f['download'] == '1') {
+                    // if ($f['view'] == '1') {
+                    // fix 0 , 1 for manager_approved to be read as No , Yes 
+                    $x = $f['field'];
+
+                    if ($f['field'] == 'manager_approved' && $row->$x === 1) {
+                        $row->$x = 'Yes';
+                    } elseif ($f['field'] == 'manager_approved' && $row->$x === 0) {
+                        $row->$x = 'No';
+                    }
+
+                    $conn = (isset($f['conn']) ? $f['conn'] : array() );
+                    $arr2[$f['label']] = \SiteHelpers::gridDisplay($row->$x, $f['field'], $conn);
+                    // }
+                }
             }
-            $content .= '</tr>';
+            $arr3[] = $arr2;
         }
 
-        @header('Content-Type: application/ms-excel');
-        @header('Content-Length: ' . strlen($content));
-        @header('Content-disposition: inline; filename="' . 'sample_payroll_sheet' . ' ' . date("d/m/Y") . '.xls"');
+        // print_r($arr3); die ;
+        if (isset($arr3) && count($arr3) > 0) {
+            \Excel::create($this->data['pageTitle'] . '-' . date("d/m/Y"), function($excel) use($arr3) {
 
-        echo $content;
-        die;
+                $excel->sheet('Sheetname', function($sheet) use($arr3) {
 
-
-        // ini_set('max_execution_time', 0);
-        // ini_set('memory_limit', '-1');
-
-        // // create directory that have a name include the current date
-        // $date = Carbon::now();
-        // $directory = str_replace('-', '_', str_replace(' ', '_', str_replace(':', '_', $date->toDateTimeString())));
-        // $directory_name = 'NOT_ACTIVE_subscribers_' . $directory . '_' . \Auth::user()->id;
-        // $offset = 0;
-        // $lmt = 1000000;
-        // $i = 0;
-        // while (true) {
-        //     $phones = \DB::select('SELECT SUBSTRING(phone, 3,10) as phone  FROM `tb_susbcribers` WHERE  `NewStatus` = 1 AND `ServiceName` LIKE "باقة العفاسي الدينية"   LIMIT ' . $offset . ',' . $lmt . ';');
-        //     if (count($phones) == 0) {
-        //         break;
-        //     }
-        //     $content = "phone_number\n";
-        //     foreach ($phones as $phone) {
-        //         $content .= $phone->phone . "\r\n";
-        //     }
-        //     $file_name = 'file_' . $i . '.txt';
-        //     \Storage::disk('local')->append($directory_name . '/' . $file_name, $content);
-        //     $i++;
-        //     $offset += $lmt;
-        // }
-        // $files = storage_path('app/' . $directory_name);
-        // \Zipper::make(storage_path('app/' . $directory_name . '.zip'))->add($files)->close();
-
-        // return response()->download(storage_path('app/' . $directory_name . '.zip'));
+                    $sheet->fromArray($arr3);
+                });
+            })->download('xlsx');
+        } else {
+            return Redirect::back()
+                            ->with('messagetext', 'There is no data')->with('msgstatus', 'error');
+        }
     }
 
     public function getDownloadActive()
@@ -2157,6 +2173,17 @@ abstract class Controller extends BaseController
         } else {
             return Redirect::to($this->module . '/trashed')
                 ->with('messagetext', 'No Item Deleted')->with('msgstatus', 'error');
+        }
+    }
+
+    public function send_sms($phone, $subject, $link)
+    {
+        // send SMS
+        if ($phone && SEND_SMS == 1) {
+            $message = $subject . ' Check at: ' . url($link);
+            $URL = DEV_SMS_SEND_MESSAGE;
+            $param = "phone_number=" . $phone . "&message=" . $message;
+            $result = $this->get_content_post($URL, $param);
         }
     }
 

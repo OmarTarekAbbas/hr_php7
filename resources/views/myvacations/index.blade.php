@@ -99,7 +99,7 @@
                                     <?php
                                     if ($field['field'] == 'manager_approved' AND $row->$x == 1) {
                                         echo 'Yes';
-                                   } elseif ($field['field'] == "manager_approved" && $row->$x == 0  && is_int($row->$field['field'])) {
+                                   } elseif ($field['field'] == "manager_approved" && $row->$x == 0  && is_int($row->$x)) {
                                         echo 'No';
                                     } else {
                                         ?>
