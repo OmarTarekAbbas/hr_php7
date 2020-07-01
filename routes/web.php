@@ -231,7 +231,7 @@ Route::post('myvacations/comboselectuser', 'MyvacationsController@postComboselec
 Route::get('myvacations/combotable', 'MyvacationsController@getCombotable');
 Route::get('myvacations/combotablefield', 'MyvacationsController@getCombotablefield');
 
-//my vacations
+//my mypermissions
 Route::get('mypermissions', 'MypermissionsController@getIndex');
 Route::get('mypermissions/update', 'MypermissionsController@getUpdate');
 Route::get('mypermissions/update/{id}', 'MypermissionsController@getUpdate');
@@ -245,6 +245,71 @@ Route::post('mypermissions/comboselect', 'MypermissionsController@postComboselec
 Route::post('mypermissions/comboselectuser', 'MypermissionsController@postComboselectuser');
 Route::get('mypermissions/combotable', 'MypermissionsController@getCombotable');
 Route::get('mypermissions/combotablefield', 'MypermissionsController@getCombotablefield');
+
+
+//my permissions
+Route::get('permissions', 'PermissionsController@getIndex');
+Route::get('permissions/update', 'PermissionsController@getUpdate');
+Route::get('permissions/update/{id}', 'PermissionsController@getUpdate');
+Route::get('permissions/show/{id}', 'PermissionsController@getShow');
+Route::post('permissions/save', 'PermissionsController@postSave');
+Route::post('permissions/delete', 'PermissionsController@postDelete');
+Route::post('permissions/multisearch', 'PermissionsController@postMultisearch');
+Route::post('permissions/filter', 'PermissionsController@postFilter');
+Route::get('permissions/download', 'PermissionsController@getDownload');
+Route::post('permissions/comboselect', 'PermissionsController@postComboselect');
+Route::post('permissions/comboselectuser', 'PermissionsController@postComboselectuser');
+Route::get('permissions/combotable', 'PermissionsController@getCombotable');
+Route::get('permissions/combotablefield', 'PermissionsController@getCombotablefield');
+
+//employeespermissions
+Route::get('employeespermissions', 'EmployeespermissionsController@getIndex');
+Route::get('employeespermissions/update', 'EmployeespermissionsController@getUpdate');
+Route::get('employeespermissions/update/{id}', 'EmployeespermissionsController@getUpdate');
+Route::get('employeespermissions/show/{id}', 'EmployeespermissionsController@getShow');
+Route::post('employeespermissions/save', 'EmployeespermissionsController@postSave');
+Route::post('employeespermissions/delete', 'EmployeespermissionsController@postDelete');
+Route::post('employeespermissions/multisearch', 'EmployeespermissionsController@postMultisearch');
+Route::post('employeespermissions/filter', 'EmployeespermissionsController@postFilter');
+Route::get('employeespermissions/download', 'EmployeespermissionsController@getDownload');
+Route::post('employeespermissions/comboselect', 'EmployeespermissionsController@postComboselect');
+Route::post('employeespermissions/comboselectuser', 'EmployeespermissionsController@postComboselectuser');
+Route::get('employeespermissions/combotable', 'EmployeespermissionsController@getCombotable');
+Route::get('employeespermissions/combotablefield', 'EmployeespermissionsController@getCombotablefield');
+
+
+//vacations
+Route::get('vacations', 'VacationsController@getIndex');
+Route::get('vacations/update', 'VacationsController@getUpdate');
+Route::get('vacations/update/{id}', 'VacationsController@getUpdate');
+Route::get('vacations/show/{id}', 'VacationsController@getShow');
+Route::post('vacations/save', 'VacationsController@postSave');
+Route::post('vacations/delete', 'VacationsController@postDelete');
+Route::post('vacations/multisearch', 'VacationsController@postMultisearch');
+Route::post('vacations/filter', 'VacationsController@postFilter');
+Route::get('vacations/download', 'VacationsController@getDownload');
+Route::post('vacations/comboselect', 'VacationsController@postComboselect');
+Route::post('vacations/comboselectuser', 'VacationsController@postComboselectuser');
+Route::get('vacations/combotable', 'VacationsController@getCombotable');
+Route::get('vacations/combotablefield', 'VacationsController@getCombotablefield');
+
+
+
+//occationscategories
+Route::get('occationscategories', 'OccasionsController@getIndex');
+Route::get('occasions/update', 'OccasionsController@getUpdate');
+Route::get('occasions/update/{id}', 'OccasionsController@getUpdate');
+Route::get('occasions/show/{id}', 'OccasionsController@getShow');
+Route::post('occasions/save', 'OccasionsController@postSave');
+Route::post('occasions/delete', 'OccasionsController@postDelete');
+Route::post('occasions/multisearch', 'OccasionsController@postMultisearch');
+Route::post('occasions/filter', 'OccasionsController@postFilter');
+Route::get('occasions/download', 'OccasionsController@getDownload');
+Route::post('occasions/comboselect', 'OccasionsController@postComboselect');
+Route::post('occasions/comboselectuser', 'OccasionsController@postComboselectuser');
+Route::get('occasions/combotable', 'OccasionsController@getCombotable');
+Route::get('occasions/combotablefield', 'OccasionsController@getCombotablefield');
+
 
 Route::get('hr', function () {
     return redirect('dashboard');

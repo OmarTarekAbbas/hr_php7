@@ -5,7 +5,7 @@
 
 
 <?php
-// to can downlaod excel by search condition 
+// to can downlaod excel by search condition
 $search = "";
 if (isset($_REQUEST['search'])) {
     $search = "?search=" . $_REQUEST['search'];
@@ -23,37 +23,37 @@ if (isset($_REQUEST['search'])) {
         <ul class="breadcrumb">
             <li><a href="{{ URL::to('dashboard') }}"> Dashboard </a></li>
             <li class="active">{{ $pageTitle }}</li>
-        </ul>	  
+        </ul>
 
     </div>
 
 
-    <div class="page-content-wrapper m-t">	 	
+    <div class="page-content-wrapper m-t">
 
         <div class="sbox animated fadeInRight">
             <div class="sbox-title"> <h5> <i class="fa fa-table"></i> </h5>
                 <div class="sbox-tools" >
                     @if(Session::get('gid') ==1)
                     <a href="{{ URL::to('sximo/module/config/'.$pageModule) }}" class="btn btn-xs btn-white tips" title=" {{ Lang::get('core.btn_config') }}" ><i class="fa fa-cog"></i></a>
-                    @endif 
+                    @endif
                 </div>
             </div>
-            <div class="sbox-content"> 	
+            <div class="sbox-content">
                 <div class="toolbar-line ">
                     @if($access['is_add'] ==1)
                     <a href="{{ URL::to('permissions/update') }}" class="tips btn btn-sm btn-white"  title="{{ Lang::get('core.btn_create') }}">
                         <i class="fa fa-plus-circle "></i>&nbsp;{{ Lang::get('core.btn_create') }}</a>
-                    @endif  
+                    @endif
                     @if($access['is_remove'] ==1)
                     <a href="javascript://ajax"  onclick="SximoDelete();" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_remove') }}">
                         <i class="fa fa-minus-circle "></i>&nbsp;{{ Lang::get('core.btn_remove') }}</a>
-                    @endif 		
+                    @endif
                     @if($access['is_excel'] ==1)
                     <a href="{{ URL::to('permissions/download'.$search) }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
                         <i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
-                    @endif			
+                    @endif
 
-                </div> 		
+                </div>
 
 
 
@@ -80,37 +80,42 @@ if (isset($_REQUEST['search'])) {
                                 <td> </td>
                                 @foreach ($tableGrid as $t)
                                 @if($t['view'] =='1')
-                                <td>						
-                                    {!! SiteHelpers::transForm($t['field'] , $tableForm) !!}								
+                                <td>
+                                    {!! SiteHelpers::transForm($t['field'] , $tableForm) !!}
                                 </td>
                                 @endif
                                 @endforeach
                                 <td >
                                     <input type="hidden"  value="Search">
                                     <button type="button"  class=" do-quick-search btn btn-xs btn-info"> GO</button></td>
-                            </tr>	        
+                            </tr>
 
                             @foreach ($rowData as $row)
                             <tr>
                                 <td width="30"> {{ ++$i }} </td>
-                                <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>									
+                                <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>
                                 @foreach ($tableGrid as $field)
                                 @if($field['view'] =='1')
-                                <td>					 
-                                    @if($field['attribute']['image']['active'] =='1')
-                                    {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
-                                    @else	
-                                    @if($field['field'] == 'manager_approved' &&  $row->$field['field'] === 1  )
-                                    Yes
-                                    @elseif( $field['field'] == "manager_approved" && $row->$field['field'] == 0  && is_int($row->$field['field']) )
-                                    No
-                                    @else
-                                    {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-                                    {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}
-                                    @endif
-                                    @endif						 
-                                </td>
-                                @endif					 
+                                        @php
+                                            $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                            $x = $field['field'];
+                                        @endphp
+
+                                        <td>
+                                            @if($field['attribute']['image']['active'] =='1')
+                                                {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
+                                            @else
+                                                @if($field['field'] == 'manager_approved' &&  $row->$x == '1'  )
+                                                    Yes
+                                                @elseif( $field['field'] == "manager_approved" && $row->$x == 0  && is_int($row->$x) )
+                                                    No
+                                                @else
+                                                    {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
+                                                    {!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}
+                                                @endif
+                                            @endif
+                                        </td>
+                                @endif
                                 @endforeach
                                 <td  width="100">
                                     @if($access['is_detail'] ==1)
@@ -119,12 +124,12 @@ if (isset($_REQUEST['search'])) {
                                     @if($access['is_edit'] ==1  &&    $row->manager_approved === NULL    )
                                     <a  href="{{ URL::to('permissions/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
                                     @endif
-                                    
+
                                  <a  href="{{ URL::to('permissions/makepdfvacation?id='.$row->id) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_preview_as_pdf') }}"><i class="fa fa-arrows-alt "></i></a>
 
 
 
-                                </td>				 
+                                </td>
                             </tr>
 
                             @endforeach
@@ -137,9 +142,9 @@ if (isset($_REQUEST['search'])) {
                 {!! Form::close() !!}
                 @include('footer')
             </div>
-        </div>	
-    </div>	  
-</div>	
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
 
@@ -149,5 +154,5 @@ if (isset($_REQUEST['search'])) {
         });
 
     });
-</script>		
+</script>
 @stop
