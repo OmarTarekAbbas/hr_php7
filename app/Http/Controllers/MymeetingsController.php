@@ -20,11 +20,14 @@ class MymeetingsController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Mymeetings();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -42,8 +45,8 @@ class MymeetingsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
 
@@ -56,7 +59,7 @@ class MymeetingsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -65,20 +68,20 @@ class MymeetingsController extends Controller {
         $pagination->setPath('mymeetings');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mymeetings.index', $this->data);
@@ -114,7 +117,7 @@ class MymeetingsController extends Controller {
             return Redirect::to('dashboard')
                             ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus', 'error');
 
-        // to let each employees see his meeting only 
+        // to let each employees see his meeting only
         $Mymeeting = Mymeetings::where('id', '=', $id)->where('employee_id', '=', \Auth::user()->id)->first();
         if ($Mymeeting === NULL) {
             return Redirect::to('dashboard')
@@ -139,8 +142,8 @@ class MymeetingsController extends Controller {
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
             $data = $this->validatePost('tb_mymeetings');
-            
-          
+
+
             // to let employee create new meeting  "Mymeetings module"
             $user = User::find(\Auth::user()->id);
             if ($user) {
@@ -152,30 +155,30 @@ class MymeetingsController extends Controller {
             $data['department_id'] = $departmentId;
             $data['manager_id'] = $mangerId;
             $data['date'] = date("Y-m-d");
-            
-            
-              
+
+
+
             $id = $this->model->insertRow2($data, $request->input('id'));
-            
-            // mean that department manager make meeting ... so hr can approve to this 
-            if ($mangerId == $user->id) { 
+
+            // mean that department manager make meeting ... so hr can approve to this
+            if ($mangerId == $user->id) {
                 //$data['manager_approved'] = 1;
-                // send notification to hr to can approve or refuse 
+                // send notification to hr to can approve or refuse
                  $subject = "New meeting request from manager:  " . $user->first_name . ' ' . $user->last_name;
                  $link = 'meetings/update/' . $id;
                 $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
                 \SiteHelpers::addNotification($user->id, $HR->id, $subject, $link);
-                
+
             }
 
-            // send notification to manager if empployee request meeting from his manager 
-            if ($mangerId != $user->id) {  // employee make overtime and send notification to his manager 
+            // send notification to manager if empployee request meeting from his manager
+            if ($mangerId != $user->id) {  // employee make overtime and send notification to his manager
                 $subject = "New meeting request from " . $user->first_name . ' ' . $user->last_name;
                 $link = 'employeesmeetings/update/' . $id;
                 \SiteHelpers::addNotification($user->id, $mangerId, $subject, $link);
             }
-            
-            
+
+
             if (!is_null($request->input('apply'))) {
                 $return = 'mymeetings/update/' . $id . '?return=' . self::returnUrl();
             } else {
@@ -202,7 +205,7 @@ class MymeetingsController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 

@@ -2,6 +2,15 @@
 
 @section('content')
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
+
+<?php
+// to can downlaod excel by search condition
+$search = "";
+if (isset($_REQUEST['search'])) {
+    $search = "?search=" . $_REQUEST['search'];
+}
+?>
+
   <div class="page-content row">
     <!-- Page header -->
     <div class="page-header">
@@ -10,7 +19,7 @@
       </div>
 
       <ul class="breadcrumb">
-        <li><a href="{{ URL::to('dashboard') }}"> Dashboard </a></li>
+        <li><a href="{{ URL::to('dashboard') }}"> Dashboard  </a></li>
         <li class="active">{{ $pageTitle }}</li>
       </ul>
 
@@ -30,7 +39,7 @@
 	<div class="sbox-content">
 	    <div class="toolbar-line ">
 			@if($access['is_add'] ==1)
-	   		<a href="{{ URL::to('notifications/update') }}" class="tips btn btn-sm btn-white"  title="{{ Lang::get('core.btn_create') }}">
+	   		<a href="{{ URL::to('vacations/update') }}" class="tips btn btn-sm btn-white"  title="{{ Lang::get('core.btn_create') }}">
 			<i class="fa fa-plus-circle "></i>&nbsp;{{ Lang::get('core.btn_create') }}</a>
 			@endif
 			@if($access['is_remove'] ==1)
@@ -38,15 +47,20 @@
 			<i class="fa fa-minus-circle "></i>&nbsp;{{ Lang::get('core.btn_remove') }}</a>
 			@endif
 			@if($access['is_excel'] ==1)
-			<a href="{{ URL::to('notifications/download') }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
+			<a href="{{ URL::to('vacations/download'.$search) }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif
+
+
+<!--
+                         <a href="{{ URL::to('vacations/makepdfvacation?id=1') }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download_pdf_all') }}">
+                        <i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download_pdf_all') }} </a>-->
 
 		</div>
 
 
 
-	 {!! Form::open(array('url'=>'notifications/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
+	 {!! Form::open(array('url'=>'vacations/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
 	 <div class="table-responsive" style="min-height:300px;">
     <table class="table table-striped ">
         <thead>
@@ -105,17 +119,18 @@
                                     @endif
                                 @endif
                             </td>
-					 @endif
+
+                        @endif
 				 @endforeach
-				 <td>
-
+				 <td width="100">
 					 	@if($access['is_detail'] ==1)
-						<a href="{{ URL::to('notifications/show/'.$row->id.'?return='.$return)}}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_view') }}"><i class="fa  fa-search "></i></a>
+						<a href="{{ URL::to('vacations/show/'.$row->id.'?return='.$return)}}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_view') }}"><i class="fa  fa-search "></i></a>
 						@endif
-						@if($access['is_edit'] ==1)
-						<a  href="{{ URL::to('notifications/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
+						@if($access['is_edit'] ==1  &&    $row->manager_approved === NULL     )
+						<a  href="{{ URL::to('vacations/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
 						@endif
 
+                                                <a  href="{{ URL::to('vacations/makepdfvacation?id='.$row->id) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_preview_as_pdf') }}"><i class="fa fa-arrows-alt "></i></a>
 
 				</td>
                 </tr>
@@ -137,7 +152,7 @@
 $(document).ready(function(){
 
 	$('.do-quick-search').click(function(){
-		$('#SximoTable').attr('action','{{ URL::to("notifications/multisearch")}}');
+		$('#SximoTable').attr('action','{{ URL::to("vacations/multisearch")}}');
 		$('#SximoTable').submit();
 	});
 

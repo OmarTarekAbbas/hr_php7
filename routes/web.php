@@ -216,6 +216,7 @@ Route::get('updateSubscribers', 'SubscribersController@updateSubscribers');
 Route::get('subscribe_liftime', 'SubscribersLifeTimeController@index');
 Route::get('subscribe_liftime/search', 'SubscribersLifeTimeController@search');
 
+
 //my vacations
 Route::get('myvacations', 'MyvacationsController@getIndex');
 Route::get('myvacations/update', 'MyvacationsController@getUpdate');
@@ -295,6 +296,37 @@ Route::get('vacations/combotablefield', 'VacationsController@getCombotablefield'
 
 
 
+//vacationtypes
+Route::get('vacationtypes', 'VacationsController@getIndex');
+Route::get('vacationtypes/update', 'VacationsController@getUpdate');
+Route::get('vacationtypes/update/{id}', 'VacationsController@getUpdate');
+Route::get('vacationtypes/show/{id}', 'VacationsController@getShow');
+Route::post('vacationtypes/save', 'VacationsController@postSave');
+Route::post('vacationtypes/delete', 'VacationsController@postDelete');
+Route::post('vacationtypes/multisearch', 'VacationsController@postMultisearch');
+Route::post('vacationtypes/filter', 'VacationsController@postFilter');
+Route::get('vacationtypes/download', 'VacationsController@getDownload');
+Route::post('vacationtypes/comboselect', 'VacationsController@postComboselect');
+Route::post('vacationtypes/comboselectuser', 'VacationsController@postComboselectuser');
+Route::get('vacationtypes/combotable', 'VacationsController@getCombotable');
+Route::get('vacationtypes/combotablefield', 'VacationsController@getCombotablefield');
+
+
+//employeesvacations
+Route::get('employeesvacations', 'VacationsController@getIndex');
+Route::get('employeesvacations/update', 'VacationsController@getUpdate');
+Route::get('employeesvacations/update/{id}', 'VacationsController@getUpdate');
+Route::get('employeesvacations/show/{id}', 'VacationsController@getShow');
+Route::post('employeesvacations/save', 'VacationsController@postSave');
+Route::post('employeesvacations/delete', 'VacationsController@postDelete');
+Route::post('employeesvacations/multisearch', 'VacationsController@postMultisearch');
+Route::post('employeesvacations/filter', 'VacationsController@postFilter');
+Route::get('employeesvacations/download', 'VacationsController@getDownload');
+Route::post('employeesvacations/comboselect', 'VacationsController@postComboselect');
+Route::post('employeesvacations/comboselectuser', 'VacationsController@postComboselectuser');
+Route::get('employeesvacations/combotable', 'VacationsController@getCombotable');
+Route::get('employeesvacations/combotablefield', 'VacationsController@getCombotablefield');
+
 //occationscategories
 Route::get('occationscategories', 'OccasionsController@getIndex');
 Route::get('occasions/update', 'OccasionsController@getUpdate');
@@ -309,6 +341,138 @@ Route::post('occasions/comboselect', 'OccasionsController@postComboselect');
 Route::post('occasions/comboselectuser', 'OccasionsController@postComboselectuser');
 Route::get('occasions/combotable', 'OccasionsController@getCombotable');
 Route::get('occasions/combotablefield', 'OccasionsController@getCombotablefield');
+
+
+
+//overtimes
+Route::get('overtimes', 'OvertimesController@getIndex');
+Route::get('overtimes/update', 'OvertimesController@getUpdate');
+Route::get('overtimes/update/{id}', 'OvertimesController@getUpdate');
+Route::get('overtimes/show/{id}', 'OvertimesController@getShow');
+Route::post('overtimes/save', 'OvertimesController@postSave');
+Route::post('overtimes/delete', 'OvertimesController@postDelete');
+Route::post('overtimes/multisearch', 'OvertimesController@postMultisearch');
+Route::post('overtimes/filter', 'OvertimesController@postFilter');
+Route::get('overtimes/download', 'OvertimesController@getDownload');
+Route::post('overtimes/comboselect', 'OvertimesController@postComboselect');
+Route::post('overtimes/comboselectuser', 'OvertimesController@postComboselectuser');
+Route::get('overtimes/combotable', 'OvertimesController@getCombotable');
+Route::get('overtimes/combotablefield', 'OvertimesController@getCombotablefield');
+
+
+
+//myovertime
+Route::get('myovertime', 'MyovertimeController@getIndex');
+Route::get('myovertime/update', 'MyovertimeController@getUpdate');
+Route::get('myovertime/update/{id}', 'MyovertimeController@getUpdate');
+Route::get('myovertime/show/{id}', 'MyovertimeController@getShow');
+Route::post('myovertime/save', 'MyovertimeController@postSave');
+Route::post('myovertime/delete', 'MyovertimeController@postDelete');
+Route::post('myovertime/multisearch', 'MyovertimeController@postMultisearch');
+Route::post('myovertime/filter', 'MyovertimeController@postFilter');
+Route::get('myovertime/download', 'MyovertimeController@getDownload');
+Route::post('myovertime/comboselect', 'MyovertimeController@postComboselect');
+Route::post('myovertime/comboselectuser', 'MyovertimeController@postComboselectuser');
+Route::get('myovertime/combotable', 'MyovertimeController@getCombotable');
+Route::get('myovertime/combotablefield', 'MyovertimeController@getCombotablefield');
+
+
+//employeesovertime
+Route::get('employeesovertime', 'EmployeesovertimeController@getIndex');
+Route::get('employeesovertime/update', 'EmployeesovertimeController@getUpdate');
+Route::get('employeesovertime/update/{id}', 'EmployeesovertimeController@getUpdate');
+Route::get('employeesovertime/show/{id}', 'EmployeesovertimeController@getShow');
+Route::post('employeesovertime/save', 'EmployeesovertimeController@postSave');
+Route::post('employeesovertime/delete', 'EmployeesovertimeController@postDelete');
+Route::post('employeesovertime/multisearch', 'EmployeesovertimeController@postMultisearch');
+Route::post('employeesovertime/filter', 'EmployeesovertimeController@postFilter');
+Route::get('employeesovertime/download', 'EmployeesovertimeController@getDownload');
+Route::post('employeesovertime/comboselect', 'EmployeesovertimeController@postComboselect');
+Route::post('employeesovertime/comboselectuser', 'EmployeesovertimeController@postComboselectuser');
+Route::get('employeesovertime/combotable', 'EmployeesovertimeController@getCombotable');
+Route::get('employeesovertime/combotablefield', 'EmployeesovertimeController@getCombotablefield');
+
+
+//meetings
+Route::get('meetings', 'MeetingsController@getIndex');
+Route::get('meetings/update', 'MeetingsController@getUpdate');
+Route::get('meetings/update/{id}', 'MeetingsController@getUpdate');
+Route::get('meetings/show/{id}', 'MeetingsController@getShow');
+Route::post('meetings/save', 'MeetingsController@postSave');
+Route::post('meetings/delete', 'MeetingsController@postDelete');
+Route::post('meetings/multisearch', 'MeetingsController@postMultisearch');
+Route::post('meetings/filter', 'MeetingsController@postFilter');
+Route::get('meetings/download', 'MeetingsController@getDownload');
+Route::post('meetings/comboselect', 'MeetingsController@postComboselect');
+Route::post('meetings/comboselectuser', 'MeetingsController@postComboselectuser');
+Route::get('meetings/combotable', 'MeetingsController@getCombotable');
+Route::get('meetings/combotablefield', 'MeetingsController@getCombotablefield');
+
+
+//mymeetings
+Route::get('mymeetings', 'MymeetingsController@getIndex');
+Route::get('mymeetings/update', 'MymeetingsController@getUpdate');
+Route::get('mymeetings/update/{id}', 'MymeetingsController@getUpdate');
+Route::get('mymeetings/show/{id}', 'MymeetingsController@getShow');
+Route::post('mymeetings/save', 'MymeetingsController@postSave');
+Route::post('mymeetings/delete', 'MymeetingsController@postDelete');
+Route::post('mymeetings/multisearch', 'MymeetingsController@postMultisearch');
+Route::post('mymeetings/filter', 'MymeetingsController@postFilter');
+Route::get('mymeetings/download', 'MymeetingsController@getDownload');
+Route::post('mymeetings/comboselect', 'MymeetingsController@postComboselect');
+Route::post('mymeetings/comboselectuser', 'MymeetingsController@postComboselectuser');
+Route::get('mymeetings/combotable', 'MymeetingsController@getCombotable');
+Route::get('mymeetings/combotablefield', 'MymeetingsController@getCombotablefield');
+
+
+
+//employeesmeetings
+Route::get('employeesmeetings', 'EmployeesmeetingsController@getIndex');
+Route::get('employeesmeetings/update', 'EmployeesmeetingsController@getUpdate');
+Route::get('employeesmeetings/update/{id}', 'EmployeesmeetingsController@getUpdate');
+Route::get('employeesmeetings/show/{id}', 'EmployeesmeetingsController@getShow');
+Route::post('employeesmeetings/save', 'EmployeesmeetingsController@postSave');
+Route::post('employeesmeetings/delete', 'EmployeesmeetingsController@postDelete');
+Route::post('employeesmeetings/multisearch', 'EmployeesmeetingsController@postMultisearch');
+Route::post('employeesmeetings/filter', 'EmployeesmeetingsController@postFilter');
+Route::get('employeesmeetings/download', 'EmployeesmeetingsController@getDownload');
+Route::post('employeesmeetings/comboselect', 'EmployeesmeetingsController@postComboselect');
+Route::post('employeesmeetings/comboselectuser', 'EmployeesmeetingsController@postComboselectuser');
+Route::get('employeesmeetings/combotable', 'EmployeesmeetingsController@getCombotable');
+Route::get('employeesmeetings/combotablefield', 'EmployeesmeetingsController@getCombotablefield');
+
+
+//notifications
+Route::get('notifications', 'NotificationsController@getIndex');
+Route::get('notifications/update', 'NotificationsController@getUpdate');
+Route::get('notifications/update/{id}', 'NotificationsController@getUpdate');
+Route::get('notifications/show/{id}', 'NotificationsController@getShow');
+Route::post('notifications/save', 'NotificationsController@postSave');
+Route::post('notifications/delete', 'NotificationsController@postDelete');
+Route::post('notifications/multisearch', 'NotificationsController@postMultisearch');
+Route::post('notifications/filter', 'NotificationsController@postFilter');
+Route::get('notifications/download', 'NotificationsController@getDownload');
+Route::post('notifications/comboselect', 'NotificationsController@postComboselect');
+Route::post('notifications/comboselectuser', 'NotificationsController@postComboselectuser');
+Route::get('notifications/combotable', 'NotificationsController@getCombotable');
+Route::get('notifications/combotablefield', 'NotificationsController@getCombotablefield');
+
+
+
+//operator
+Route::get('operator', 'OperatorController@getIndex');
+Route::get('operator/update', 'OperatorController@getUpdate');
+Route::get('operator/update/{id}', 'OperatorController@getUpdate');
+Route::get('operator/show/{id}', 'OperatorController@getShow');
+Route::post('operator/save', 'OperatorController@postSave');
+Route::post('operator/delete', 'OperatorController@postDelete');
+Route::post('operator/multisearch', 'OperatorController@postMultisearch');
+Route::post('operator/filter', 'OperatorController@postFilter');
+Route::get('operator/download', 'OperatorController@getDownload');
+Route::post('operator/comboselect', 'OperatorController@postComboselect');
+Route::post('operator/comboselectuser', 'OperatorController@postComboselectuser');
+Route::get('operator/combotable', 'OperatorController@getCombotable');
+Route::get('operator/combotablefield', 'OperatorController@getCombotablefield');
 
 
 Route::get('hr', function () {

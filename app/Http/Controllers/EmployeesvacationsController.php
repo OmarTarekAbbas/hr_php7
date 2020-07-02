@@ -25,7 +25,12 @@ class EmployeesvacationsController extends Controller {
         $this->model = new Employeesvacations();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+
+            $this->access = $this->model->validAccess($this->info['id']);
+
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -43,10 +48,10 @@ class EmployeesvacationsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
-        // to add condition in index view for sximo 
+        // to add condition in index view for sximo
         $managerId = \Auth::user()->id;
         $filter .= " AND manager_id =  '{$managerId}'   AND  employee_id <>  {$managerId} ";
 
@@ -60,7 +65,7 @@ class EmployeesvacationsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -69,20 +74,20 @@ class EmployeesvacationsController extends Controller {
         $pagination->setPath('employeesvacations');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('employeesvacations.index', $this->data);
@@ -161,7 +166,7 @@ class EmployeesvacationsController extends Controller {
             $vacation = \DB::table('tb_vacations')->where('id', $request->input('id'))->first();
             $Employee = User::where('id', $vacation->employee_id)->first();
 
-            // we will remove this check 
+            // we will remove this check
             /*
               if($Employee->annual_credit == 0  ){
               return Redirect::to('dashboard')
@@ -174,12 +179,12 @@ class EmployeesvacationsController extends Controller {
 
             $id = $this->model->updateVacation($data, $request->input('id'));
 
-            if ($data["manager_approved"] == 0) { // manager not approved 
+            if ($data["manager_approved"] == 0) { // manager not approved
                 $subject = "Your vacation is refused";
-                if (strlen(trim($data["manager_reason"])) != 0) {  // there is reason for refuse 
+                if (strlen(trim($data["manager_reason"])) != 0) {  // there is reason for refuse
                     $subject .= " due to : " . $data["manager_reason"];
                 }
-            } elseif ($data["manager_approved"] == 1) { // if manager is approve then send notification to hr 
+            } elseif ($data["manager_approved"] == 1) { // if manager is approve then send notification to hr
                 $subject = "Your vacation is approved ";
                 $hr_subject = "Vacation for " . $Employee->first_name . " " . $Employee->last_name . " is approved by  " . $user->first_name . " " . $user->last_name;
                 $hr_link = "vacations/show/" . $id;
@@ -189,37 +194,37 @@ class EmployeesvacationsController extends Controller {
 
                  // send SMS
                $phone = $HR->phone_number;
-               $this->send_sms($phone,$hr_subject, $hr_link); 
+               $this->send_sms($phone,$hr_subject, $hr_link);
 
                 //  notification to ceo if employee is in managers department
                 if ($vacation->department_id == MANAGER_DEPARTMENT_ID) {
-                    
+
                       $department = \DB::table('tb_departments')->where('id', MANAGER_DEPARTMENT_ID)->first();
                       if($department){
                        $manager_user_id =    $department->manager_id ;
                       }
 
-                      $manager_user = \DB::table('tb_users')->where('id', $manager_user_id)->first();    
-                      
+                      $manager_user = \DB::table('tb_users')->where('id', $manager_user_id)->first();
+
                     \SiteHelpers::addNotification(\Auth::user()->id, $manager_user->id, $hr_subject, $hr_link);
 
                 // send SMS
                     $phone = $manager_user->phone_number;
-                    $this->send_sms($phone,$hr_subject, $hr_link); 
-                    
+                    $this->send_sms($phone,$hr_subject, $hr_link);
+
                 }
 
 
 
-                // if there is credit in prev year 
-                // update annual_credit for that employee 
-                if ($Employee->annual_credit == 0 && $vacation->type_id == 4) {  // 4 = unpaid vacation 
+                // if there is credit in prev year
+                // update annual_credit for that employee
+                if ($Employee->annual_credit == 0 && $vacation->type_id == 4) {  // 4 = unpaid vacation
                     // add deducation with this period
                     $date = date("Y-m-d");
                     $Deductions = new Deductions();
                     $Deductions->user_id = $Employee->id;
                     $Deductions->deducation_period = $vacation->peroid;
-                    $Deductions->reason_id = 2;  // 2= unpaid vacation reason 
+                    $Deductions->reason_id = 2;  // 2= unpaid vacation reason
                     $Deductions->date = date("Y-m-d");
                     $Deductions->month = date("n");
                     $Deductions->year = date("Y");
@@ -237,7 +242,7 @@ class EmployeesvacationsController extends Controller {
                     $Deductions = new Deductions();
                     $Deductions->user_id = $Employee->id;
                     $Deductions->deducation_period = $vacation->peroid - $Employee->annual_credit;
-                    $Deductions->reason_id = 2;  // 2= unpaid vacation reason 
+                    $Deductions->reason_id = 2;  // 2= unpaid vacation reason
                     $Deductions->date = date("Y-m-d");
                     $Deductions->month = date("n");
                     $Deductions->year = date("Y");
@@ -249,7 +254,7 @@ class EmployeesvacationsController extends Controller {
 
                     $Employee->annual_credit = 0;
                     $Employee->save();
-                } else {  // employee has enough credit 
+                } else {  // employee has enough credit
                     $Employee->annual_credit -= $vacation->peroid;
                     $Employee->save();
                 }
@@ -257,12 +262,12 @@ class EmployeesvacationsController extends Controller {
 
             $link = 'myvacations/show/' . $id;
 
-            \SiteHelpers::addNotification(\Auth::user()->id, $vacation->employee_id, $subject, $link);  //  notification to employee under current manager 
-            
+            \SiteHelpers::addNotification(\Auth::user()->id, $vacation->employee_id, $subject, $link);  //  notification to employee under current manager
+
             // send SMS
                 $phone = $Employee->phone_number;
-                $this->send_sms($phone,$subject, $link); 
-        
+                $this->send_sms($phone,$subject, $link);
+
 
             return Redirect::to('employeesvacations')->with('messagetext', \Lang::get('core.note_success'))->with('msgstatus', 'success');
         } else {
@@ -307,7 +312,7 @@ class EmployeesvacationsController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
@@ -334,7 +339,7 @@ class EmployeesvacationsController extends Controller {
                 $Manager = User::find($vacation->manager_id);
                 $vacation->manager_approved = 1;
                 $vacation->save();
-                // send notificaton to employee that his manager approved to his vacation 
+                // send notificaton to employee that his manager approved to his vacation
                 $subject = "Your vacation is approved by your manager " . $Manager->first_name . ' ' . $Manager->last_name;
                 $link = 'myvacations/show/' . $vacation->id;
                 \SiteHelpers::addNotification($userId, $vacation->employee_id, $subject, $link);
