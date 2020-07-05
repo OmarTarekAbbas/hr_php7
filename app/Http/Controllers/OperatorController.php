@@ -173,7 +173,7 @@ class OperatorController extends Controller {
 
 		} else {
 
-			return Redirect::to('operator/update/'.$id)->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
+			return Redirect::to('operator/update/')->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
 			->withErrors($validator)->withInput();
 		}
 

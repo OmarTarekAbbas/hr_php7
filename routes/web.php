@@ -491,6 +491,88 @@ Route::get('visadays/combotable', 'VisadaysController@getCombotable');
 Route::get('visadays/combotablefield', 'VisadaysController@getCombotablefield');
 
 
+//perdiempositions
+Route::get('perdiempositions', 'PerdiempositionsController@getIndex');
+Route::get('perdiempositions/update', 'PerdiempositionsController@getUpdate');
+Route::get('perdiempositions/update/{id}', 'PerdiempositionsController@getUpdate');
+Route::get('perdiempositions/show/{id}', 'PerdiempositionsController@getShow');
+Route::post('perdiempositions/save', 'PerdiempositionsController@postSave');
+Route::post('perdiempositions/delete', 'PerdiempositionsController@postDelete');
+Route::post('perdiempositions/multisearch', 'PerdiempositionsController@postMultisearch');
+Route::post('perdiempositions/filter', 'PerdiempositionsController@postFilter');
+Route::get('perdiempositions/download', 'PerdiempositionsController@getDownload');
+Route::post('perdiempositions/comboselect', 'PerdiempositionsController@postComboselect');
+Route::post('perdiempositions/comboselectuser', 'PerdiempositionsController@postComboselectuser');
+Route::get('perdiempositions/combotable', 'PerdiempositionsController@getCombotable');
+Route::get('perdiempositions/combotablefield', 'PerdiempositionsController@getCombotablefield');
+
+
+//countryperdiem
+Route::get('countryperdiem', 'CountryperdiemController@getIndex');
+Route::get('countryperdiem/update', 'CountryperdiemController@getUpdate');
+Route::get('countryperdiem/update/{id}', 'CountryperdiemController@getUpdate');
+Route::get('countryperdiem/show/{id}', 'CountryperdiemController@getShow');
+Route::post('countryperdiem/save', 'CountryperdiemController@postSave');
+Route::post('countryperdiem/delete', 'CountryperdiemController@postDelete');
+Route::post('countryperdiem/multisearch', 'CountryperdiemController@postMultisearch');
+Route::post('countryperdiem/filter', 'CountryperdiemController@postFilter');
+Route::get('countryperdiem/download', 'CountryperdiemController@getDownload');
+Route::post('countryperdiem/comboselect', 'CountryperdiemController@postComboselect');
+Route::post('countryperdiem/comboselectuser', 'CountryperdiemController@postComboselectuser');
+Route::get('countryperdiem/combotable', 'CountryperdiemController@getCombotable');
+Route::get('countryperdiem/combotablefield', 'CountryperdiemController@getCombotablefield');
+
+
+//travelling
+Route::get('travelling', 'TravellingController@getIndex');
+Route::get('travelling/update', 'TravellingController@getUpdate');
+Route::get('travelling/update/{id}', 'TravellingController@getUpdate');
+Route::get('travelling/show/{id}', 'TravellingController@getShow');
+Route::post('travelling/save', 'TravellingController@postSave');
+Route::post('travelling/delete', 'TravellingController@postDelete');
+Route::post('travelling/multisearch', 'TravellingController@postMultisearch');
+Route::post('travelling/filter', 'TravellingController@postFilter');
+Route::get('travelling/download', 'TravellingController@getDownload');
+Route::post('travelling/comboselect', 'TravellingController@postComboselect');
+Route::post('travelling/comboselectuser', 'TravellingController@postComboselectuser');
+Route::get('travelling/combotable', 'TravellingController@getCombotable');
+Route::get('travelling/combotablefield', 'TravellingController@getCombotablefield');
+
+
+//mytravelling
+Route::get('mytravelling', 'MytravellingController@getIndex');
+Route::get('mytravelling/update', 'MytravellingController@getUpdate');
+Route::get('mytravelling/update/{id}', 'MytravellingController@getUpdate');
+Route::get('mytravelling/show/{id}', 'MytravellingController@getShow');
+Route::post('mytravelling/save', 'MytravellingController@postSave');
+Route::post('mytravelling/delete', 'MytravellingController@postDelete');
+Route::post('mytravelling/multisearch', 'MytravellingController@postMultisearch');
+Route::post('mytravelling/filter', 'MytravellingController@postFilter');
+Route::get('mytravelling/download', 'MytravellingController@getDownload');
+Route::post('mytravelling/comboselect', 'MytravellingController@postComboselect');
+Route::post('mytravelling/comboselectuser', 'MytravellingController@postComboselectuser');
+Route::get('mytravelling/combotable', 'MytravellingController@getCombotable');
+Route::get('mytravelling/combotablefield', 'MytravellingController@getCombotablefield');
+
+
+//employeestravelling
+Route::get('employeestravelling', 'EmployeestravellingController@getIndex');
+Route::get('employeestravelling/update', 'EmployeestravellingController@getUpdate');
+Route::get('employeestravelling/update/{id}', 'EmployeestravellingController@getUpdate');
+Route::get('employeestravelling/show/{id}', 'EmployeestravellingController@getShow');
+Route::post('employeestravelling/save', 'EmployeestravellingController@postSave');
+Route::post('employeestravelling/delete', 'EmployeestravellingController@postDelete');
+Route::post('employeestravelling/multisearch', 'EmployeestravellingController@postMultisearch');
+Route::post('employeestravelling/filter', 'EmployeestravellingController@postFilter');
+Route::get('employeestravelling/download', 'EmployeestravellingController@getDownload');
+Route::post('employeestravelling/comboselect', 'EmployeestravellingController@postComboselect');
+Route::post('employeestravelling/comboselectuser', 'EmployeestravellingController@postComboselectuser');
+Route::get('employeestravelling/combotable', 'EmployeestravellingController@getCombotable');
+Route::get('employeestravelling/combotablefield', 'EmployeestravellingController@getCombotablefield');
+
+
+
+
 Route::get('hr', function () {
     return redirect('dashboard');
 });

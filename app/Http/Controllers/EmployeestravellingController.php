@@ -22,11 +22,15 @@ class EmployeestravellingController extends Controller
     public function __construct()
     {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Employeestravelling();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -45,10 +49,10 @@ class EmployeestravellingController extends Controller
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
-        // to add condition in index view for sximo 
+        // to add condition in index view for sximo
         $managerId = \Auth::user()->id;
         $filter .= " AND manager_id =  '{$managerId}'   AND  employee_id <>  {$managerId} ";
 
@@ -62,7 +66,7 @@ class EmployeestravellingController extends Controller
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0)
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -71,20 +75,20 @@ class EmployeestravellingController extends Controller
         $pagination->setPath('employeestravelling');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('employeestravelling.index', $this->data);
@@ -124,7 +128,7 @@ class EmployeestravellingController extends Controller
 
 
 
-    
+
 
 
     public function getShow($id = null)
@@ -175,9 +179,9 @@ class EmployeestravellingController extends Controller
             $Travelling = \DB::table('tb_travellings')->where('id', $id)->first();
             $Employee = \DB::table('tb_users')->where('id', $Travelling->employee_id)->first();
 
-            if ($Travelling->manager_approved == 0) { // manager not approved 
+            if ($Travelling->manager_approved == 0) { // manager not approved
                 $subject = "Your travelling request is refused by " . $user->first_name . " " . $user->last_name;
-                if (strlen(trim($Travelling->manager_reason)) != 0) {  // there is reason for refuse 
+                if (strlen(trim($Travelling->manager_reason)) != 0) {  // there is reason for refuse
                     $subject .= " due to : " . $Travelling->manager_reason;
                 }
             } elseif ($Travelling->manager_approved == 1) { // if manager is approved then send notification to admin
@@ -188,17 +192,17 @@ class EmployeestravellingController extends Controller
                 $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
                 \SiteHelpers::addNotification(\Auth::user()->id, ADMIN_USER_ID, $admin_subject, $admin_link);
                    // send SMS TO admin
-                $admin = User::where('id', ADMIN_USER_ID)->first();                
+                $admin = User::where('id', ADMIN_USER_ID)->first();
                 $phone = $admin->phone_number;
-                $this->send_sms($phone,$admin_subject, $admin_link); 
-               
+                $this->send_sms($phone,$admin_subject, $admin_link);
+
             }
             $link = 'mytravelling/show/' . $id;
-            \SiteHelpers::addNotification(\Auth::user()->id, $Travelling->employee_id, $subject, $link);  //  notification to employee under current manager 
+            \SiteHelpers::addNotification(\Auth::user()->id, $Travelling->employee_id, $subject, $link);  //  notification to employee under current manager
                // send SMS TO employee
-                $employee = User::where('id', $Travelling->employee_id)->first();                         
+                $employee = User::where('id', $Travelling->employee_id)->first();
                $phone = $employee->phone_number;
-               $this->send_sms($phone,$subject, $link);    
+               $this->send_sms($phone,$subject, $link);
 
 
             if (!is_null($request->input('apply'))) {
@@ -228,7 +232,7 @@ class EmployeestravellingController extends Controller
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                 ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
