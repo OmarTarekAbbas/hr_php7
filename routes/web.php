@@ -475,6 +475,22 @@ Route::get('operator/combotable', 'OperatorController@getCombotable');
 Route::get('operator/combotablefield', 'OperatorController@getCombotablefield');
 
 
+//visadays
+Route::get('visadays', 'VisadaysController@getIndex');
+Route::get('visadays/update', 'VisadaysController@getUpdate');
+Route::get('visadays/update/{id}', 'VisadaysController@getUpdate');
+Route::get('visadays/show/{id}', 'VisadaysController@getShow');
+Route::post('visadays/save', 'VisadaysController@postSave');
+Route::post('visadays/delete', 'VisadaysController@postDelete');
+Route::post('visadays/multisearch', 'VisadaysController@postMultisearch');
+Route::post('visadays/filter', 'VisadaysController@postFilter');
+Route::get('visadays/download', 'VisadaysController@getDownload');
+Route::post('visadays/comboselect', 'VisadaysController@postComboselect');
+Route::post('visadays/comboselectuser', 'VisadaysController@postComboselectuser');
+Route::get('visadays/combotable', 'VisadaysController@getCombotable');
+Route::get('visadays/combotablefield', 'VisadaysController@getCombotablefield');
+
+
 Route::get('hr', function () {
     return redirect('dashboard');
 });
