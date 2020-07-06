@@ -14,7 +14,7 @@
 // Route::resource('/home', 'HomeController');
 Route::get('home', 'HomeController@index');
 Route::get('home/lang/{one?}/{two?}/{three?}/{four?}/{five?}', 'HomeController@getLang');
-Route::get('service', 'HomeController@index');
+// Route::get('service', 'HomeController@index');
 Route::get('about-us', 'HomeController@index');
 Route::get('contact-us', 'HomeController@index');
 Route::get('faq', 'HomeController@index');
@@ -598,10 +598,27 @@ Route::post('employeestasks/multisearch', 'EmployeestasksController@postMultisea
 Route::post('employeestasks/filter', 'EmployeestasksController@postFilter');
 Route::get('employeestasks/download', 'EmployeestasksController@getDownload');
 Route::post('employeestasks/comboselect', 'EmployeestasksController@postComboselect');
-Route::post('commitments/comboselect', 'EmployeestasksController@postComboselect');
+Route::post('employeestasks/comboselect', 'EmployeestasksController@postComboselect');
 Route::post('employeestasks/comboselectuser', 'EmployeestasksController@postComboselectuser');
 Route::get('employeestasks/combotable', 'EmployeestasksController@getCombotable');
 Route::get('employeestasks/combotablefield', 'EmployeestasksController@getCombotablefield');
+
+
+//service
+Route::get('service', 'ServiceController@getIndex');
+Route::get('service/update', 'ServiceController@getUpdate');
+Route::get('service/update/{id}', 'ServiceController@getUpdate');
+Route::get('service/show/{id}', 'ServiceController@getShow');
+Route::post('service/save', 'ServiceController@postSave');
+Route::post('service/delete', 'ServiceController@postDelete');
+Route::post('service/multisearch', 'ServiceController@postMultisearch');
+Route::post('service/filter', 'ServiceController@postFilter');
+Route::get('service/download', 'ServiceController@getDownload');
+Route::post('service/comboselect', 'ServiceController@postComboselect');
+Route::post('service/comboselect', 'ServiceController@postComboselect');
+Route::post('service/comboselectuser', 'ServiceController@postComboselectuser');
+Route::get('service/combotable', 'ServiceController@getCombotable');
+Route::get('service/combotablefield', 'ServiceController@getCombotablefield');
 
 
 //mytasks
