@@ -27,5 +27,6 @@ class VerifyCsrfToken extends Middleware
         'sximo/module/combotable',
         'sximo/module/combotablefield',
         'commitments/comboselect',
+        'core/elfinder',
     ];
 }

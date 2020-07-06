@@ -109,16 +109,21 @@
                             <tr>
                                 <td > {{ $c++ }} </td> 
                                 @foreach ($tableGrid as $t)
+                                @php
+                                $x = $t['field'];
+                                $conn = (isset($t['conn']) ? $t['conn'] : array() );
+                                @endphp
+
                                 @if($t['view'] =='1')
 
                                 <td>
-                                    @if($t['field']  == "manager_approved"  &&  $row->$t['field'] == 1   )
+                                    @if($t['field']  == "manager_approved"  &&  $row->$x == 1   )
                                     Yes
-                                    @elseif( $t['field'] == "manager_approved" && $row->$t['field'] == 0  && is_int($row->$t['field']) )
+                                    @elseif( $t['field'] == "manager_approved" && $row->$x == 0  && is_int($row->$x) )
                                     No
                                     @else
                                     {{--*/ $conn = (isset($t['conn']) ? $t['conn'] : array() ) /*--}}
-                                    {!! SiteHelpers::gridDisplay($row->$t['field'],$t['field'],$conn) !!}	
+                                    {!! SiteHelpers::gridDisplay($row->$x,$t['field'],$conn) !!}
                                     @endif
                                 </td>
                                 @endif

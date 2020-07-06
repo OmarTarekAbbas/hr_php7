@@ -635,7 +635,20 @@ Route::post('strategies/comboselectuser', 'StrategiesController@postComboselectu
 Route::get('strategies/combotable', 'StrategiesController@getCombotable');
 Route::get('strategies/combotablefield', 'StrategiesController@getCombotablefield');
 
+//searchTables
+Route::get('searchTables', 'SearchTablesController@index');
+Route::get('searchTables/download', 'SearchTablesController@download');
+Route::get('searchTables/search', 'SearchTablesController@search');
 
+//database_backups
+Route::get('database_backups', 'DashboardController@list_backups');
+Route::get('export_DB', 'DashboardController@export_DB_backup');
+Route::get('delete_backup', 'DashboardController@delete_backup');
+Route::get('download_backup', 'DashboardController@download_backup');
+Route::get('import_DB', 'DashboardController@import_DB_backup');
+
+Route::get('core/elfinder', 'Core\ElfinderController@getIndex');
+Route::post('core/elfinder', 'Core\ElfinderController@getIndex');
 
 Route::get('hr', function () {
     return redirect('dashboard');
