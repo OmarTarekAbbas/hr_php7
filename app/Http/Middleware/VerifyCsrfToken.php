@@ -27,5 +27,13 @@ class VerifyCsrfToken extends Middleware
         'sximo/module/combotable',
         'sximo/module/combotablefield',
         'commitments/comboselect',
+        'campaignalbums/comboselect',
+        'track/comboselect',
+        'occasions/comboselect',
+        'audiometadata/comboselect',
+        'originalcontents/comboselect',
+        'finalvideo/comboselect',
+        'finalimage/comboselect',
+        'departments/comboselect',
     ];
 }
