@@ -598,10 +598,42 @@ Route::post('employeestasks/multisearch', 'EmployeestasksController@postMultisea
 Route::post('employeestasks/filter', 'EmployeestasksController@postFilter');
 Route::get('employeestasks/download', 'EmployeestasksController@getDownload');
 Route::post('employeestasks/comboselect', 'EmployeestasksController@postComboselect');
+Route::post('commitments/comboselect', 'EmployeestasksController@postComboselect');
 Route::post('employeestasks/comboselectuser', 'EmployeestasksController@postComboselectuser');
 Route::get('employeestasks/combotable', 'EmployeestasksController@getCombotable');
 Route::get('employeestasks/combotablefield', 'EmployeestasksController@getCombotablefield');
 
+
+//mytasks
+Route::get('mytasks', 'MytasksController@getIndex');
+Route::get('mytasks/update', 'MytasksController@getUpdate');
+Route::get('mytasks/update/{id}', 'MytasksController@getUpdate');
+Route::get('mytasks/show/{id}', 'MytasksController@getShow');
+Route::post('mytasks/save', 'MytasksController@postSave');
+Route::post('mytasks/delete', 'MytasksController@postDelete');
+Route::post('mytasks/multisearch', 'MytasksController@postMultisearch');
+Route::post('mytasks/filter', 'MytasksController@postFilter');
+Route::get('mytasks/download', 'MytasksController@getDownload');
+Route::post('mytasks/comboselect', 'MytasksController@postComboselect');
+Route::post('mytasks/comboselectuser', 'MytasksController@postComboselectuser');
+Route::get('mytasks/combotable', 'MytasksController@getCombotable');
+Route::get('mytasks/combotablefield', 'MytasksController@getCombotablefield');
+
+
+//strategies
+Route::get('strategies', 'StrategiesController@getIndex');
+Route::get('strategies/update', 'StrategiesController@getUpdate');
+Route::get('strategies/update/{id}', 'StrategiesController@getUpdate');
+Route::get('strategies/show/{id}', 'StrategiesController@getShow');
+Route::post('strategies/save', 'StrategiesController@postSave');
+Route::post('strategies/delete', 'StrategiesController@postDelete');
+Route::post('strategies/multisearch', 'StrategiesController@postMultisearch');
+Route::post('strategies/filter', 'StrategiesController@postFilter');
+Route::get('strategies/download', 'StrategiesController@getDownload');
+Route::post('strategies/comboselect', 'StrategiesController@postComboselect');
+Route::post('strategies/comboselectuser', 'StrategiesController@postComboselectuser');
+Route::get('strategies/combotable', 'StrategiesController@getCombotable');
+Route::get('strategies/combotablefield', 'StrategiesController@getCombotablefield');
 
 
 

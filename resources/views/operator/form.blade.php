@@ -53,9 +53,6 @@
 									<label for="Country" class=" control-label col-md-4 text-left"> Country <span class="asterix"> * </span></label>
 									<div class="col-md-6">
 									  <select name='country_id' rows='5' id='country_id' class='select2 ' required  >
-
-
-
                                       </select>
 									 </div>
 									 <div class="col-md-2">
