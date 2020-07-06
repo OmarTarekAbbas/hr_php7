@@ -21,5 +21,8 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'myvacations/comboselect',
         'mytravelling/comboselect',
+        'operator/comboselect',
+        'notifications/comboselect',
+        'travelling/comboselect',
     ];
 }

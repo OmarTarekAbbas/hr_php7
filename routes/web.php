@@ -571,6 +571,38 @@ Route::get('employeestravelling/combotable', 'EmployeestravellingController@getC
 Route::get('employeestravelling/combotablefield', 'EmployeestravellingController@getCombotablefield');
 
 
+//mycommitments
+Route::get('mycommitments', 'EmployeestravellingController@getIndex');
+Route::get('mycommitments/update', 'EmployeestravellingController@getUpdate');
+Route::get('mycommitments/update/{id}', 'EmployeestravellingController@getUpdate');
+Route::get('mycommitments/show/{id}', 'EmployeestravellingController@getShow');
+Route::post('mycommitments/save', 'EmployeestravellingController@postSave');
+Route::post('mycommitments/delete', 'EmployeestravellingController@postDelete');
+Route::post('mycommitments/multisearch', 'EmployeestravellingController@postMultisearch');
+Route::post('mycommitments/filter', 'EmployeestravellingController@postFilter');
+Route::get('mycommitments/download', 'EmployeestravellingController@getDownload');
+Route::post('mycommitments/comboselect', 'EmployeestravellingController@postComboselect');
+Route::post('mycommitments/comboselectuser', 'EmployeestravellingController@postComboselectuser');
+Route::get('mycommitments/combotable', 'EmployeestravellingController@getCombotable');
+Route::get('mycommitments/combotablefield', 'EmployeestravellingController@getCombotablefield');
+
+
+//employeestasks
+Route::get('employeestasks', 'EmployeestasksController@getIndex');
+Route::get('employeestasks/update', 'EmployeestasksController@getUpdate');
+Route::get('employeestasks/update/{id}', 'EmployeestasksController@getUpdate');
+Route::get('employeestasks/show/{id}', 'EmployeestasksController@getShow');
+Route::post('employeestasks/save', 'EmployeestasksController@postSave');
+Route::post('employeestasks/delete', 'EmployeestasksController@postDelete');
+Route::post('employeestasks/multisearch', 'EmployeestasksController@postMultisearch');
+Route::post('employeestasks/filter', 'EmployeestasksController@postFilter');
+Route::get('employeestasks/download', 'EmployeestasksController@getDownload');
+Route::post('employeestasks/comboselect', 'EmployeestasksController@postComboselect');
+Route::post('employeestasks/comboselectuser', 'EmployeestasksController@postComboselectuser');
+Route::get('employeestasks/combotable', 'EmployeestasksController@getCombotable');
+Route::get('employeestasks/combotablefield', 'EmployeestasksController@getCombotablefield');
+
+
 
 
 Route::get('hr', function () {
