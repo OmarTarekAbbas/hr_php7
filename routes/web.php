@@ -922,6 +922,109 @@ Route::get('departments/combotable', 'DepartmentsController@getCombotable');
 Route::get('departments/combotablefield', 'DepartmentsController@getCombotablefield');
 Route::get('departments/combotablefield', 'DepartmentsController@getCombotablefield');
 
+//attendance
+Route::get('attendance', 'AttendanceController@getIndex');
+Route::get('attendance/update', 'AttendanceController@getUpdate');
+Route::get('attendance/update/{id}', 'AttendanceController@getUpdate');
+Route::get('attendance/show/{id}', 'AttendanceController@getShow');
+Route::post('attendance/save', 'AttendanceController@postSave');
+Route::post('attendance/delete', 'AttendanceController@postDelete');
+Route::post('attendance/multisearch', 'AttendanceController@postMultisearch');
+Route::post('attendance/filter', 'AttendanceController@postFilter');
+Route::get('attendance/download', 'AttendanceController@getDownload');
+Route::post('attendance/comboselect', 'AttendanceController@postComboselect');
+Route::post('attendance/comboselectuser', 'AttendanceController@postComboselectuser');
+Route::get('attendance/combotable', 'AttendanceController@getCombotable');
+Route::get('attendance/combotablefield', 'AttendanceController@getCombotablefield');
+Route::get('attendance/combotablefield', 'AttendanceController@getCombotablefield');
+Route::get('refresh_punch', 'AttendanceController@refresh_punch');
+Route::get('attendance/upload', 'AttendanceController@getUpload');
+
+
+//deductions
+Route::get('deductions', 'DeductionsController@getIndex');
+Route::get('deductions/update', 'DeductionsController@getUpdate');
+Route::get('deductions/update/{id}', 'DeductionsController@getUpdate');
+Route::get('deductions/show/{id}', 'DeductionsController@getShow');
+Route::post('deductions/save', 'DeductionsController@postSave');
+Route::post('deductions/delete', 'DeductionsController@postDelete');
+Route::post('deductions/multisearch', 'DeductionsController@postMultisearch');
+Route::post('deductions/filter', 'DeductionsController@postFilter');
+Route::get('deductions/download', 'DeductionsController@getDownload');
+Route::post('deductions/comboselect', 'DeductionsController@postComboselect');
+Route::post('deductions/comboselectuser', 'DeductionsController@postComboselectuser');
+Route::get('deductions/combotable', 'DeductionsController@getCombotable');
+Route::get('deductions/combotablefield', 'DeductionsController@getCombotablefield');
+Route::get('deductions/combotablefield', 'DeductionsController@getCombotablefield');
+
+//delaynotifications
+Route::get('delaynotifications', 'DelaynotificationsController@getIndex');
+Route::get('delaynotifications/update', 'DelaynotificationsController@getUpdate');
+Route::get('delaynotifications/update/{id}', 'DelaynotificationsController@getUpdate');
+Route::get('delaynotifications/show/{id}', 'DelaynotificationsController@getShow');
+Route::post('delaynotifications/save', 'DelaynotificationsController@postSave');
+Route::post('delaynotifications/delete', 'DelaynotificationsController@postDelete');
+Route::post('delaynotifications/multisearch', 'DelaynotificationsController@postMultisearch');
+Route::post('delaynotifications/filter', 'DelaynotificationsController@postFilter');
+Route::get('delaynotifications/download', 'DelaynotificationsController@getDownload');
+Route::post('delaynotifications/comboselect', 'DelaynotificationsController@postComboselect');
+Route::post('delaynotifications/comboselectuser', 'DelaynotificationsController@postComboselectuser');
+Route::get('delaynotifications/combotable', 'DelaynotificationsController@getCombotable');
+Route::get('delaynotifications/combotablefield', 'DelaynotificationsController@getCombotablefield');
+Route::get('delaynotifications/combotablefield', 'DelaynotificationsController@getCombotablefield');
+
+
+//rbt
+Route::get('rbt/statistics', 'RbtController@statitics');
+Route::post('rbt/get_statistics', 'RbtController@get_statistics');
+Route::get('rbt', 'RbtController@getIndex');
+Route::get('rbt/update', 'RbtController@getUpdate');
+Route::get('rbt/update/{id}', 'RbtController@getUpdate');
+Route::get('rbt/show/{id}', 'RbtController@getShow');
+Route::post('rbt/save', 'RbtController@postSave');
+Route::post('rbt/delete', 'RbtController@postDelete');
+Route::post('rbt/multisearch', 'RbtController@postMultisearch');
+Route::post('rbt/filter', 'RbtController@postFilter');
+Route::get('rbt/download', 'RbtController@getDownload');
+Route::post('rbt/comboselect', 'RbtController@postComboselect');
+Route::post('rbt/comboselectuser', 'RbtController@postComboselectuser');
+Route::get('rbt/combotable', 'RbtController@getCombotable');
+Route::get('rbt/combotablefield', 'RbtController@getCombotablefield');
+Route::get('rbt/combotablefield', 'RbtController@getCombotablefield');
+Route::get('rbt/excel', 'RbtController@create_excel');
+Route::post('rbt/excel', 'RbtController@excelStore');
+Route::get('rbt/upload_tracks', 'RbtController@multi_upload');
+Route::get('rbt/file_system', 'RbtController@list_file_system');
+Route::get('rbt/file_system/content', 'RbtController@get_file_system');
+Route::get('rbt/search', 'RbtController@search');
+Route::post('rbt/search', 'RbtController@search_result');
+
+//report
+Route::get('report/statistics', 'ReportController@statitics');
+Route::post('report/get_statistics', 'ReportController@get_statistics');
+Route::get('report', 'ReportController@getIndex');
+Route::get('report/update', 'ReportController@getUpdate');
+Route::get('report/update/{id}', 'ReportController@getUpdate');
+Route::get('report/show/{id}', 'ReportController@getShow');
+Route::post('report/save', 'ReportController@postSave');
+Route::post('report/delete', 'ReportController@postDelete');
+Route::post('report/multisearch', 'ReportController@postMultisearch');
+Route::post('report/filter', 'ReportController@postFilter');
+Route::get('report/download', 'ReportController@getDownload');
+Route::post('report/comboselect', 'ReportController@postComboselect');
+Route::post('report/comboselectuser', 'ReportController@postComboselectuser');
+Route::get('report/combotable', 'ReportController@getCombotable');
+Route::get('report/combotablefield', 'ReportController@getCombotablefield');
+Route::get('report/combotablefield', 'ReportController@getCombotablefield');
+Route::get('report/excel', 'ReportController@excel');
+Route::post('report/excel', 'ReportController@excelStore');
+Route::get('report/upload_tracks', 'ReportController@multi_upload');
+Route::get('report/file_system', 'ReportController@list_file_system');
+Route::get('report/file_system/content', 'ReportController@get_file_system');
+Route::get('report/search', 'ReportController@search');
+Route::post('report/search', 'ReportController@search_result');
+
+
 Route::get('hr', function () {
     return redirect('dashboard');
 });

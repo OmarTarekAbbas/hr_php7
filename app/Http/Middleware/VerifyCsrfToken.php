@@ -35,5 +35,9 @@ class VerifyCsrfToken extends Middleware
         'finalvideo/comboselect',
         'finalimage/comboselect',
         'departments/comboselect',
+        'deductions/comboselect',
+        'delaynotifications/comboselectuser',
+        'rbt/get_statistics',
+        'rbt/comboselect',
     ];
 }
