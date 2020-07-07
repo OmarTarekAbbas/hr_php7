@@ -262,6 +262,7 @@ Route::post('permissions/comboselect', 'PermissionsController@postComboselect');
 Route::post('permissions/comboselectuser', 'PermissionsController@postComboselectuser');
 Route::get('permissions/combotable', 'PermissionsController@getCombotable');
 Route::get('permissions/combotablefield', 'PermissionsController@getCombotablefield');
+Route::get('permissions/makepdfvacation/{one?}/{two?}/{three?}/{four?}/{five?}', 'PermissionsController@getMakepdfvacation');
 
 //employeespermissions
 Route::get('employeespermissions', 'EmployeespermissionsController@getIndex');
@@ -703,6 +704,11 @@ Route::post('album/comboselectuser', 'AlbumController@postComboselectuser');
 Route::get('album/combotable', 'AlbumController@getCombotable');
 Route::get('album/combotablefield', 'AlbumController@getCombotablefield');
 Route::get('album/combotablefield', 'AlbumController@getCombotablefield');
+Route::get('album/excel', 'AlbumController@excel');
+Route::post('album/excel', 'AlbumController@excelStore');
+Route::get('album/downloadSample', 'AlbumController@downloadSample');
+Route::get('album/downloadsample/{one?}/{two?}/{three?}/{four?}/{five?}', 'AlbumController@getDownloadsample');
+Route::post('album/downloadsheet/{one?}/{two?}/{three?}/{four?}/{five?}', 'AlbumController@postDownloadsheet');
 
 
 //album
@@ -974,6 +980,22 @@ Route::get('delaynotifications/combotablefield', 'DelaynotificationsController@g
 Route::get('delaynotifications/combotablefield', 'DelaynotificationsController@getCombotablefield');
 
 
+//punchnotifications
+Route::get('punchnotifications', 'PunchnotificationsController@getIndex');
+Route::get('punchnotifications/update', 'PunchnotificationsController@getUpdate');
+Route::get('punchnotifications/update/{id}', 'PunchnotificationsController@getUpdate');
+Route::get('punchnotifications/show/{id}', 'PunchnotificationsController@getShow');
+Route::post('punchnotifications/save', 'PunchnotificationsController@postSave');
+Route::post('punchnotifications/delete', 'PunchnotificationsController@postDelete');
+Route::post('punchnotifications/multisearch', 'PunchnotificationsController@postMultisearch');
+Route::post('punchnotifications/filter', 'PunchnotificationsController@postFilter');
+Route::get('punchnotifications/download', 'PunchnotificationsController@getDownload');
+Route::post('punchnotifications/comboselect', 'PunchnotificationsController@postComboselect');
+Route::post('punchnotifications/comboselectuser', 'PunchnotificationsController@postComboselectuser');
+Route::get('punchnotifications/combotable', 'PunchnotificationsController@getCombotable');
+Route::get('punchnotifications/combotablefield', 'PunchnotificationsController@getCombotablefield');
+Route::get('punchnotifications/combotablefield', 'PunchnotificationsController@getCombotablefield');
+
 //rbt
 Route::get('rbt/statistics', 'RbtController@statitics');
 Route::post('rbt/get_statistics', 'RbtController@get_statistics');
@@ -997,7 +1019,10 @@ Route::get('rbt/upload_tracks', 'RbtController@multi_upload');
 Route::get('rbt/file_system', 'RbtController@list_file_system');
 Route::get('rbt/file_system/content', 'RbtController@get_file_system');
 Route::get('rbt/search', 'RbtController@search');
+Route::get('rbt/downloadSampleNew', 'RbtController@getDownloadNew');
+Route::get('rbt/downloadSample', 'RbtController@downloadSample');
 Route::post('rbt/search', 'RbtController@search_result');
+Route::get('rbt/search', 'RbtController@search');
 
 //report
 Route::get('report/statistics', 'ReportController@statitics');
@@ -1021,8 +1046,18 @@ Route::post('report/excel', 'ReportController@excelStore');
 Route::get('report/upload_tracks', 'ReportController@multi_upload');
 Route::get('report/file_system', 'ReportController@list_file_system');
 Route::get('report/file_system/content', 'ReportController@get_file_system');
+Route::get('report/downloadSample', 'ReportController@downloadSample');
+Route::get('report/downloadsample/{one?}/{two?}/{three?}/{four?}/{five?}', 'ReportController@getDownloadsample');
 Route::get('report/search', 'ReportController@search');
 Route::post('report/search', 'ReportController@search_result');
+
+//playtrack_v4
+Route::get('playtrack', 'CampaignalbumsController@GetTrack');
+Route::get('playtrack_v2/{track_id}', 'CampaignalbumsController@GetTrack_v2');
+Route::get('playtrack_v3/{track_id}', 'CampaignalbumsController@GetTrack_v3');
+Route::get('playtrack_v4/{track_id}', 'CampaignalbumsController@GetTrack_v4');
+Route::post('campaignalbums/add/track', 'CampaignalbumsController@add_track');
+Route::get('campaignalbums/add/track/{id}', 'CampaignalbumsController@get_track_form');
 
 
 Route::get('hr', function () {

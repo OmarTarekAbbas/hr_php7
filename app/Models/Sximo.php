@@ -19,7 +19,7 @@ class Sximo extends Model {
             'global' => 1
                         ), $args));
 
-        $offset = ($page - 1) * $limit;
+        $offset = ((int)$page - 1) * (int)$limit;
         $limitConditional = ($page != 0 && $limit != 0) ? "LIMIT  $offset , $limit" : '';
         $orderConditional = ($sort != '' && $order != '') ? " ORDER BY {$sort} {$order} " : '';
 
@@ -27,10 +27,10 @@ class Sximo extends Model {
         $table = with(new static)->table;
         if ($global == 0)
             $params .= " AND {$table}.entry_by ='" . \Session::get('uid') . "'";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -39,7 +39,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -68,10 +68,10 @@ class Sximo extends Model {
         $table = with(new static)->table;
         if ($global == 0)
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . "WHERE {$table}.trashed = 1" . " 
+        $result = \DB::select(self::querySelect() . "WHERE {$table}.trashed = 1" . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -80,7 +80,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . " WHERE {$table}.trashed = 1 " . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -109,10 +109,10 @@ class Sximo extends Model {
         $table = with(new static)->table;
         if ($global == 0)
             $params .= " AND {$table}.entry_by ='" . \Session::get('uid') . "'";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -121,7 +121,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -150,10 +150,10 @@ class Sximo extends Model {
         $table = with(new static)->table;
         if ($global == 0)
             $params .= " AND {$table}.notified_id ='" . \Session::get('uid') . "'";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -162,7 +162,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -192,10 +192,10 @@ class Sximo extends Model {
         if ($global == 0)
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
         $params .= " AND {$table}.parent =0";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -204,7 +204,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -243,11 +243,11 @@ class Sximo extends Model {
         if ($global == 0)
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
 
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -256,7 +256,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -299,11 +299,11 @@ class Sximo extends Model {
         if ($global == 0)
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
 
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -312,7 +312,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -345,14 +345,14 @@ class Sximo extends Model {
         date_default_timezone_set("Africa/Cairo");
         if ($id == NULL) {
 
-            // Insert Here 
+            // Insert Here
             if (isset($data['createdOn']))
                 $data['createdOn'] = date("Y-m-d H:i:s");
             if (isset($data['updatedOn']))
                 $data['updatedOn'] = date("Y-m-d H:i:s");
             $id = \DB::table($table)->insertGetId($data);
         } else {
-            // Update here 
+            // Update here
             // update created field if any
             if (isset($data['createdOn']))
                 unset($data['createdOn']);
@@ -383,7 +383,7 @@ class Sximo extends Model {
     }
 
     public function insertRow3($data, $id) {
-      
+
         $table = with(new static)->table;
         $key = with(new static)->primaryKey;
         date_default_timezone_set("Africa/Cairo");
@@ -399,8 +399,8 @@ class Sximo extends Model {
         }
         return $id;
     }
-    
-    
+
+
     public  function insertDelayNotification( $data , $id)
 	{
        $table = with(new static)->table;
@@ -408,19 +408,19 @@ class Sximo extends Model {
 	   date_default_timezone_set("Africa/Cairo");
       if($id == NULL )
         {
-			
-			       $data['created_at'] = date("Y-m-d H:i:s");	
-			       $data['updated_at'] = date("Y-m-d H:i:s");	
-			       $data['entry_by'] = $data['user_id'];	
-			 $id = \DB::table( $table)->insertGetId($data);				
-            
+
+			       $data['created_at'] = date("Y-m-d H:i:s");
+			       $data['updated_at'] = date("Y-m-d H:i:s");
+			       $data['entry_by'] = $data['user_id'];
+			 $id = \DB::table( $table)->insertGetId($data);
+
         } else {
-           
+
 			       $data['updated_at'] = date("Y-m-d H:i:s");
                                  $data['entry_by'] = $data['user_id'];
-			 \DB::table($table)->where($key,$id)->update($data);    
-        }    
-        return $id;    
+			 \DB::table($table)->where($key,$id)->update($data);
+        }
+        return $id;
 	}
 
     public function updateVacation($data, $id) {
@@ -502,10 +502,10 @@ class Sximo extends Model {
 
         return $row;
     }
-    
-    
-    
-    
+
+
+
+
      static function postComboselectuser($params, $limit = null, $parent = null) {
         $limit = explode(':', $limit);
         $parent = explode(':', $parent);
@@ -830,7 +830,7 @@ class Sximo extends Model {
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
 
         //$params .= " AND {$table}.id IN (".$absent_employees_string.")";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
         //	$result = \DB::select( self::querySelect() . self::queryWhere(). " 	{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
@@ -844,7 +844,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -907,7 +907,7 @@ class Sximo extends Model {
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
 
         $params .= " AND {$table}.id IN (" . $absent_employees_string . ")";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
         //	$result = \DB::select( self::querySelect() . self::queryWhere(). " 	{$params} ". self::queryGroup() ." {$orderConditional}  {$limitConditional} ");
@@ -919,7 +919,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -949,10 +949,10 @@ class Sximo extends Model {
         if ($global == 0)
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
         $params .= " AND {$table}.activity_status_id =4 ";
-        // End Update permission global / own access new ver 1.1			
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -961,7 +961,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 
@@ -990,11 +990,11 @@ class Sximo extends Model {
         $table = with(new static)->table;
         if ($global == 0)
             $params .= " AND {$table}.entry_user ='" . \Session::get('uid') . "'";
-        //	$params .= " AND {$table}.status =1 "; 
-        // End Update permission global / own access new ver 1.1			
+        //	$params .= " AND {$table}.status =1 ";
+        // End Update permission global / own access new ver 1.1
 
         $rows = array();
-        $result = \DB::select(self::querySelect() . self::queryWhere() . " 
+        $result = \DB::select(self::querySelect() . self::queryWhere() . "
 				{$params} " . self::queryGroup() . " {$orderConditional}  {$limitConditional} ");
 
         if ($key == '') {
@@ -1003,7 +1003,7 @@ class Sximo extends Model {
             $key = $table . "." . $key;
         }
         $counter_select = preg_replace('/[\s]*SELECT(.*)FROM/Usi', 'SELECT count(' . $key . ') as total FROM', self::querySelect());
-        //echo 	$counter_select; exit; 
+        //echo 	$counter_select; exit;
         $res = \DB::select($counter_select . self::queryWhere() . " {$params} " . self::queryGroup());
         $total = $res[0]->total;
 

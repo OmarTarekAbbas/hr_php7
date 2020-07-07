@@ -148,7 +148,7 @@
                                             {{-- {!! Form::select('operator_id[]',$operators,null,['class'=>'form-control chosen', 'required'=>'required']) !!} --}}
                                             <select class="form-control chosen" name="operator_id[]" required>
                                               @foreach ($operators as $key => $value)
-                                                <option value="{{$value->id}}">{{ $value->country->country }}-{{ $value->name }}</option>
+                                                <option value="{{$value->id}}">{{ $value->name }}</option>
                                               @endforeach
                                             </select>
                                         </div>
@@ -214,7 +214,7 @@
                   '<div class="form-group"> <div class="input-group"> <label class="col-sm-5 col-lg-4 control-label">Select Operator for that track *</label> ' +
                   '<div class="col-sm-3 col-lg-5 controls"><select class="form-control chosen" name="operator_id[]" required>'+
                       @foreach ($operators as $key => $value)
-                      '  <option value="{{$value->id}}">{{ $value->country->country }}-{{ $value->name }}</option>'+
+                      '  <option value="{{$value->id}}">{{ $value->name }}</option>'+
                       @endforeach
                     '</select></div>' +
                   '<div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_new_field('+ room +');"> ' +

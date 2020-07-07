@@ -85,7 +85,7 @@
                         <select name="operator_id" id='countries' rows='5' required  class='select2'  >
                             <option  value ='' >--Please Select--</option>
                             @foreach ($operators as $key => $val)
-                            <option  value ='{{$val->id}}' @if($row["operator_id"] == $val->id) selected @endif >{{ $val->country->country }}-{{$val->name}}</option>
+                            <option  value ='{{$val->id}}' @if($row["operator_id"] == $val->id) selected @endif >{{$val->name}}</option>
                             @endforeach
                         </select>
                     </div>
