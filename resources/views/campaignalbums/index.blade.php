@@ -87,14 +87,19 @@
 					<td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>
 				 @foreach ($tableGrid as $field)
 					 @if($field['view'] =='1')
+                            @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                            @endphp
 					 <td>
-					 	@if($field['attribute']['image']['active'] =='1')
-							{!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
-						@else
-							{{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-							{!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}
-						@endif
+                         @if($field['attribute']['image']['active'] =='1')
+                             {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
+                         @else
+                             {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
+                             {!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}
+                         @endif
 					 </td>
+
 					 @endif
 				 @endforeach
          <td><a  href="{{ URL::to('playtrack_v4/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="Show  Tracks">Show Track</a></td>
@@ -106,7 +111,7 @@
 						<a  href="{{ URL::to('campaignalbums/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
 						@endif
 						<a  href="{{ URL::to('campaignalbums/add/track/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="Add Track"><i class="fa fa-plus "></i></a>
-            
+
         </td>
                 </tr>
 

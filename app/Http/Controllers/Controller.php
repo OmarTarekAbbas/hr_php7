@@ -1033,7 +1033,7 @@ abstract class Controller extends BaseController
         }
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
-        // handle the report type by adding conditions 
+        // handle the report type by adding conditions
         if ($request->input('model_name') !== NULL) {
             if ($request->input('model_name') == "employees_vacations") {
                 $managerId = \Auth::user()->id;
@@ -1042,7 +1042,7 @@ abstract class Controller extends BaseController
         }
 
 
-        $page = "";  // to get all result as this   $page = $request->input('page', 1); get result from first page only 
+        $page = "";  // to get all result as this   $page = $request->input('page', 1); get result from first page only
         $params = array(
             'page' => $page,
             'limit' => (!is_null($request->input('rows')) ? filter_var($request->input('rows'), FILTER_VALIDATE_INT) : static::$per_page ),
@@ -1051,7 +1051,7 @@ abstract class Controller extends BaseController
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
         $fields = $info['config']['grid'];
         $rows = $results['rows'];
@@ -1064,7 +1064,7 @@ abstract class Controller extends BaseController
             foreach ($fields as $f) {
                 if ($f['download'] == '1') {
                     // if ($f['view'] == '1') {
-                    // fix 0 , 1 for manager_approved to be read as No , Yes 
+                    // fix 0 , 1 for manager_approved to be read as No , Yes
                     $x = $f['field'];
 
                     if ($f['field'] == 'manager_approved' && $row->$x === 1) {
@@ -1511,7 +1511,7 @@ abstract class Controller extends BaseController
         //  $contents = \View::make('pdf_print')->with('all', $all)->with('rows', $rows);
         //  echo $contents ; die ;
 
-        $pdf = new PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new \PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf::SetTitle($all['title']);
 
         // set some language dependent data:

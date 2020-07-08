@@ -17,11 +17,15 @@ class ProviderestablishmentsController extends Controller {
 	public function __construct()
 	{
 
-		$this->beforeFilter('csrf', array('on'=>'post'));
+		//$this->beforeFilter('csrf', array('on'=>'post'));
 		$this->model = new Providerestablishments();
 
 		$this->info = $this->model->makeInfo( $this->module);
-		$this->access = $this->model->validAccess($this->info['id']);
+
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
 		$this->data = array(
 			'pageTitle'	=> 	$this->info['title'],
@@ -141,7 +145,7 @@ class ProviderestablishmentsController extends Controller {
 
 		$rules = $this->validateForm();
 		$validator = Validator::make($request->all(), $rules);
-		
+
 		$generalAcceptTypes = array('jpg', 'png');
 		$legalAcceptTypes = array('jpg', 'png', 'pdf');
 

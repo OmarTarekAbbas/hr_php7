@@ -79,7 +79,7 @@
                                @else
                                <a href="sms:{{get_track($album->track_id,$country_from_ip)[$j]->rbt_sms_code}}{{$sign}}body={{get_track($album->track_id,$country_from_ip)[$j]->code}}">
                                @endif
-                                 <img src="{!! url(get_track($album->track_id,$country_from_ip)[$j]->image) !!}" alt="operator"/>
+                                 <img src="{!! url('/'.get_track($album->track_id,$country_from_ip)[$j]->image) !!}" alt="operator"/>
                                </a>
 
                                  @if((int) get_track($album->track_id,$country_from_ip)[$j]->rbt_ussd_code > 0)

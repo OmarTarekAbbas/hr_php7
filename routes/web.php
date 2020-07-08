@@ -262,6 +262,7 @@ Route::post('permissions/comboselect', 'PermissionsController@postComboselect');
 Route::post('permissions/comboselectuser', 'PermissionsController@postComboselectuser');
 Route::get('permissions/combotable', 'PermissionsController@getCombotable');
 Route::get('permissions/combotablefield', 'PermissionsController@getCombotablefield');
+Route::get('permissions/makepdfvacation/{one?}/{two?}/{three?}/{four?}/{five?}', 'PermissionsController@getMakepdfvacation');
 
 //employeespermissions
 Route::get('employeespermissions', 'EmployeespermissionsController@getIndex');
@@ -666,6 +667,428 @@ Route::get('import_DB', 'DashboardController@import_DB_backup');
 
 Route::get('core/elfinder', 'Core\ElfinderController@getIndex');
 Route::post('core/elfinder', 'Core\ElfinderController@getIndex');
+
+//campaigntypes
+Route::get('campaigntypes', 'CampaigntypesController@getIndex');
+Route::get('campaigntypes/update', 'CampaigntypesController@getUpdate');
+Route::get('campaigntypes/update/{id}', 'CampaigntypesController@getUpdate');
+Route::get('campaigntypes/show/{id}', 'CampaigntypesController@getShow');
+Route::post('campaigntypes/save', 'CampaigntypesController@postSave');
+Route::post('campaigntypes/delete', 'CampaigntypesController@postDelete');
+Route::post('campaigntypes/multisearch', 'CampaigntypesController@postMultisearch');
+Route::post('campaigntypes/filter', 'CampaigntypesController@postFilter');
+Route::get('campaigntypes/download', 'CampaigntypesController@getDownload');
+Route::post('campaigntypes/comboselect', 'CampaigntypesController@postComboselect');
+Route::post('campaigntypes/comboselectuser', 'CampaigntypesController@postComboselectuser');
+Route::get('campaigntypes/combotable', 'CampaigntypesController@getCombotable');
+Route::get('campaigntypes/combotablefield', 'CampaigntypesController@getCombotablefield');
+
+
+//campaignalbums
+Route::get('campaignalbums', 'CampaignalbumsController@getIndex');
+Route::get('campaignalbums/update', 'CampaignalbumsController@getUpdate');
+Route::get('campaignalbums/update/{id}', 'CampaignalbumsController@getUpdate');
+Route::get('campaignalbums/show/{id}', 'CampaignalbumsController@getShow');
+Route::post('campaignalbums/save', 'CampaignalbumsController@postSave');
+Route::post('campaignalbums/delete', 'CampaignalbumsController@postDelete');
+Route::post('campaignalbums/multisearch', 'CampaignalbumsController@postMultisearch');
+Route::post('campaignalbums/filter', 'CampaignalbumsController@postFilter');
+Route::get('campaignalbums/download', 'CampaignalbumsController@getDownload');
+Route::post('campaignalbums/comboselect', 'CampaignalbumsController@postComboselect');
+Route::post('campaignalbums/comboselectuser', 'CampaignalbumsController@postComboselectuser');
+Route::get('campaignalbums/combotable', 'CampaignalbumsController@getCombotable');
+Route::get('campaignalbums/combotablefield', 'CampaignalbumsController@getCombotablefield');
+Route::get('campaignalbums/combotablefield', 'CampaignalbumsController@getCombotablefield');
+
+
+
+//aggregators
+Route::get('aggregators', 'AggregatorsController@getIndex');
+Route::get('aggregators/update', 'AggregatorsController@getUpdate');
+Route::get('aggregators/update/{id}', 'AggregatorsController@getUpdate');
+Route::get('aggregators/show/{id}', 'AggregatorsController@getShow');
+Route::post('aggregators/save', 'AggregatorsController@postSave');
+Route::post('aggregators/delete', 'AggregatorsController@postDelete');
+Route::post('aggregators/multisearch', 'AggregatorsController@postMultisearch');
+Route::post('aggregators/filter', 'AggregatorsController@postFilter');
+Route::get('aggregators/download', 'AggregatorsController@getDownload');
+Route::post('aggregators/comboselect', 'AggregatorsController@postComboselect');
+Route::post('aggregators/comboselectuser', 'AggregatorsController@postComboselectuser');
+Route::get('aggregators/combotable', 'AggregatorsController@getCombotable');
+Route::get('aggregators/combotablefield', 'AggregatorsController@getCombotablefield');
+Route::get('aggregators/combotablefield', 'AggregatorsController@getCombotablefield');
+
+
+//album
+Route::get('album', 'AlbumController@getIndex');
+Route::get('album/update', 'AlbumController@getUpdate');
+Route::get('album/update/{id}', 'AlbumController@getUpdate');
+Route::get('album/show/{id}', 'AlbumController@getShow');
+Route::post('album/save', 'AlbumController@postSave');
+Route::post('album/delete', 'AlbumController@postDelete');
+Route::post('album/multisearch', 'AlbumController@postMultisearch');
+Route::post('album/filter', 'AlbumController@postFilter');
+Route::get('album/download', 'AlbumController@getDownload');
+Route::post('album/comboselect', 'AlbumController@postComboselect');
+Route::post('album/comboselectuser', 'AlbumController@postComboselectuser');
+Route::get('album/combotable', 'AlbumController@getCombotable');
+Route::get('album/combotablefield', 'AlbumController@getCombotablefield');
+Route::get('album/combotablefield', 'AlbumController@getCombotablefield');
+Route::get('album/excel', 'AlbumController@excel');
+Route::post('album/excel', 'AlbumController@excelStore');
+Route::get('album/downloadSample', 'AlbumController@downloadSample');
+Route::get('album/downloadsample/{one?}/{two?}/{three?}/{four?}/{five?}', 'AlbumController@getDownloadsample');
+Route::post('album/downloadsheet/{one?}/{two?}/{three?}/{four?}/{five?}', 'AlbumController@postDownloadsheet');
+
+
+//album
+Route::get('track', 'TrackController@getIndex');
+Route::get('track/update', 'TrackController@getUpdate');
+Route::get('track/update/{id}', 'TrackController@getUpdate');
+Route::get('track/show/{id}', 'TrackController@getShow');
+Route::post('track/save', 'TrackController@postSave');
+Route::post('track/delete', 'TrackController@postDelete');
+Route::post('track/multisearch', 'TrackController@postMultisearch');
+Route::post('track/filter', 'TrackController@postFilter');
+Route::get('track/download', 'TrackController@getDownload');
+Route::post('track/comboselect', 'TrackController@postComboselect');
+Route::post('track/comboselectuser', 'TrackController@postComboselectuser');
+Route::get('track/combotable', 'TrackController@getCombotable');
+Route::get('track/combotablefield', 'TrackController@getCombotablefield');
+Route::get('track/combotablefield', 'TrackController@getCombotablefield');
+
+
+//providertypes
+Route::get('providertypes', 'ProvidertypesController@getIndex');
+Route::get('providertypes/update', 'ProvidertypesController@getUpdate');
+Route::get('providertypes/update/{id}', 'ProvidertypesController@getUpdate');
+Route::get('providertypes/show/{id}', 'ProvidertypesController@getShow');
+Route::post('providertypes/save', 'ProvidertypesController@postSave');
+Route::post('providertypes/delete', 'ProvidertypesController@postDelete');
+Route::post('providertypes/multisearch', 'ProvidertypesController@postMultisearch');
+Route::post('providertypes/filter', 'ProvidertypesController@postFilter');
+Route::get('providertypes/download', 'ProvidertypesController@getDownload');
+Route::post('providertypes/comboselect', 'ProvidertypesController@postComboselect');
+Route::post('providertypes/comboselectuser', 'ProvidertypesController@postComboselectuser');
+Route::get('providertypes/combotable', 'ProvidertypesController@getCombotable');
+Route::get('providertypes/combotablefield', 'ProvidertypesController@getCombotablefield');
+Route::get('providertypes/combotablefield', 'ProvidertypesController@getCombotablefield');
+
+
+//individualproviders
+Route::get('individualproviders', 'IndividualprovidersController@getIndex');
+Route::get('individualproviders/update', 'IndividualprovidersController@getUpdate');
+Route::get('individualproviders/update/{id}', 'IndividualprovidersController@getUpdate');
+Route::get('individualproviders/show/{id}', 'IndividualprovidersController@getShow');
+Route::post('individualproviders/save', 'IndividualprovidersController@postSave');
+Route::post('individualproviders/delete', 'IndividualprovidersController@postDelete');
+Route::post('individualproviders/multisearch', 'IndividualprovidersController@postMultisearch');
+Route::post('individualproviders/filter', 'IndividualprovidersController@postFilter');
+Route::get('individualproviders/download', 'IndividualprovidersController@getDownload');
+Route::post('individualproviders/comboselect', 'IndividualprovidersController@postComboselect');
+Route::post('individualproviders/comboselectuser', 'IndividualprovidersController@postComboselectuser');
+Route::get('individualproviders/combotable', 'IndividualprovidersController@getCombotable');
+Route::get('individualproviders/combotablefield', 'IndividualprovidersController@getCombotablefield');
+Route::get('individualproviders/combotablefield', 'IndividualprovidersController@getCombotablefield');
+
+
+//providerestablishments
+Route::get('providerestablishments', 'ProviderestablishmentsController@getIndex');
+Route::get('providerestablishments/update', 'ProviderestablishmentsController@getUpdate');
+Route::get('providerestablishments/update/{id}', 'ProviderestablishmentsController@getUpdate');
+Route::get('providerestablishments/show/{id}', 'ProviderestablishmentsController@getShow');
+Route::post('providerestablishments/save', 'ProviderestablishmentsController@postSave');
+Route::post('providerestablishments/delete', 'ProviderestablishmentsController@postDelete');
+Route::post('providerestablishments/multisearch', 'ProviderestablishmentsController@postMultisearch');
+Route::post('providerestablishments/filter', 'ProviderestablishmentsController@postFilter');
+Route::get('providerestablishments/download', 'ProviderestablishmentsController@getDownload');
+Route::post('providerestablishments/comboselect', 'ProviderestablishmentsController@postComboselect');
+Route::post('providerestablishments/comboselectuser', 'ProviderestablishmentsController@postComboselectuser');
+Route::get('providerestablishments/combotable', 'ProviderestablishmentsController@getCombotable');
+Route::get('providerestablishments/combotablefield', 'ProviderestablishmentsController@getCombotablefield');
+Route::get('providerestablishments/combotablefield', 'ProviderestablishmentsController@getCombotablefield');
+
+
+//providerestablishments
+Route::get('occasions', 'OccasionsController@getIndex');
+Route::get('occasions/update', 'OccasionsController@getUpdate');
+Route::get('occasions/update/{id}', 'OccasionsController@getUpdate');
+Route::get('occasions/show/{id}', 'OccasionsController@getShow');
+Route::post('occasions/save', 'OccasionsController@postSave');
+Route::post('occasions/delete', 'OccasionsController@postDelete');
+Route::post('occasions/multisearch', 'OccasionsController@postMultisearch');
+Route::post('occasions/filter', 'OccasionsController@postFilter');
+Route::get('occasions/download', 'OccasionsController@getDownload');
+Route::post('occasions/comboselect', 'OccasionsController@postComboselect');
+Route::post('occasions/comboselectuser', 'OccasionsController@postComboselectuser');
+Route::get('occasions/combotable', 'OccasionsController@getCombotable');
+Route::get('occasions/combotablefield', 'OccasionsController@getCombotablefield');
+Route::get('occasions/combotablefield', 'OccasionsController@getCombotablefield');
+
+
+//contenttypes
+Route::get('contenttypes', 'ContenttypeController@getIndex');
+Route::get('contenttypes/update', 'ContenttypeController@getUpdate');
+Route::get('contenttypes/update/{id}', 'ContenttypeController@getUpdate');
+Route::get('contenttypes/show/{id}', 'ContenttypeController@getShow');
+Route::post('contenttypes/save', 'ContenttypeController@postSave');
+Route::post('contenttypes/delete', 'ContenttypeController@postDelete');
+Route::post('contenttypes/multisearch', 'ContenttypeController@postMultisearch');
+Route::post('contenttypes/filter', 'ContenttypeController@postFilter');
+Route::get('contenttypes/download', 'ContenttypeController@getDownload');
+Route::post('contenttypes/comboselect', 'ContenttypeController@postComboselect');
+Route::post('contenttypes/comboselectuser', 'ContenttypeController@postComboselectuser');
+Route::get('contenttypes/combotable', 'ContenttypeController@getCombotable');
+Route::get('contenttypes/combotablefield', 'ContenttypeController@getCombotablefield');
+Route::get('contenttypes/combotablefield', 'ContenttypeController@getCombotablefield');
+
+//mediafilesizes
+Route::get('mediafilesizes', 'MediafilesizesController@getIndex');
+Route::get('mediafilesizes/update', 'MediafilesizesController@getUpdate');
+Route::get('mediafilesizes/update/{id}', 'MediafilesizesController@getUpdate');
+Route::get('mediafilesizes/show/{id}', 'MediafilesizesController@getShow');
+Route::post('mediafilesizes/save', 'MediafilesizesController@postSave');
+Route::post('mediafilesizes/delete', 'MediafilesizesController@postDelete');
+Route::post('mediafilesizes/multisearch', 'MediafilesizesController@postMultisearch');
+Route::post('mediafilesizes/filter', 'MediafilesizesController@postFilter');
+Route::get('mediafilesizes/download', 'MediafilesizesController@getDownload');
+Route::post('mediafilesizes/comboselect', 'MediafilesizesController@postComboselect');
+Route::post('mediafilesizes/comboselectuser', 'MediafilesizesController@postComboselectuser');
+Route::get('mediafilesizes/combotable', 'MediafilesizesController@getCombotable');
+Route::get('mediafilesizes/combotablefield', 'MediafilesizesController@getCombotablefield');
+Route::get('mediafilesizes/combotablefield', 'MediafilesizesController@getCombotablefield');
+
+
+//specscontentcategory
+Route::get('specscontentcategory', 'SpecscontentcategoryController@getIndex');
+Route::get('specscontentcategory/update', 'SpecscontentcategoryController@getUpdate');
+Route::get('specscontentcategory/update/{id}', 'SpecscontentcategoryController@getUpdate');
+Route::get('specscontentcategory/show/{id}', 'SpecscontentcategoryController@getShow');
+Route::post('specscontentcategory/save', 'SpecscontentcategoryController@postSave');
+Route::post('specscontentcategory/delete', 'SpecscontentcategoryController@postDelete');
+Route::post('specscontentcategory/multisearch', 'SpecscontentcategoryController@postMultisearch');
+Route::post('specscontentcategory/filter', 'SpecscontentcategoryController@postFilter');
+Route::get('specscontentcategory/download', 'SpecscontentcategoryController@getDownload');
+Route::post('specscontentcategory/comboselect', 'SpecscontentcategoryController@postComboselect');
+Route::post('specscontentcategory/comboselectuser', 'SpecscontentcategoryController@postComboselectuser');
+Route::get('specscontentcategory/combotable', 'SpecscontentcategoryController@getCombotable');
+Route::get('specscontentcategory/combotablefield', 'SpecscontentcategoryController@getCombotablefield');
+Route::get('specscontentcategory/combotablefield', 'SpecscontentcategoryController@getCombotablefield');
+
+//specscontentcategory
+Route::get('audiometadata', 'AudiometadataController@getIndex');
+Route::get('audiometadata/update', 'AudiometadataController@getUpdate');
+Route::get('audiometadata/update/{id}', 'AudiometadataController@getUpdate');
+Route::get('audiometadata/show/{id}', 'AudiometadataController@getShow');
+Route::post('audiometadata/save', 'AudiometadataController@postSave');
+Route::post('audiometadata/delete', 'AudiometadataController@postDelete');
+Route::post('audiometadata/multisearch', 'AudiometadataController@postMultisearch');
+Route::post('audiometadata/filter', 'AudiometadataController@postFilter');
+Route::get('audiometadata/download', 'AudiometadataController@getDownload');
+Route::post('audiometadata/comboselect', 'AudiometadataController@postComboselect');
+Route::post('audiometadata/comboselectuser', 'AudiometadataController@postComboselectuser');
+Route::get('audiometadata/combotable', 'AudiometadataController@getCombotable');
+Route::get('audiometadata/combotablefield', 'AudiometadataController@getCombotablefield');
+Route::get('audiometadata/combotablefield', 'AudiometadataController@getCombotablefield');
+
+
+//originalcontents
+Route::get('originalcontents', 'OriginalcontentsController@getIndex');
+Route::get('originalcontents/update', 'OriginalcontentsController@getUpdate');
+Route::get('originalcontents/update/{id}', 'OriginalcontentsController@getUpdate');
+Route::get('originalcontents/show/{id}', 'OriginalcontentsController@getShow');
+Route::post('originalcontents/save', 'OriginalcontentsController@postSave');
+Route::post('originalcontents/delete', 'OriginalcontentsController@postDelete');
+Route::post('originalcontents/multisearch', 'OriginalcontentsController@postMultisearch');
+Route::post('originalcontents/filter', 'OriginalcontentsController@postFilter');
+Route::get('originalcontents/download', 'OriginalcontentsController@getDownload');
+Route::post('originalcontents/comboselect', 'OriginalcontentsController@postComboselect');
+Route::post('originalcontents/comboselectuser', 'OriginalcontentsController@postComboselectuser');
+Route::get('originalcontents/combotable', 'OriginalcontentsController@getCombotable');
+Route::get('originalcontents/combotablefield', 'OriginalcontentsController@getCombotablefield');
+Route::get('originalcontents/combotablefield', 'OriginalcontentsController@getCombotablefield');
+
+
+//finalvideo
+Route::get('finalvideo', 'FinalvideoController@getIndex');
+Route::get('finalvideo/update', 'FinalvideoController@getUpdate');
+Route::get('finalvideo/update/{id}', 'FinalvideoController@getUpdate');
+Route::get('finalvideo/show/{id}', 'FinalvideoController@getShow');
+Route::post('finalvideo/save', 'FinalvideoController@postSave');
+Route::post('finalvideo/delete', 'FinalvideoController@postDelete');
+Route::post('finalvideo/multisearch', 'FinalvideoController@postMultisearch');
+Route::post('finalvideo/filter', 'OriginalcontentsController@postFilter');
+Route::get('finalvideo/download', 'FinalvideoController@getDownload');
+Route::post('finalvideo/comboselect', 'FinalvideoController@postComboselect');
+Route::post('finalvideo/comboselectuser', 'FinalvideoController@postComboselectuser');
+Route::get('finalvideo/combotable', 'FinalvideoController@getCombotable');
+Route::get('finalvideo/combotablefield', 'FinalvideoController@getCombotablefield');
+Route::get('finalvideo/combotablefield', 'FinalvideoController@getCombotablefield');
+
+
+//finalimage
+Route::get('finalimage', 'FinalimageController@getIndex');
+Route::get('finalimage/update', 'FinalimageController@getUpdate');
+Route::get('finalimage/update/{id}', 'FinalimageController@getUpdate');
+Route::get('finalimage/show/{id}', 'FinalimageController@getShow');
+Route::post('finalimage/save', 'FinalimageController@postSave');
+Route::post('finalimage/delete', 'FinalimageController@postDelete');
+Route::post('finalimage/multisearch', 'FinalimageController@postMultisearch');
+Route::post('finalimage/filter', 'FinalimageController@postFilter');
+Route::get('finalimage/download', 'FinalimageController@getDownload');
+Route::post('finalimage/comboselect', 'FinalimageController@postComboselect');
+Route::post('finalimage/comboselectuser', 'FinalimageController@postComboselectuser');
+Route::get('finalimage/combotable', 'FinalimageController@getCombotable');
+Route::get('finalimage/combotablefield', 'FinalimageController@getCombotablefield');
+Route::get('finalimage/combotablefield', 'FinalimageController@getCombotablefield');
+
+//departments
+Route::get('departments', 'DepartmentsController@getIndex');
+Route::get('departments/update', 'DepartmentsController@getUpdate');
+Route::get('departments/update/{id}', 'DepartmentsController@getUpdate');
+Route::get('departments/show/{id}', 'DepartmentsController@getShow');
+Route::post('departments/save', 'DepartmentsController@postSave');
+Route::post('departments/delete', 'DepartmentsController@postDelete');
+Route::post('departments/multisearch', 'DepartmentsController@postMultisearch');
+Route::post('departments/filter', 'DepartmentsController@postFilter');
+Route::get('departments/download', 'DepartmentsController@getDownload');
+Route::post('departments/comboselect', 'DepartmentsController@postComboselect');
+Route::post('departments/comboselectuser', 'DepartmentsController@postComboselectuser');
+Route::get('departments/combotable', 'DepartmentsController@getCombotable');
+Route::get('departments/combotablefield', 'DepartmentsController@getCombotablefield');
+Route::get('departments/combotablefield', 'DepartmentsController@getCombotablefield');
+
+//attendance
+Route::get('attendance', 'AttendanceController@getIndex');
+Route::get('attendance/update', 'AttendanceController@getUpdate');
+Route::get('attendance/update/{id}', 'AttendanceController@getUpdate');
+Route::get('attendance/show/{id}', 'AttendanceController@getShow');
+Route::post('attendance/save', 'AttendanceController@postSave');
+Route::post('attendance/delete', 'AttendanceController@postDelete');
+Route::post('attendance/multisearch', 'AttendanceController@postMultisearch');
+Route::post('attendance/filter', 'AttendanceController@postFilter');
+Route::get('attendance/download', 'AttendanceController@getDownload');
+Route::post('attendance/comboselect', 'AttendanceController@postComboselect');
+Route::post('attendance/comboselectuser', 'AttendanceController@postComboselectuser');
+Route::get('attendance/combotable', 'AttendanceController@getCombotable');
+Route::get('attendance/combotablefield', 'AttendanceController@getCombotablefield');
+Route::get('attendance/combotablefield', 'AttendanceController@getCombotablefield');
+Route::get('refresh_punch', 'AttendanceController@refresh_punch');
+Route::get('attendance/upload', 'AttendanceController@getUpload');
+
+
+//deductions
+Route::get('deductions', 'DeductionsController@getIndex');
+Route::get('deductions/update', 'DeductionsController@getUpdate');
+Route::get('deductions/update/{id}', 'DeductionsController@getUpdate');
+Route::get('deductions/show/{id}', 'DeductionsController@getShow');
+Route::post('deductions/save', 'DeductionsController@postSave');
+Route::post('deductions/delete', 'DeductionsController@postDelete');
+Route::post('deductions/multisearch', 'DeductionsController@postMultisearch');
+Route::post('deductions/filter', 'DeductionsController@postFilter');
+Route::get('deductions/download', 'DeductionsController@getDownload');
+Route::post('deductions/comboselect', 'DeductionsController@postComboselect');
+Route::post('deductions/comboselectuser', 'DeductionsController@postComboselectuser');
+Route::get('deductions/combotable', 'DeductionsController@getCombotable');
+Route::get('deductions/combotablefield', 'DeductionsController@getCombotablefield');
+Route::get('deductions/combotablefield', 'DeductionsController@getCombotablefield');
+
+//delaynotifications
+Route::get('delaynotifications', 'DelaynotificationsController@getIndex');
+Route::get('delaynotifications/update', 'DelaynotificationsController@getUpdate');
+Route::get('delaynotifications/update/{id}', 'DelaynotificationsController@getUpdate');
+Route::get('delaynotifications/show/{id}', 'DelaynotificationsController@getShow');
+Route::post('delaynotifications/save', 'DelaynotificationsController@postSave');
+Route::post('delaynotifications/delete', 'DelaynotificationsController@postDelete');
+Route::post('delaynotifications/multisearch', 'DelaynotificationsController@postMultisearch');
+Route::post('delaynotifications/filter', 'DelaynotificationsController@postFilter');
+Route::get('delaynotifications/download', 'DelaynotificationsController@getDownload');
+Route::post('delaynotifications/comboselect', 'DelaynotificationsController@postComboselect');
+Route::post('delaynotifications/comboselectuser', 'DelaynotificationsController@postComboselectuser');
+Route::get('delaynotifications/combotable', 'DelaynotificationsController@getCombotable');
+Route::get('delaynotifications/combotablefield', 'DelaynotificationsController@getCombotablefield');
+Route::get('delaynotifications/combotablefield', 'DelaynotificationsController@getCombotablefield');
+
+
+//punchnotifications
+Route::get('punchnotifications', 'PunchnotificationsController@getIndex');
+Route::get('punchnotifications/update', 'PunchnotificationsController@getUpdate');
+Route::get('punchnotifications/update/{id}', 'PunchnotificationsController@getUpdate');
+Route::get('punchnotifications/show/{id}', 'PunchnotificationsController@getShow');
+Route::post('punchnotifications/save', 'PunchnotificationsController@postSave');
+Route::post('punchnotifications/delete', 'PunchnotificationsController@postDelete');
+Route::post('punchnotifications/multisearch', 'PunchnotificationsController@postMultisearch');
+Route::post('punchnotifications/filter', 'PunchnotificationsController@postFilter');
+Route::get('punchnotifications/download', 'PunchnotificationsController@getDownload');
+Route::post('punchnotifications/comboselect', 'PunchnotificationsController@postComboselect');
+Route::post('punchnotifications/comboselectuser', 'PunchnotificationsController@postComboselectuser');
+Route::get('punchnotifications/combotable', 'PunchnotificationsController@getCombotable');
+Route::get('punchnotifications/combotablefield', 'PunchnotificationsController@getCombotablefield');
+Route::get('punchnotifications/combotablefield', 'PunchnotificationsController@getCombotablefield');
+
+//rbt
+Route::get('rbt/statistics', 'RbtController@statitics');
+Route::post('rbt/get_statistics', 'RbtController@get_statistics');
+Route::get('rbt', 'RbtController@getIndex');
+Route::get('rbt/update', 'RbtController@getUpdate');
+Route::get('rbt/update/{id}', 'RbtController@getUpdate');
+Route::get('rbt/show/{id}', 'RbtController@getShow');
+Route::post('rbt/save', 'RbtController@postSave');
+Route::post('rbt/delete', 'RbtController@postDelete');
+Route::post('rbt/multisearch', 'RbtController@postMultisearch');
+Route::post('rbt/filter', 'RbtController@postFilter');
+Route::get('rbt/download', 'RbtController@getDownload');
+Route::post('rbt/comboselect', 'RbtController@postComboselect');
+Route::post('rbt/comboselectuser', 'RbtController@postComboselectuser');
+Route::get('rbt/combotable', 'RbtController@getCombotable');
+Route::get('rbt/combotablefield', 'RbtController@getCombotablefield');
+Route::get('rbt/combotablefield', 'RbtController@getCombotablefield');
+Route::get('rbt/excel', 'RbtController@create_excel');
+Route::post('rbt/excel', 'RbtController@excelStore');
+Route::get('rbt/upload_tracks', 'RbtController@multi_upload');
+Route::get('rbt/file_system', 'RbtController@list_file_system');
+Route::get('rbt/file_system/content', 'RbtController@get_file_system');
+Route::get('rbt/search', 'RbtController@search');
+Route::get('rbt/downloadSampleNew', 'RbtController@getDownloadNew');
+Route::get('rbt/downloadSample', 'RbtController@downloadSample');
+Route::post('rbt/search', 'RbtController@search_result');
+Route::get('rbt/search', 'RbtController@search');
+
+//report
+Route::get('report/statistics', 'ReportController@statitics');
+Route::post('report/get_statistics', 'ReportController@get_statistics');
+Route::get('report', 'ReportController@getIndex');
+Route::get('report/update', 'ReportController@getUpdate');
+Route::get('report/update/{id}', 'ReportController@getUpdate');
+Route::get('report/show/{id}', 'ReportController@getShow');
+Route::post('report/save', 'ReportController@postSave');
+Route::post('report/delete', 'ReportController@postDelete');
+Route::post('report/multisearch', 'ReportController@postMultisearch');
+Route::post('report/filter', 'ReportController@postFilter');
+Route::get('report/download', 'ReportController@getDownload');
+Route::post('report/comboselect', 'ReportController@postComboselect');
+Route::post('report/comboselectuser', 'ReportController@postComboselectuser');
+Route::get('report/combotable', 'ReportController@getCombotable');
+Route::get('report/combotablefield', 'ReportController@getCombotablefield');
+Route::get('report/combotablefield', 'ReportController@getCombotablefield');
+Route::get('report/excel', 'ReportController@excel');
+Route::post('report/excel', 'ReportController@excelStore');
+Route::get('report/upload_tracks', 'ReportController@multi_upload');
+Route::get('report/file_system', 'ReportController@list_file_system');
+Route::get('report/file_system/content', 'ReportController@get_file_system');
+Route::get('report/downloadSample', 'ReportController@downloadSample');
+Route::get('report/downloadsample/{one?}/{two?}/{three?}/{four?}/{five?}', 'ReportController@getDownloadsample');
+Route::get('report/search', 'ReportController@search');
+Route::post('report/search', 'ReportController@search_result');
+
+//playtrack_v4
+Route::get('playtrack', 'CampaignalbumsController@GetTrack');
+Route::get('playtrack_v2/{track_id}', 'CampaignalbumsController@GetTrack_v2');
+Route::get('playtrack_v3/{track_id}', 'CampaignalbumsController@GetTrack_v3');
+Route::get('playtrack_v4/{track_id}', 'CampaignalbumsController@GetTrack_v4');
+Route::post('campaignalbums/add/track', 'CampaignalbumsController@add_track');
+Route::get('campaignalbums/add/track/{id}', 'CampaignalbumsController@get_track_form');
+
 
 Route::get('hr', function () {
     return redirect('dashboard');
