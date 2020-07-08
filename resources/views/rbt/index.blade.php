@@ -87,16 +87,21 @@
 					<td width="30"> {{ ++$i }} </td>
 					<td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>
 				 @foreach ($tableGrid as $field)
+					@php
+					$x = $field['field'];
+					$conn = (isset($field['conn']) ? $field['conn'] : array() );
+					@endphp
+
 					 @if($field['view'] =='1')
 					 <td>
 					 	@if($field['attribute']['image']['active'] =='1')
 						 {{-- {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!} --}}
               <audio id="trackId" width="100%"  controls>
-                  <source src="{{ url('/') }}{{$field['attribute']['image']['path']}}{{ $row->$field['field'] }}" >
+                  <source src="{{ url('/') }}{{$field['attribute']['image']['path']}}{{ $row->$x }}" >
               </audio>
 						@else
 							{{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-							{!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}
+							{!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}
 						@endif
 					 </td>
 					 @endif
