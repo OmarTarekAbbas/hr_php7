@@ -64,7 +64,7 @@ if (isset($_REQUEST['search'])) {
 
 	 {!! Form::open(array('url'=>'track/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
 	 <div class="table-responsive" style="min-height:300px;">
-    <table class="table table-striped ">
+    	<table class="table table-striped ">
         <thead>
 			<tr>
 				<th class="number"> No </th>
@@ -110,9 +110,8 @@ if (isset($_REQUEST['search'])) {
                              {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
 
                          @else
-
-                       @if($row->$x  == "track_path"  &&  $row->$field['field'] !==  NULL  )
-                           <audio src="{{url($row->$x)}}" autobuffer autoloop loop controls> </audio>
+                       @if($row->$x  == "track_path"  &&  $row->$x !==  NULL  )
+                           <audio src="{{url($row->track_path)}}" autobuffer autoloop loop controls> </audio>
 
                           @else
 

@@ -23,6 +23,7 @@ class VerifyCsrfToken extends Middleware
         'mytravelling/comboselect',
         'operator/comboselect',
         'notifications/comboselect',
+        'track/upload',
         'travelling/comboselect',
         'sximo/module/combotable',
         'sximo/module/combotablefield',

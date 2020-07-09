@@ -329,19 +329,19 @@ Route::get('employeesvacations/combotable', 'VacationsController@getCombotable')
 Route::get('employeesvacations/combotablefield', 'VacationsController@getCombotablefield');
 
 //occationscategories
-Route::get('occationscategories', 'OccasionsController@getIndex');
-Route::get('occasions/update', 'OccasionsController@getUpdate');
-Route::get('occasions/update/{id}', 'OccasionsController@getUpdate');
-Route::get('occasions/show/{id}', 'OccasionsController@getShow');
-Route::post('occasions/save', 'OccasionsController@postSave');
-Route::post('occasions/delete', 'OccasionsController@postDelete');
-Route::post('occasions/multisearch', 'OccasionsController@postMultisearch');
-Route::post('occasions/filter', 'OccasionsController@postFilter');
-Route::get('occasions/download', 'OccasionsController@getDownload');
-Route::post('occasions/comboselect', 'OccasionsController@postComboselect');
-Route::post('occasions/comboselectuser', 'OccasionsController@postComboselectuser');
-Route::get('occasions/combotable', 'OccasionsController@getCombotable');
-Route::get('occasions/combotablefield', 'OccasionsController@getCombotablefield');
+Route::get('occationscategories', 'OccationscategoriesController@getIndex');
+Route::get('occationscategories/update', 'OccationscategoriesController@getUpdate');
+Route::get('occationscategories/update/{id}', 'OccationscategoriesController@getUpdate');
+Route::get('occationscategories/show/{id}', 'OccationscategoriesController@getShow');
+Route::post('occationscategories/save', 'OccationscategoriesController@postSave');
+Route::post('occationscategories/delete', 'OccationscategoriesController@postDelete');
+Route::post('occationscategories/multisearch', 'OccationscategoriesController@postMultisearch');
+Route::post('occationscategories/filter', 'OccationscategoriesController@postFilter');
+Route::get('occationscategories/download', 'OccationscategoriesController@getDownload');
+Route::post('occationscategories/comboselect', 'OccationscategoriesController@postComboselect');
+Route::post('occationscategories/comboselectuser', 'OccationscategoriesController@postComboselectuser');
+Route::get('occationscategories/combotable', 'OccationscategoriesController@getCombotable');
+Route::get('occationscategories/combotablefield', 'OccationscategoriesController@getCombotablefield');
 
 
 
@@ -743,6 +743,8 @@ Route::post('album/downloadsheet/{one?}/{two?}/{three?}/{four?}/{five?}', 'Album
 
 //album
 Route::get('track', 'TrackController@getIndex');
+Route::get('track/upload', 'TrackController@tracks');
+Route::post('track/upload', 'TrackController@tracksStore');
 Route::get('track/update', 'TrackController@getUpdate');
 Route::get('track/update/{id}', 'TrackController@getUpdate');
 Route::get('track/show/{id}', 'TrackController@getShow');
@@ -1089,6 +1091,8 @@ Route::get('playtrack_v4/{track_id}', 'CampaignalbumsController@GetTrack_v4');
 Route::post('campaignalbums/add/track', 'CampaignalbumsController@add_track');
 Route::get('campaignalbums/add/track/{id}', 'CampaignalbumsController@get_track_form');
 
+//notifications
+Route::post('notifications/upnotifications', 'NotificationsController@postUpnotifications');
 
 Route::get('hr', function () {
     return redirect('dashboard');
