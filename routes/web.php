@@ -758,6 +758,7 @@ Route::post('track/comboselectuser', 'TrackController@postComboselectuser');
 Route::get('track/combotable', 'TrackController@getCombotable');
 Route::get('track/combotablefield', 'TrackController@getCombotablefield');
 Route::get('track/combotablefield', 'TrackController@getCombotablefield');
+Route::post('track/downloadinf', 'TrackController@postDownloadinf');
 
 
 //providertypes

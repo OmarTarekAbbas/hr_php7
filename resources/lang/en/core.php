@@ -4,6 +4,9 @@ return array(
 // General 
     "norecord" => "No Record Found",
     "create" => "Create New",
+    "upload_albums_from_excel" => "upload from excel",
+    "btn_tracks" => "upload tracks",
+    "download_inf_file_and_compress_ablum_tracks" => "download album tracks",
     // General , Login Info & Signup
     "ID" => "ID",
     "Level" => "Level",

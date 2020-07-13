@@ -22,6 +22,7 @@ class VerifyCsrfToken extends Middleware
         'myvacations/comboselect',
         'mytravelling/comboselect',
         'operator/comboselect',
+        'report/get_statistics',
         'notifications/comboselect',
         'track/upload',
         'travelling/comboselect',

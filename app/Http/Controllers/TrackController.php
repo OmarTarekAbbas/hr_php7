@@ -473,7 +473,7 @@ class TrackController extends Controller {
 
 
             $zip = new ZipArchive();
-            $zip_album = 'uploads/etisalat_upload/albums_'. date('Y-m-d').".zip"; // Zip name
+            $zip_album = 'uploads/etisalat_upload/tracks_'. date('Y-m-d').".zip"; // Zip name
             $zip->open($zip_album,  ZipArchive::CREATE);
 
                 // echo $path = "upload/".$file;
@@ -490,7 +490,7 @@ class TrackController extends Controller {
 
 
 
-            return response()->download('uploads/etisalat_upload/albums_'. date('Y-m-d') . '.zip');
+            return response()->download('uploads/etisalat_upload/tracks_'. date('Y-m-d') . '.zip');
             // return response()->download(public_path($filename));
         } else {
             return Redirect::back()
