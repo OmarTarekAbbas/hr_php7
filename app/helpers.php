@@ -109,16 +109,16 @@ function ApproveGroup() {
 
 // this return regions account manager or all account managers "All"
 function OperationApproveGroup($country_ids) {
-    $country_title = App\Models\countries::whereIn('id',$country_ids)->lists('country')->toArray();
+    $country_title = App\Models\countries::whereIn('id',$country_ids)->pluck('country')->toArray();
 
     if(in_array('All', $country_title)){
         $operation_dep = \App\Models\departments::where('title', 'like', '%Operation%')->select('id')->first();
         // operation all team ids
-        $ids = \App\User::where('department_id', $operation_dep->id)->Where('active', 1)->lists('id')->toArray();
+        $ids = \App\User::where('department_id', $operation_dep->id)->Where('active', 1)->pluck('id')->toArray();
     }
     else{
         // account manager ids
-       $ids = App\Models\countries::whereIn('id',$country_ids)->lists('account_manager_id')->toArray();
+       $ids = App\Models\countries::whereIn('id',$country_ids)->pluck('account_manager_id')->toArray();
     }
     return $ids;
 }
@@ -151,7 +151,7 @@ function checkDeptManager() {
     return $department_id;
 }
 function DeptIds() {
-    $ids = \App\Models\departments::where('title', 'like', '%Finance%')->orWhere('title', 'like', '%Legal%')->orWhere('title', 'like', '%CEO%')->lists('id')->toArray();
+    $ids = \App\Models\departments::where('title', 'like', '%Finance%')->orWhere('title', 'like', '%Legal%')->orWhere('title', 'like', '%CEO%')->pluck('id')->toArray();
     return $ids;
 }
 

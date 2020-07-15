@@ -84,17 +84,22 @@
                                 <td width="30"> {{ ++$i }} </td>
                                 <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>									
                                 @foreach ($tableGrid as $field)
+                                @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                                @endphp
+
                                 @if($field['view'] =='1')
                                 <td>
                                     
-                                    @if($field['field']=='content_type')
-                                        {{($row->$field['field']==1)?'In':'Out'}}
+                                    @if($x=='content_type')
+                                        {{($row->$x==1)?'In':'Out'}}
                                     @else
                                     @if($field['attribute']['image']['active'] =='1')
-                                    {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
+                                    {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
                                     @else	
                                     {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-                                    {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}	
+                                    {!! SiteHelpers::gridDisplay($row->$x,$x,$conn) !!}	
                                     @endif						 
                                     @endif						 
                                 </td>

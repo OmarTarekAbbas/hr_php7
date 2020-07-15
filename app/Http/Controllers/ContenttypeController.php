@@ -27,8 +27,6 @@ class ContenttypeController extends Controller {
             return $next($request);
 	   });
 	   
-	   dd($this->info);
-
         $this->data = array(
             'pageTitle'	=> 	$this->info['title'],
             'pageNote'	=>  $this->info['note'],

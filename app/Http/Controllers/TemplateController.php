@@ -26,11 +26,14 @@ class TemplateController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        // $this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Template();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],

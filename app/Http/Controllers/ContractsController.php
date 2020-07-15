@@ -22,11 +22,14 @@ class ContractsController extends Controller {
 
     public function __construct() {
         date_default_timezone_set("Africa/Cairo");
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        // $this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Contracts();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+	   });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -117,13 +120,13 @@ class ContractsController extends Controller {
         $row = $this->model->find($id);
         if ($row) {
             $this->data['row'] = $row;
-            $this->data['contract_contries'] = DB::table('contracts_operator')->where('contracts_id', $row->id)->lists('country_id');
+            $this->data['contract_contries'] = DB::table('contracts_operator')->where('contracts_id', $row->id)->pluck('country_id');
             foreach ($this->data['contract_contries'] as $k => $v) {
-                $contract_operator = DB::table('contracts_operator')->where('contracts_id', $row->id)->where('country_id', $v)->lists('operator_ids');
+                $contract_operator = DB::table('contracts_operator')->where('contracts_id', $row->id)->where('country_id', $v)->pluck('operator_ids');
                 $this->data['contract_operator'][$k] = explode(',', $contract_operator[0]);
                 $this->data['old_contract_operators'][$v] = \App\Models\operator::where('country_id', $v)->get();
             }
-            $this->data['contract_service'] = DB::table('contracts_service')->where('contracts_id', $row->id)->lists('service_id');
+            $this->data['contract_service'] = DB::table('contracts_service')->where('contracts_id', $row->id)->pluck('service_id');
             $this->data['contract_attachments'] = DB::table('tb_contracts_attachments')->where('contract_id', $row->id)->get();
             $this->data['items'] = DB::table('contract_items')->where('contract_id', $row->id)->get();
             $this->data['departments'] = \App\Models\departments::all();
@@ -145,9 +148,9 @@ class ContractsController extends Controller {
         if ($request->acquisition_id) {
             $acquisition = \App\Models\acquisitions::find($request->acquisition_id);
             $this->data['acquisition_brand'] = $acquisition->brand_manager_id;
-            $this->data['acquisitions_contries'] = DB::table('acquisition_region')->where('acquisition_id', $acquisition->id)->lists('country_id');
+            $this->data['acquisitions_contries'] = DB::table('acquisition_region')->where('acquisition_id', $acquisition->id)->pluck('country_id');
             foreach ($this->data['acquisitions_contries'] as $k => $v) {
-                $acquisition_operator = DB::table('acquisition_region')->where('acquisition_id', $acquisition->id)->where('country_id', $v)->lists('operators_ids');
+                $acquisition_operator = DB::table('acquisition_region')->where('acquisition_id', $acquisition->id)->where('country_id', $v)->pluck('operators_ids');
                 $this->data['acquisition_operator'][$k] = explode(',', $acquisition_operator[0]);
                 $this->data['old_operators'][$v] = \App\Models\operator::where('country_id', $v)->get();
             }
@@ -203,7 +206,7 @@ class ContractsController extends Controller {
           array_push($this->data['countrys'],$country);
           array_push($this->data['all_operators'],$operators);
         }
-        $service_ids = \DB::table('contracts_service')->where('contracts_id', $id)->lists('service_id');
+        $service_ids = \DB::table('contracts_service')->where('contracts_id', $id)->pluck('service_id');
         $this->data['services'] = \DB::table('tb_services')->whereIn('id', $service_ids)->get();
         //return [$this->data['countrys'],$this->data['all_operators']];
         return view('contracts.view', $this->data);

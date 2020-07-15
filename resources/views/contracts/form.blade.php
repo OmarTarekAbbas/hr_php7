@@ -567,6 +567,7 @@
                             <div class="col-md-2">
 
                             </div>
+                            @if ($contract_attachments)                                
                             @if(count($contract_attachments)>0)
                                 @foreach($contract_attachments as $val)
                                     @if($val->attachment_type_id==$type->id)
@@ -579,6 +580,7 @@
                                         <hr style="margin-top: 5px;margin-bottom: 5px;"/>
                                     @endif
                                 @endforeach
+                            @endif
                             @endif
 
                         </div>

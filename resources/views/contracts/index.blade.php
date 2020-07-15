@@ -87,10 +87,15 @@
                                 <td width="30"> {{ ++$i }} </td>
                                 <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>									
                                 @foreach ($tableGrid as $field)
+                                @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                                @endphp
+
                                 @if($field['view'] =='1')
                                 <td>					 
                                     @if($field['attribute']['image']['active'] =='1')
-                                    {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
+                                    {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
                                     @else
                                         @if($field['field']=='working_hours')
                                             <?php $working_hours = explode('.', $row->working_hours) ?>
@@ -98,11 +103,11 @@
 
                                         @elseif($field['field']=='contract_type')
                                            
-                                            {{$row->$field['field']=='1'?'New':'Draft'}}
+                                            {{$row->$x=='1'?'New':'Draft'}}
 
                                         @else
                                             {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-                                            {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}	
+                                            {!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}	
                                         @endif						 
                                     @endif						 
                                 </td>

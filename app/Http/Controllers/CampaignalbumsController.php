@@ -458,7 +458,7 @@ class CampaignalbumsController extends Controller {
 	public function UpdateRecord(Request $request) {
 			$this->data['row'] = $this->model->getColumnTable('campaign_albums');
 			$track = Campaigntracks::findOrFail($request->get('track_id'));
-			$albums = Campaignalbums::lists('name', 'id');
+			$albums = Campaignalbums::pluck('name', 'id');
 			$operators = Operator::all();
 			$op_tr = DB::select("SELECT  campaign_operators_tracks.id operator_track_id , campaign_operators_tracks.code code , campaign_operators_tracks.operator_id operator_id FROM campaign_operators_tracks JOIN campaign_tracks ON campaign_operators_tracks.track_id = campaign_tracks.id JOIN tb_operators ON tb_operators.id = campaign_operators_tracks.operator_id WHERE campaign_tracks.id =" . $request->get('track_id'));
 			$this->data['track'] =$track;

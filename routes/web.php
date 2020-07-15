@@ -830,20 +830,20 @@ Route::get('occasions/combotablefield', 'OccasionsController@getCombotablefield'
 
 
 //contenttypes
-Route::get('contenttypes', 'ContenttypeController@getIndex');
-Route::get('contenttypes/update', 'ContenttypeController@getUpdate');
-Route::get('contenttypes/update/{id}', 'ContenttypeController@getUpdate');
-Route::get('contenttypes/show/{id}', 'ContenttypeController@getShow');
-Route::post('contenttypes/save', 'ContenttypeController@postSave');
-Route::post('contenttypes/delete', 'ContenttypeController@postDelete');
-Route::post('contenttypes/multisearch', 'ContenttypeController@postMultisearch');
-Route::post('contenttypes/filter', 'ContenttypeController@postFilter');
-Route::get('contenttypes/download', 'ContenttypeController@getDownload');
-Route::post('contenttypes/comboselect', 'ContenttypeController@postComboselect');
-Route::post('contenttypes/comboselectuser', 'ContenttypeController@postComboselectuser');
-Route::get('contenttypes/combotable', 'ContenttypeController@getCombotable');
-Route::get('contenttypes/combotablefield', 'ContenttypeController@getCombotablefield');
-Route::get('contenttypes/combotablefield', 'ContenttypeController@getCombotablefield');
+Route::get('contenttypes', 'ContenttypesController@getIndex');
+Route::get('contenttypes/update', 'ContenttypesController@getUpdate');
+Route::get('contenttypes/update/{id}', 'ContenttypesController@getUpdate');
+Route::get('contenttypes/show/{id}', 'ContenttypesController@getShow');
+Route::post('contenttypes/save', 'ContenttypesController@postSave');
+Route::post('contenttypes/delete', 'ContenttypesController@postDelete');
+Route::post('contenttypes/multisearch', 'ContenttypesController@postMultisearch');
+Route::post('contenttypes/filter', 'ContenttypesController@postFilter');
+Route::get('contenttypes/download', 'ContenttypesController@getDownload');
+Route::post('contenttypes/comboselect', 'ContenttypesController@postComboselect');
+Route::post('contenttypes/comboselectuser', 'ContenttypesController@postComboselectuser');
+Route::get('contenttypes/combotable', 'ContenttypesController@getCombotable');
+Route::get('contenttypes/combotablefield', 'ContenttypesController@getCombotablefield');
+Route::get('contenttypes/combotablefield', 'ContenttypesController@getCombotablefield');
 
 //mediafilesizes
 Route::get('mediafilesizes', 'MediafilesizesController@getIndex');
@@ -1091,6 +1091,108 @@ Route::get('playtrack_v3/{track_id}', 'CampaignalbumsController@GetTrack_v3');
 Route::get('playtrack_v4/{track_id}', 'CampaignalbumsController@GetTrack_v4');
 Route::post('campaignalbums/add/track', 'CampaignalbumsController@add_track');
 Route::get('campaignalbums/add/track/{id}', 'CampaignalbumsController@get_track_form');
+
+//contracts
+Route::get('contracts', 'ContractsController@getIndex');
+Route::get('contracts/approve', 'ContractsController@getApprove');
+Route::get('contracts/update', 'ContractsController@getUpdate');
+Route::get('contracts/show/{id}', 'ContractsController@getShow');
+Route::post('contracts/save', 'ContractsController@postSave');
+Route::get('contracts/trashed', 'ContractsController@getTrashed');
+Route::get('contracts/teamapprove', 'ContractsController@getTeamapprove');
+Route::get('contracts/provider', 'ContractsController@get_provider');
+Route::get('contracts/download', 'ContractsController@getDownload');
+Route::get('contracts/cancel', 'ContractsController@getCancel');
+Route::get('contracts/chart', 'ContractsController@getChart');
+Route::get('contracts/comboselect', 'ContractsController@postComboselect');
+Route::post('contracts/multisearch', 'ContractsController@postMultisearch');
+Route::post('contracts/filter', 'ContractsController@postFilter');
+Route::post('contracts/delete', 'ContractsController@postDelete');
+
+//contractsrenew
+Route::get('contractsrenew', 'ContractsrenewController@getIndex');
+Route::get('contractsrenew/approve', 'ContractsrenewController@getApprove');
+Route::get('contractsrenew/update', 'ContractsrenewController@getUpdate');
+Route::get('contractsrenew/show/{id}', 'ContractsrenewController@getShow');
+Route::post('contractsrenew/save', 'ContractsrenewController@postSave');
+Route::get('contractsrenew/trashed', 'ContractsrenewController@getTrashed');
+Route::get('contractsrenew/teamapprove', 'ContractsrenewController@getTeamapprove');
+Route::get('contractsrenew/provider', 'ContractsrenewController@get_provider');
+Route::get('contractsrenew/download', 'ContractsrenewController@getDownload');
+Route::get('contractsrenew/cancel', 'ContractsrenewController@getCancel');
+Route::get('contractsrenew/chart', 'ContractsrenewController@getChart');
+Route::get('contractsrenew/comboselect', 'ContractsrenewController@postComboselect');
+Route::post('contractsrenew/multisearch', 'ContractsrenewController@postMultisearch');
+Route::post('contractsrenew/filter', 'ContractsrenewController@postFilter');
+Route::post('contractsrenew/delete', 'ContractsrenewController@postDelete');
+
+//commitments
+Route::get('commitments', 'CommitmentsController@getIndex');
+Route::get('commitments/approve', 'CommitmentsController@getApprove');
+Route::get('commitments/update/{id?}', 'CommitmentsController@getUpdate');
+Route::get('commitments/show/{id}', 'CommitmentsController@getShow');
+Route::post('commitments/save', 'CommitmentsController@postSave');
+Route::get('commitments/trashed', 'CommitmentsController@getTrashed');
+Route::get('commitments/teamapprove', 'CommitmentsController@getTeamapprove');
+Route::get('commitments/provider', 'CommitmentsController@get_provider');
+Route::get('commitments/download', 'CommitmentsController@getDownload');
+Route::get('commitments/cancel', 'CommitmentsController@getCancel');
+Route::get('commitments/chart', 'CommitmentsController@getChart');
+Route::get('commitments/comboselect', 'CommitmentsController@postComboselect');
+Route::post('commitments/multisearch', 'CommitmentsController@postMultisearch');
+Route::post('commitments/filter', 'CommitmentsController@postFilter');
+Route::post('commitments/delete', 'CommitmentsController@postDelete');
+
+//Tasks
+Route::get('tasks', 'TasksController@getIndex');
+Route::get('tasks/approve', 'TasksController@getApprove');
+Route::get('tasks/update/{id?}', 'TasksController@getUpdate');
+Route::get('tasks/show/{id}', 'TasksController@getShow');
+Route::post('tasks/save', 'TasksController@postSave');
+Route::get('tasks/trashed', 'TasksController@getTrashed');
+Route::get('tasks/teamapprove', 'TasksController@getTeamapprove');
+Route::get('tasks/provider', 'TasksController@get_provider');
+Route::get('tasks/download', 'TasksController@getDownload');
+Route::get('tasks/cancel', 'TasksController@getCancel');
+Route::get('tasks/chart', 'TasksController@getChart');
+Route::get('tasks/comboselect', 'TasksController@postComboselect');
+Route::post('tasks/multisearch', 'TasksController@postMultisearch');
+Route::post('tasks/filter', 'TasksController@postFilter');
+Route::post('tasks/delete', 'TasksController@postDelete');
+
+//template
+Route::get('template', 'TemplateController@getIndex');
+Route::get('template/approve', 'TemplateController@getApprove');
+Route::get('template/update/{id?}', 'TemplateController@getUpdate');
+Route::get('template/show/{id}', 'TemplateController@getShow');
+Route::post('template/save', 'TemplateController@postSave');
+Route::get('template/trashed', 'TemplateController@getTrashed');
+Route::get('template/teamapprove', 'TemplateController@getTeamapprove');
+Route::get('template/provider', 'TemplateController@get_provider');
+Route::get('template/download', 'TemplateController@getDownload');
+Route::get('template/cancel', 'TemplateController@getCancel');
+Route::get('template/chart', 'TemplateController@getChart');
+Route::get('template/comboselect', 'TemplateController@postComboselect');
+Route::post('template/multisearch', 'TemplateController@postMultisearch');
+Route::post('template/filter', 'TemplateController@postFilter');
+Route::post('template/delete', 'TemplateController@postDelete');
+
+//acquisitions
+Route::get('acquisitions', 'AcquisitionsController@getIndex');
+Route::get('acquisitions/approve', 'AcquisitionsController@getApprove');
+Route::get('acquisitions/update/{id?}', 'AcquisitionsController@getUpdate');
+Route::get('acquisitions/show/{id}', 'AcquisitionsController@getShow');
+Route::post('acquisitions/save', 'AcquisitionsController@postSave');
+Route::get('acquisitions/trashed', 'AcquisitionsController@getTrashed');
+Route::get('acquisitions/teamapprove', 'AcquisitionsController@getTeamapprove');
+Route::get('acquisitions/provider', 'AcquisitionsController@get_provider');
+Route::get('acquisitions/download', 'AcquisitionsController@getDownload');
+Route::get('acquisitions/cancel', 'AcquisitionsController@getCancel');
+Route::get('acquisitions/chart', 'AcquisitionsController@getChart');
+Route::get('acquisitions/comboselect', 'AcquisitionsController@postComboselect');
+Route::post('acquisitions/multisearch', 'AcquisitionsController@postMultisearch');
+Route::post('acquisitions/filter', 'AcquisitionsController@postFilter');
+Route::post('acquisitions/delete', 'AcquisitionsController@postDelete');
 
 //notifications
 Route::post('notifications/upnotifications', 'NotificationsController@postUpnotifications');

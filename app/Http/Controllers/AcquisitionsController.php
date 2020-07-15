@@ -22,11 +22,14 @@ class AcquisitionsController extends Controller {
     public function __construct() {
 
         date_default_timezone_set("Africa/Cairo");
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        // $this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Acquisitions();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+	   });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -109,10 +112,10 @@ class AcquisitionsController extends Controller {
         $row = $this->model->find($id);
         if ($row) {
             $this->data['row'] = $row;
-            $this->data['acquisition_contries'] = DB::table('acquisition_region')->where('acquisition_id', $row->id)->lists('country_id');
+            $this->data['acquisition_contries'] = DB::table('acquisition_region')->where('acquisition_id', $row->id)->pluck('country_id');
 
             foreach ($this->data['acquisition_contries'] as $k => $v) {
-                $aquisition_operator = DB::table('acquisition_region')->where('acquisition_id', $row->id)->where('country_id', $v)->lists('operators_ids');
+                $aquisition_operator = DB::table('acquisition_region')->where('acquisition_id', $row->id)->where('country_id', $v)->pluck('operators_ids');
                 $this->data['acquisition_operator'][$k] = explode(',', $aquisition_operator[0]); // here K start from 0   and the values are acqusition operators list
                 $this->data['old_operators'][$v] = \App\Models\operator::where('country_id', $v)->get();  // here V is country_id
             }

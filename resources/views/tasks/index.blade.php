@@ -80,13 +80,18 @@
                                 <td width="30"> {{ ++$i }} </td>
                                 <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>									
                                 @foreach ($tableGrid as $field)
+                                @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                                @endphp
+
                                 @if($field['view'] =='1')
                                 <td>					 
                                     @if($field['attribute']['image']['active'] =='1')
-                                    {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
+                                    {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
                                     @else	
                                     {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-                                    @if($field['field']=='status')
+                                    @if($x=='status')
                                         @if($row->status==0)
                                             <label class="label label-default"> Not Seen </label>
                                         @elseif($row->status==1)
@@ -98,18 +103,18 @@
                                         @elseif($row->status==4)
                                             <label class="label label-success"> Finished</label>
                                         @endif
-                                    @elseif($field['field']=='seen')
+                                    @elseif($x=='seen')
                                         @if($row->seen==1) 
                                             <label class="label label-success">Seen</label>
                                         @elseif($row->seen==0)  
                                             <label class="label label-danger"> Not Seen </label>
                                          @endif
-                                    @elseif($field['field']=='working_hours')
+                                    @elseif($x=='working_hours')
                                             <?php $working_hours = explode('.', $row->working_hours) ?>
                                             <?= $working_hours[0] != 0 ? $working_hours[0] . ' Hour  ' : '' ?><?= $working_hours[1] != 0 ? ltrim($working_hours[1], '0') . ' Min.  ' : '' ?>
      
                                     @else
-                                    {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}	
+                                    {!! SiteHelpers::gridDisplay($row->$x,$x,$conn) !!}	
                                     @endif						 
                                     @endif						 
                                 </td>
