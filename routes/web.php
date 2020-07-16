@@ -294,6 +294,7 @@ Route::post('vacations/comboselect', 'VacationsController@postComboselect');
 Route::post('vacations/comboselectuser', 'VacationsController@postComboselectuser');
 Route::get('vacations/combotable', 'VacationsController@getCombotable');
 Route::get('vacations/combotablefield', 'VacationsController@getCombotablefield');
+Route::get('vacations/makepdfvacation', 'VacationsController@getMakepdfvacation');
 
 
 
