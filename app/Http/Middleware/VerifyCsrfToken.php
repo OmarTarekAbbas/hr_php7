@@ -43,5 +43,6 @@ class VerifyCsrfToken extends Middleware
         'rbt/get_statistics',
         'rbt/comboselect',
         'punchnotifications/comboselectuser',
+        'notifications/upnotifications',
     ];
 }
