@@ -1574,21 +1574,22 @@ abstract class Controller extends BaseController
             foreach ($all['fields'] as $f) {
                 if ($f['field'] != 'id') { // to remove id from print form view
                     if ($f['download'] == '1') {
+                        $fField = $f['field'];
                         //  echo $row->$f['field'].'-------------'.$f['field'].'<br>' ;
-                        if ($f['field'] == 'manager_approved' && $row->$f['field'] === 1) {
-                            $row->$f['field'] = 'Yes';
-                        } elseif ($f['field'] == 'manager_approved' && $row->$f['field'] === 0) {
-                            $row->$f['field'] = 'No';
+                        if ($f['field'] == 'manager_approved' && $row->$fField === 1) {
+                            $row->$fField = 'Yes';
+                        } elseif ($f['field'] == 'manager_approved' && $row->$fField === 0) {
+                            $row->$fField = 'No';
                         } elseif ($f['field'] == 'peroid') {
-                            if ($row->$f['field'] == 1) {
-                                $row->$f['field'] = $row->$f['field'] . ' Day';
-                            } elseif ($row->$f['field'] > 1) {
-                                $row->$f['field'] = $row->$f['field'] . ' Day(s)';
+                            if ($row->$fField == 1) {
+                                $row->$fField = $row->$fField . ' Day';
+                            } elseif ($row->$fField > 1) {
+                                $row->$fField = $row->$fField . ' Day(s)';
                             }
                         }
 
                         $conn = (isset($f['conn']) ? $f['conn'] : array());
-                        $content .= '<p  style="text-align: left"   ><b>' . \Lang::get('core.' . $f["label"]) . " : </b> " . \SiteHelpers::gridDisplay($row->$f['field'], $f['field'], $conn) . '</p>';
+                        $content .= '<p  style="text-align: left"   ><b>' . \Lang::get('core.' . $f["label"]) . " : </b> " . \SiteHelpers::gridDisplay($row->$fField, $f['field'], $conn) . '</p>';
                     }
                 }
             }

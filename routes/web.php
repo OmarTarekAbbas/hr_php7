@@ -360,6 +360,7 @@ Route::post('overtimes/comboselect', 'OvertimesController@postComboselect');
 Route::post('overtimes/comboselectuser', 'OvertimesController@postComboselectuser');
 Route::get('overtimes/combotable', 'OvertimesController@getCombotable');
 Route::get('overtimes/combotablefield', 'OvertimesController@getCombotablefield');
+Route::get('overtimes/makepdfvacation', 'OvertimesController@getMakepdfvacation');
 
 
 
@@ -409,6 +410,7 @@ Route::post('meetings/comboselect', 'MeetingsController@postComboselect');
 Route::post('meetings/comboselectuser', 'MeetingsController@postComboselectuser');
 Route::get('meetings/combotable', 'MeetingsController@getCombotable');
 Route::get('meetings/combotablefield', 'MeetingsController@getCombotablefield');
+Route::get('meetings/makepdfvacation', 'MeetingsController@getMakepdfvacation');
 
 
 //mymeetings
@@ -637,6 +639,7 @@ Route::post('mytasks/comboselect', 'MytasksController@postComboselect');
 Route::post('mytasks/comboselectuser', 'MytasksController@postComboselectuser');
 Route::get('mytasks/combotable', 'MytasksController@getCombotable');
 Route::get('mytasks/combotablefield', 'MytasksController@getCombotablefield');
+Route::get('mytasks/projects', 'MytasksController@getProjects');
 
 
 //strategies
