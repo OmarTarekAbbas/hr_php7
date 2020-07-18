@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 require_once 'htmltodocx_converter/h2d_htmlconverter.php';
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;

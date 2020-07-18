@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\core;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Core\Users;
 use Illuminate\Http\Request;
 use App\Models\Core\Groups;
