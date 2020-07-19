@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Vacations;
 use App\User;
 use Illuminate\Http\Request;
@@ -21,12 +21,16 @@ class VacationsController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Vacations();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
 
+            $this->access = $this->model->validAccess($this->info['id']);
+
+            return $next($request);
+        });
         $this->data = array(
             'pageTitle' => $this->info['title'],
             'pageNote' => $this->info['note'],
@@ -43,8 +47,8 @@ class VacationsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
 
@@ -57,7 +61,7 @@ class VacationsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -66,20 +70,20 @@ class VacationsController extends Controller {
         $pagination->setPath('vacations');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('vacations.index', $this->data);
@@ -156,28 +160,28 @@ class VacationsController extends Controller {
 
             $id = $this->model->updateVacation($data, $request->input('id'));
 
-            if ($data["manager_approved"] == 0) { // manager not approved 
+            if ($data["manager_approved"] == 0) { // manager not approved
                 $subject = "Your vacation is refused";
-                if (strlen(trim($data["manager_reason"])) != 0) {  // there is reason for refuse 
+                if (strlen(trim($data["manager_reason"])) != 0) {  // there is reason for refuse
                     $subject .= " due to : " . $data["manager_reason"];
                 }
-            } elseif ($data["manager_approved"] == 1) { // if hr is approve then send notification to manager 
+            } elseif ($data["manager_approved"] == 1) { // if hr is approve then send notification to manager
                 $subject = "Your vacation is approved ";
-                // update annual_credit for that employee 
+                // update annual_credit for that employee
                 $Employee->annual_credit -= $vacation->peroid;
                 $Employee->save();
             }
 
             $link = 'myvacations/show/' . $id;
 
-            \SiteHelpers::addNotification(\Auth::user()->id, $vacation->employee_id, $subject, $link);  //  notification to employee under current manager 
-            
+            \SiteHelpers::addNotification(\Auth::user()->id, $vacation->employee_id, $subject, $link);  //  notification to employee under current manager
+
               $Employee = User::where('id', $vacation->employee_id)->first();
-            
+
              // send SMS
                $phone = $Employee->phone_number;
-               $this->send_sms($phone,$subject, $link); 
-               
+               $this->send_sms($phone,$subject, $link);
+
             if (!is_null($request->input('apply'))) {
                 $return = 'vacations/update/' . $id . '?return=' . self::returnUrl();
             } else {
@@ -204,16 +208,16 @@ class VacationsController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         //  print_r($request->input('id')); die;
         if (count($request->input('id')) >= 1) {
 
-            // if remove vacation increase employee credit 
+            // if remove vacation increase employee credit
             foreach ($request->input('id') as $id) {
                 $vacation = \DB::table('tb_vacations')->where('id', $id)->first();
                 $Employee = User::where('id', $vacation->employee_id)->first();
                 if ($vacation->manager_approved == 1) { // previous approve
-                    // update annual_credit for that employee 
+                    // update annual_credit for that employee
                     $Employee->annual_credit += $vacation->peroid;
                     $Employee->save();
                 }

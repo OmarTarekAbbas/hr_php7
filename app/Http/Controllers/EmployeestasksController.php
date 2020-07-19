@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Employeestasks;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -20,11 +20,14 @@ class EmployeestasksController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Employeestasks();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -54,7 +57,7 @@ class EmployeestasksController extends Controller {
             $filter .= " AND assign_to_id IN  (select id from tb_users where `department_id` ='{$departmentId}')";
         }
 
-        // to filter tasks by commitment ans assigned employees 
+        // to filter tasks by commitment ans assigned employees
 
         if ($request->commitment_id) {
             $filter .= " AND commitment_id ='{$request->commitment_id}'";
@@ -224,27 +227,27 @@ class EmployeestasksController extends Controller {
         }
     }
 
-    
+
     // to enable department manager to filter tasks among his employee  ( group tasks )
     public function getUsers($commitmentID,Request $request) {
 
-       
+
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
         // End Filter sort and order for query
         // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
         // to add condition in index view for sximo
-      
-       
+
+
             $managerId = \Auth::user()->id;
             $departmentId = \App\Models\departments::where('manager_id', $managerId)->first()->id;
 
             $filter .= " AND assign_to_id IN  (select id from tb_users where `department_id` ='{$departmentId}')";
-       
+
             $filter .= " AND commitment_id ='{$commitmentID}' group by (assign_to_id)";
-           
-     
+
+
 
         $page = $request->input('page', 1);
         $params = array(
@@ -257,7 +260,7 @@ class EmployeestasksController extends Controller {
         );
         // Get Query
         $results = $this->model->getRows($params);
-      
+
         // Build pagination setting
         $page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;
         $pagination = new Paginator($results['rows'], $results['total'], $params['limit']);
@@ -272,7 +275,7 @@ class EmployeestasksController extends Controller {
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
         // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
-       
+
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission

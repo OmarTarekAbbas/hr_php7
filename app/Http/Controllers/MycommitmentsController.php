@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Mycommitments;
 use App\Models\contracts;
 use Illuminate\Http\Request;
@@ -20,11 +20,14 @@ class MycommitmentsController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Mycommitments();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -42,10 +45,10 @@ class MycommitmentsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
-        // to add condition in index view for sximo 
+        // to add condition in index view for sximo
         $managerId = \Auth::user()->id;
 
         $department =   \App\Models\departments::where('manager_id', $managerId)->first() ;
@@ -55,7 +58,7 @@ class MycommitmentsController extends Controller {
 
         }
         $filter .= " AND id IN (select commitment_id from commitments_escalation where user_id = '{$managerId}' )";
-        
+
         if ($request->contract_id) {
             $filter .= " AND contract_id ='{$request->contract_id}'";
         }
@@ -68,7 +71,7 @@ class MycommitmentsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -77,20 +80,20 @@ class MycommitmentsController extends Controller {
         $pagination->setPath('mycommitments');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mycommitments.index', $this->data);
@@ -182,7 +185,7 @@ class MycommitmentsController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
@@ -207,13 +210,13 @@ class MycommitmentsController extends Controller {
         \App\Models\commitments::where('id', $id)->update(array('approve' => 1));
         return Redirect::to("employeestasks/update?commitment_id=".$id);
     }
-    
-    // get contracts that current user involved in 
+
+    // get contracts that current user involved in
     public function getProjects(Request $request) {
         $Cmodel = new Contracts();
-        
+
         $this->info = $Cmodel->makeInfo('contracts');
-       
+
         $this->access = $Cmodel->validAccess($this->info['id']);
 
         $this->data = array(
@@ -228,8 +231,8 @@ class MycommitmentsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
          $userId = \Auth::user()->id;
         $filter .= " AND id IN (select contract_id from tb_commitments where tb_commitments.id IN (select commitment_id from commitments_escalation where user_id = '{$userId}'))";
@@ -243,7 +246,7 @@ class MycommitmentsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $Cmodel->getRows($params);
 
         // Build pagination setting
@@ -252,20 +255,20 @@ class MycommitmentsController extends Controller {
         $pagination->setPath('contracts');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mycommitments.projects', $this->data);

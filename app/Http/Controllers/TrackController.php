@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Track;
 use App\Models\Album;
 use Illuminate\Http\Request;
@@ -23,11 +23,15 @@ class TrackController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Track();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -469,7 +473,7 @@ class TrackController extends Controller {
 
 
             $zip = new ZipArchive();
-            $zip_album = 'uploads/etisalat_upload/albums_'. date('Y-m-d').".zip"; // Zip name
+            $zip_album = 'uploads/etisalat_upload/tracks_'. date('Y-m-d').".zip"; // Zip name
             $zip->open($zip_album,  ZipArchive::CREATE);
 
                 // echo $path = "upload/".$file;
@@ -486,7 +490,7 @@ class TrackController extends Controller {
 
 
 
-            return response()->download('uploads/etisalat_upload/albums_'. date('Y-m-d') . '.zip');
+            return response()->download('uploads/etisalat_upload/tracks_'. date('Y-m-d') . '.zip');
             // return response()->download(public_path($filename));
         } else {
             return Redirect::back()

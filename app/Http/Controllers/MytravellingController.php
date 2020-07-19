@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Mytravelling;
 use App\Models\Visadays;
 use App\User;
@@ -23,12 +23,15 @@ class MytravellingController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Mytravelling();
       //  var_dump($this->model); die;
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+         $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -47,8 +50,8 @@ class MytravellingController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
 
@@ -61,7 +64,7 @@ class MytravellingController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -70,20 +73,20 @@ class MytravellingController extends Controller {
         $pagination->setPath('mytravelling');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mytravelling.index', $this->data);
@@ -243,20 +246,20 @@ class MytravellingController extends Controller {
 
                     $link = 'mytravelling/adminassit/' . $id;
                     \SiteHelpers::addNotification($user->id, CEO_USER_ID2, $subject, $link);  // send travelling request to reem if employee is manager + haitham
-                    $AdminAssit = User::where('id', CEO_USER_ID2)->first();                    
-                    // send SMS TO CEO Backup = reem                    
+                    $AdminAssit = User::where('id', CEO_USER_ID2)->first();
+                    // send SMS TO CEO Backup = reem
                         $phone = $AdminAssit->phone_number;
-                        $this->send_sms($phone,$subject, $link);         
-                    
-                   
+                        $this->send_sms($phone,$subject, $link);
+
+
                 } else {
                     $link = 'mytravelling/admin/' . $id;
-                    \SiteHelpers::addNotification($user->id, ADMIN_USER_ID, $subject, $link);    // send travelling request to mayar if employee is manager               
+                    \SiteHelpers::addNotification($user->id, ADMIN_USER_ID, $subject, $link);    // send travelling request to mayar if employee is manager
                     // send SMS TO Admin
-                    $Admin = User::where('id', ADMIN_USER_ID)->first();   
+                    $Admin = User::where('id', ADMIN_USER_ID)->first();
                     $phone = $Admin->phone_number;
-                    $this->send_sms($phone,$subject,$link); 
-               
+                    $this->send_sms($phone,$subject,$link);
+
                 }
             }
 
@@ -267,10 +270,10 @@ class MytravellingController extends Controller {
                 \SiteHelpers::addNotification($user->id, $mangerId, $subject, $link);
 
                 // send SMS TO Admin
-                $manager = User::where('id', $mangerId)->first();                
+                $manager = User::where('id', $mangerId)->first();
                 $phone = $manager->phone_number;
-                $this->send_sms($phone,$subject,$link); 
-               
+                $this->send_sms($phone,$subject,$link);
+
             }
 
 
@@ -301,7 +304,7 @@ class MytravellingController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
@@ -337,7 +340,7 @@ class MytravellingController extends Controller {
                     $date1 = new \DateTime($row->from);
                     $date2 = new \DateTime($row->to);
                     $peroid = $date2->diff($date1)->format("%a") + 1;
-                    
+
 
 
                     if ($Countryperdiem) {
@@ -449,18 +452,18 @@ class MytravellingController extends Controller {
 
 
             if ($Travelling->employee_id == CEO_USER_ID) {  // haitham
-                // then send notification to reem 
+                // then send notification to reem
                 $admin_subject = "Your travelling arrangement is finished";
                 $admin_link = "mytravelling/show/" . $id;
                 \SiteHelpers::addNotification(\Auth::user()->id, $Travelling->employee_id, $admin_subject, $admin_link);
 
                 // send SMS
-                $Employee = User::where('id', $Travelling->employee_id)->first();                
+                $Employee = User::where('id', $Travelling->employee_id)->first();
                 $phone = $Employee->phone_number;
-                $this->send_sms($phone,$admin_subject,$admin_link); 
-                
+                $this->send_sms($phone,$admin_subject,$admin_link);
+
             } else {
-                // then send notification to cfo 
+                // then send notification to cfo
                 $admin_subject = "New travelling by our admin";
                 $admin_link = "mytravelling/cfo/" . $id;
                 \SiteHelpers::addNotification(\Auth::user()->id, CFO_USER_ID, $admin_subject, $admin_link); // main cfo
@@ -468,14 +471,14 @@ class MytravellingController extends Controller {
                 // send SMS TO CFO
                 $CFO = User::where('id', CFO_USER_ID)->first();
                 $phone = $CFO->phone_number;
-                $this->send_sms($phone,$admin_subject,$admin_link);                 
+                $this->send_sms($phone,$admin_subject,$admin_link);
 
 
                 // send SMS TO BACKUP CFO
                 $BackupCFO = User::where('id', CFO_BACKUP_ID)->first();
                 $phone = $BackupCFO->phone_number;
-                $this->send_sms($phone,$admin_subject,$admin_link);  
-                
+                $this->send_sms($phone,$admin_subject,$admin_link);
+
             }
 
 
@@ -549,26 +552,26 @@ class MytravellingController extends Controller {
 
 
             if ($request->input('cfo_approve') == 1) {
-                // then send notification to ceo 
+                // then send notification to ceo
                 $ceo_subject = "New travelling by CFO";
                 $ceo_link = "mytravelling/ceo/" . $id;
                 \SiteHelpers::addNotification(\Auth::user()->id, CEO_USER_ID, $ceo_subject, $ceo_link);
                 \SiteHelpers::addNotification(\Auth::user()->id, CEO_USER_ID2, $ceo_subject, $ceo_link);
 
-                // send SMS TO CEO 
+                // send SMS TO CEO
                 $Ceo = User::where('id', CEO_USER_ID)->first();
                 $phone = $Ceo->phone_number;
-                $this->send_sms($phone,$ceo_subject,$ceo_link); 
-                              
+                $this->send_sms($phone,$ceo_subject,$ceo_link);
+
                 // send SMS TO CEO Backup
                 $CeoBackup = User::where('id', CEO_USER_ID2)->first();
                 $phone = $CeoBackup->phone_number;
-                $this->send_sms($phone,$ceo_subject,$ceo_link);                 
-              
-            } else {  // cfo reject 
+                $this->send_sms($phone,$ceo_subject,$ceo_link);
+
+            } else {  // cfo reject
                 // so  send notification to travelling requester
                 $subject = "Your travelling is refued by CFO";
-                if (strlen(trim($request->input('cfo_reason'))) != 0) {  // there is reason for refuse 
+                if (strlen(trim($request->input('cfo_reason'))) != 0) {  // there is reason for refuse
                     $subject .= " due to : " . $request->input('cfo_reason');
                 }
 
@@ -578,8 +581,8 @@ class MytravellingController extends Controller {
                 // send SMS TO CEO Backup
                 $Employee = User::where('id', $Travelling->employee_id)->first();
                 $phone = $Employee->phone_number;
-                $this->send_sms($phone,$subject,$link);   
-                
+                $this->send_sms($phone,$subject,$link);
+
             }
 
 
@@ -651,7 +654,7 @@ class MytravellingController extends Controller {
 
 
             if ($request->input('ceo_approve') == 1) {
-                // then send notification to ceo 
+                // then send notification to ceo
                 $subject = "New travelling  approved by CEO";
                 $link = "mytravelling/review/" . $id;
                 \SiteHelpers::addNotification(\Auth::user()->id, ADMIN_USER_ID, $subject, $link);
@@ -659,12 +662,12 @@ class MytravellingController extends Controller {
                 // send SMS TO Admin
                 $Admin = User::where('id', ADMIN_USER_ID)->first();
                 $phone = $Admin->phone_number;
-                $this->send_sms($phone,$subject,$link); 
-              
-            } else {  // ceo reject 
+                $this->send_sms($phone,$subject,$link);
+
+            } else {  // ceo reject
                 // so  send notification to travelling requester
                 $subject = "Your travelling is refued by CEO";
-                if (strlen(trim($request->input('ceo_reason'))) != 0) {  // there is reason for refuse 
+                if (strlen(trim($request->input('ceo_reason'))) != 0) {  // there is reason for refuse
                     $subject .= " due to : " . $request->input('ceo_reason');
                 }
 
@@ -674,7 +677,7 @@ class MytravellingController extends Controller {
                 // send SMS TO requester
                 $Employee = User::where('id', $Travelling->employee_id)->first();
                 $phone = $Employee->phone_number;
-                $this->send_sms($phone,$subject,$link);                
+                $this->send_sms($phone,$subject,$link);
             }
 
             $return = 'mytravelling';
@@ -702,9 +705,9 @@ class MytravellingController extends Controller {
             if ($row->admin_notes == NULL) { //  decision not taken yet
                 if ($row) {
                     $this->data['row'] = $row;
-                    
+
                       $this->data['currency'] = Countries::where(['id' => $row->country_id])->first()->currency;
-                    
+
                 } else {
                     $this->data['row'] = $this->model->getColumnTable('tb_travellings');
                 }
@@ -749,7 +752,7 @@ class MytravellingController extends Controller {
             // send SMS TO requester
             $Employee = User::where('id', $Travelling->employee_id)->first();
             $phone = $Employee->phone_number;
-            $this->send_sms($phone,$subject,$link); 
+            $this->send_sms($phone,$subject,$link);
 
             $return = 'mytravelling';
 
@@ -778,16 +781,16 @@ class MytravellingController extends Controller {
         }
     }
 
-    // start our new project by git 
+    // start our new project by git
     // CEO make approve to tavelling
     function getScalated() {
         date_default_timezone_set("Africa/Cairo");
         $this->managerEscalation();
         $this->adminEscalation();
         $this->cfoEscalation();
-        
+
       //  $this->sendMail('HR System Escalation',  'emad@ivas.com.eg');
-        
+
     }
 
     function managerEscalation() {
@@ -807,11 +810,11 @@ class MytravellingController extends Controller {
                 // send SMS TO Admin
                 $Admin = User::where('id', ADMIN_USER_ID)->first();
                 $phone = $Admin->phone_number;
-                $this->send_sms($phone,$subject,$link); 
-                
+                $this->send_sms($phone,$subject,$link);
+
             }
 
-          //  echo "Escalated manager" . "<br/>";t 
+          //  echo "Escalated manager" . "<br/>";t
              $this->sendMail( $subject . ' Check at: ' . url($link) ."  at",  'emad@ivas.com.eg');
         }
     }
@@ -832,13 +835,13 @@ class MytravellingController extends Controller {
                 // send SMS TO CFO
                 $CFO = User::where('id', CFO_USER_ID)->first();
                 $phone = $CFO->phone_number;
-                $this->send_sms($phone,$subject,$link); 
-               
+                $this->send_sms($phone,$subject,$link);
+
                 // send SMS TO CFO Backup
                 $CFOBackup = User::where('id', CFO_BACKUP_ID)->first();
                 $phone = $CFOBackup->phone_number;
-                $this->send_sms($phone,$subject,$link); 
-               
+                $this->send_sms($phone,$subject,$link);
+
             }
             // echo "Escalated admin" . "<br/>";
              $this->sendMail($subject . ' Check at: ' . url($link),  'emad@ivas.com.eg');
@@ -861,15 +864,15 @@ class MytravellingController extends Controller {
                 // send SMS
                 $CEO = User::where('id', CEO_USER_ID)->first();
                 $phone = $CEO->phone_number;
-                $this->send_sms($phone,$subject,$link);                
+                $this->send_sms($phone,$subject,$link);
             }
               // echo "Escalated cfo" . "<br/>";
              $this->sendMail($subject . ' Check at: ' . url($link),  'emad@ivas.com.eg');
-             
+
         }
     }
-    
-    
+
+
     public function sendMail($subject, $email, $Message = NULL) {
         date_default_timezone_set("Africa/Cairo");
         // send mail
@@ -881,9 +884,9 @@ class MytravellingController extends Controller {
 						<body>
 							<h2>' . $subject . '</h2>
 							<h2> Time :  ' . date("Y-m-d H:i:s") . '</h2>
-					
-							
-							
+
+
+
 						</body>
 					</html>';
 

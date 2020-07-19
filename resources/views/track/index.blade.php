@@ -60,11 +60,11 @@ if (isset($_REQUEST['search'])) {
 
 		</div>
 
-	
+
 
 	 {!! Form::open(array('url'=>'track/delete/', 'class'=>'form-horizontal' ,'id' =>'SximoTable' )) !!}
 	 <div class="table-responsive" style="min-height:300px;">
-    <table class="table table-striped ">
+    	<table class="table table-striped ">
         <thead>
 			<tr>
 				<th class="number"> No </th>
@@ -101,19 +101,23 @@ if (isset($_REQUEST['search'])) {
 					<td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>
 				 @foreach ($tableGrid as $field)
 					 @if($field['view'] =='1')
+                            @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                            @endphp
 					 <td @if($field['field']  == "created_at")  width="150"  @endif   >
 					 	@if($field['attribute']['image']['active'] =='1')
-							{!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
-						@else
+                             {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
 
-                       @if($field['field']  == "track_path"  &&  $row->$field['field'] !==  NULL  )
-                           <audio src="{{url($row->$field['field'])}}" autobuffer autoloop loop controls> </audio>
+                         @else
+                       @if($row->$x  == "track_path"  &&  $row->$x !==  NULL  )
+                           <audio src="{{url($row->track_path)}}" autobuffer autoloop loop controls> </audio>
 
                           @else
 
 
 							{{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-							{!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}
+							{!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}
 						@endif
                         @endif
 					 </td>

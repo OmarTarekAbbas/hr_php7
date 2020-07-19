@@ -64,7 +64,7 @@
         <script type="text/javascript" src="{{ asset('sximo/js/plugins/bootstrap.summernote/summernote.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('sximo/js/simpleclone.js') }}"></script>
         <script type="text/javascript" src="{{ asset('sximo/js/chart/Chart.js') }}"></script>
-        <script type="text/javascript" src="{{ url('public/media/wavesurfer.min.js') }}"></script>
+        <script type="text/javascript" src="https://unpkg.com/wavesurfer.js"></script>
 
         <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

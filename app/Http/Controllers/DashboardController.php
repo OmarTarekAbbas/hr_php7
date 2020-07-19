@@ -133,7 +133,7 @@ class DashboardController extends Controller {
     {
         $path      = $this->file_build_path("uploads","databaseBackups") ;
         if(! file_exists($path))
-            mkdir($path) ;
+            mkdir($path,null, true) ;
         $files     = scandir($path);
         $databases = array() ;
         foreach($files as $file)

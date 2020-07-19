@@ -1033,7 +1033,7 @@ abstract class Controller extends BaseController
         }
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
-        // handle the report type by adding conditions 
+        // handle the report type by adding conditions
         if ($request->input('model_name') !== NULL) {
             if ($request->input('model_name') == "employees_vacations") {
                 $managerId = \Auth::user()->id;
@@ -1042,7 +1042,7 @@ abstract class Controller extends BaseController
         }
 
 
-        $page = "";  // to get all result as this   $page = $request->input('page', 1); get result from first page only 
+        $page = "";  // to get all result as this   $page = $request->input('page', 1); get result from first page only
         $params = array(
             'page' => $page,
             'limit' => (!is_null($request->input('rows')) ? filter_var($request->input('rows'), FILTER_VALIDATE_INT) : static::$per_page ),
@@ -1051,7 +1051,7 @@ abstract class Controller extends BaseController
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
         $fields = $info['config']['grid'];
         $rows = $results['rows'];
@@ -1064,7 +1064,7 @@ abstract class Controller extends BaseController
             foreach ($fields as $f) {
                 if ($f['download'] == '1') {
                     // if ($f['view'] == '1') {
-                    // fix 0 , 1 for manager_approved to be read as No , Yes 
+                    // fix 0 , 1 for manager_approved to be read as No , Yes
                     $x = $f['field'];
 
                     if ($f['field'] == 'manager_approved' && $row->$x === 1) {
@@ -1511,7 +1511,7 @@ abstract class Controller extends BaseController
         //  $contents = \View::make('pdf_print')->with('all', $all)->with('rows', $rows);
         //  echo $contents ; die ;
 
-        $pdf = new PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new \PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf::SetTitle($all['title']);
 
         // set some language dependent data:
@@ -1574,21 +1574,22 @@ abstract class Controller extends BaseController
             foreach ($all['fields'] as $f) {
                 if ($f['field'] != 'id') { // to remove id from print form view
                     if ($f['download'] == '1') {
+                        $fField = $f['field'];
                         //  echo $row->$f['field'].'-------------'.$f['field'].'<br>' ;
-                        if ($f['field'] == 'manager_approved' && $row->$f['field'] === 1) {
-                            $row->$f['field'] = 'Yes';
-                        } elseif ($f['field'] == 'manager_approved' && $row->$f['field'] === 0) {
-                            $row->$f['field'] = 'No';
+                        if ($f['field'] == 'manager_approved' && $row->$fField === 1) {
+                            $row->$fField = 'Yes';
+                        } elseif ($f['field'] == 'manager_approved' && $row->$fField === 0) {
+                            $row->$fField = 'No';
                         } elseif ($f['field'] == 'peroid') {
-                            if ($row->$f['field'] == 1) {
-                                $row->$f['field'] = $row->$f['field'] . ' Day';
-                            } elseif ($row->$f['field'] > 1) {
-                                $row->$f['field'] = $row->$f['field'] . ' Day(s)';
+                            if ($row->$fField == 1) {
+                                $row->$fField = $row->$fField . ' Day';
+                            } elseif ($row->$fField > 1) {
+                                $row->$fField = $row->$fField . ' Day(s)';
                             }
                         }
 
                         $conn = (isset($f['conn']) ? $f['conn'] : array());
-                        $content .= '<p  style="text-align: left"   ><b>' . \Lang::get('core.' . $f["label"]) . " : </b> " . \SiteHelpers::gridDisplay($row->$f['field'], $f['field'], $conn) . '</p>';
+                        $content .= '<p  style="text-align: left"   ><b>' . \Lang::get('core.' . $f["label"]) . " : </b> " . \SiteHelpers::gridDisplay($row->$fField, $f['field'], $conn) . '</p>';
                     }
                 }
             }

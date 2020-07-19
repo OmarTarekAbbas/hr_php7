@@ -17,7 +17,7 @@ class ElfinderController extends Controller {
 	{
 		$data = array();
 		//return public_path().'/uploads/userfiles/';
-		if(!is_dir(public_path().'/uploads/userfiles/')) mkdir(public_path().'/uploads/userfiles/',0777);
+		if(!is_dir(public_path().'/uploads/userfiles/')) mkdir(public_path().'/uploads/userfiles/',0777, true);
 		$groupID = \Session::get('gid');
 		if($groupID ==1 or $groupID ==2 ) 
 		{

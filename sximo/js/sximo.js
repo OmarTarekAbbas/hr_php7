@@ -1,12 +1,12 @@
-/* Sximo builder 
-	copyright 2014 . sximo builder com 
+/* Sximo builder
+	copyright 2014 . sximo builder com
 */
 
 jQuery(document).ready(function($){
 		if($.cookie("sxintheme") != '')
 		{
 			$('#switchTheme').attr('href',$.cookie("sxintheme"));
-		} 		
+		}
 		if($.cookie("sximo-sidebar") =='minimize-sidemenu'){
 			$("body").addClass("minimize-sidemenu");
 			$('#sidemenu').removeClass('expanded-menu');
@@ -26,7 +26,7 @@ jQuery(document).ready(function($){
       var duration = 500;
       var button = $('<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>');
       button.appendTo("body");
-      
+
       jQuery(window).scroll(function() {
         if (jQuery(this).scrollTop() > offset) {
             jQuery('.back-to-top').fadeIn(duration);
@@ -34,7 +34,7 @@ jQuery(document).ready(function($){
             jQuery('.back-to-top').fadeOut(duration);
         }
       });
-    
+
       jQuery('.back-to-top').click(function(event) {
           event.preventDefault();
           jQuery('html, body').animate({scrollTop: 0}, duration);
@@ -43,17 +43,17 @@ jQuery(document).ready(function($){
 
   	$('.switch').bootstrapSwitch();
 	$('.date').datepicker({format:'yyyy-mm-dd',autoClose:true})
-	// $('.datetime').datetimepicker({format: 'yyyy-mm-dd hh:ii:ss'}); 
-	$('.datetime').datetimepicker({format: 'yyyy-mm-dd hh:ii:00'});    // to set second to 00 in datetime input  
-	
+	// $('.datetime').datetimepicker({format: 'yyyy-mm-dd hh:ii:ss'});
+	$('.datetime').datetimepicker({format: 'yyyy-mm-dd hh:ii:00'});    // to set second to 00 in datetime input
+
 	/* Tooltip */
-	$('.previewImage').fancybox();	
-	$('.tips').tooltip();	
+	$('.previewImage').fancybox();
+	$('.tips').tooltip();
 	$('.editor').summernote("removeFormat");
-	$(".select2").select2({ width:"98%"});	
+	$(".select2").select2({ width:"98%"});
 	$(".select-liquid").select2({
 		minimumResultsForSearch: "-1",
-	});	
+	});
 	$('.panel-trigger').click(function(e){
 		e.preventDefault();
 		$(this).toggleClass('active');
@@ -67,44 +67,44 @@ jQuery(document).ready(function($){
 	});
 	$('.popup').click(function (e) {
 		e.stopPropagation();
-	});	
+	});
      window.prettyPrint && prettyPrint();
 
 	$(".checkall").click(function() {
 		var cblist = $(".ids");
 		if($(this).is(":checked"))
-		{				
+		{
 			cblist.prop("checked", !cblist.is(":checked"));
-		} else {	
+		} else {
 			cblist.removeAttr("checked");
-		}	
+		}
 	});
-	
+
 	$('.nav li ul li.active').parents('li').addClass('active');
-	
-	
+
+
 		$('input[type="checkbox"],input[type="radio"]').iCheck({
 			checkboxClass: 'icheckbox_square-green',
 			radioClass: 'iradio_square-green',
-		});	
+		});
 		$('.checkall').on('ifChecked',function(){
 			$('input[type="checkbox"]').iCheck('check');
 		});
 		$('.checkall').on('ifUnchecked',function(){
 			$('input[type="checkbox"]').iCheck('uncheck');
-		});	
+		});
     $('.navbar-minimalize').click(function () {
       var w = $("body");
 		w.toggleClass("minimize-sidemenu");
-			
+
 		if( w.hasClass('minimize-sidemenu'))
 		{
 			$('#sidemenu').removeClass('expanded-menu');
 			$.cookie("sximo-sidebar",'minimize-sidemenu', {expires: 365, path: '/'});
 		} else {
 			$('#sidemenu').addClass('expanded-menu');
-			 $.cookie("sximo-sidebar",'maximaze-sidemenu', {expires: 365, path: '/'});	
-		}		
+			 $.cookie("sximo-sidebar",'maximaze-sidemenu', {expires: 365, path: '/'});
+		}
     })
 
 	$('.removeCurrentFiles').on('click',function(){
@@ -112,15 +112,30 @@ jQuery(document).ready(function($){
 		$.get(removeUrl,function(response){
 			if(response.status == 'success')
 			{
-				
+
 			}
 		});
-		$(this).parent('div').empty();	
+		$(this).parent('div').empty();
 		return false;
-	});	
-		    	
-})
+	});
 
+})
+function SximoDownloadinf(  albumId )
+{
+	var total = $('input[class="ids"]:checkbox:checked').length;
+	if(confirm('are u sure download selected rows ?'))
+	{
+
+
+            var frm = document.getElementById('SximoTable') ;
+             if(albumId){
+                frm.action = 'track/downloadinf?albumId='+albumId ;
+            }else{
+                 frm.action = 'track/downloadinf' ;
+            }
+			$('#SximoTable').submit();// do the rest here
+	}
+}
 function addMoreFiles(id){
 
    $("."+id+"Upl").append('<input type="file" name="'+id+'[]" />')
@@ -130,33 +145,33 @@ function SximoConfirmDelete( url )
 {
 	if(confirm('Are u sure deleting this record ? '))
 	{
-		window.location.href = url;	
+		window.location.href = url;
 	}
 	return false;
 }
 function SximoDelete(  )
-{	
+{
 	var total = $('input[class="ids"]:checkbox:checked').length;
 	if(confirm('are u sure removing selected rows ?'))
 	{
-			$('#SximoTable').submit();// do the rest here	
-	}	
+			$('#SximoTable').submit();// do the rest here
+	}
 }
 function SximoPermanentdelete(  )
-{	
+{
 	var total = $('input[class="ids"]:checkbox:checked').length;
 	if(confirm('are u sure removing selected rows ?'))
 	{
-			$('#SximoTable').submit();// do the rest here	
-	}	
+			$('#SximoTable').submit();// do the rest here
+	}
 }
 function SximoDelete2(  )
-{	
+{
 	var total = $('input[class="ids"]:checkbox:checked').length;
 	//if(confirm('are u sure removing selected rows ?'))
 	//{
-			$('#download').click();// do the rest here	
-	//}	
+			$('#download').click();// do the rest here
+	//}
 }
 function SximoModal( url , title)
 {
@@ -165,7 +180,7 @@ function SximoModal( url , title)
 	$('.modal-title').html(title);
 	$('#sximo-modal-content').load(url,function(){
 	});
-	$('#sximo-modal').modal('show');	
+	$('#sximo-modal').modal('show');
 }
 
 ;(function ($, window, document, undefined) {

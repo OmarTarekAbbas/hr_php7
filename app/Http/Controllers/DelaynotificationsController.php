@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Delaynotifications;
 use App\User;
 use Illuminate\Http\Request;
@@ -20,11 +20,15 @@ class DelaynotificationsController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Delaynotifications();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -42,8 +46,8 @@ class DelaynotificationsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
 
@@ -56,7 +60,7 @@ class DelaynotificationsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -65,20 +69,20 @@ class DelaynotificationsController extends Controller {
         $pagination->setPath('delaynotifications');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('delaynotifications.index', $this->data);
@@ -105,7 +109,7 @@ class DelaynotificationsController extends Controller {
 
 
         $this->data['id'] = $id;
-        return view('delaynotifications.form', $this->data);
+        return view('delaynotifications.form',compact('row'), $this->data);
     }
 
     public function getShow($id = null) {
@@ -113,7 +117,7 @@ class DelaynotificationsController extends Controller {
         if ($this->access['is_detail'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        
+
         // to make each one view only its delay notification
         if (\Auth::user()->group_id == 5 || \Auth::user()->group_id == 6 || \Auth::user()->group_id == 7) { // manager - employee - hr reports
             $Delaynotification = Delaynotifications::where('id', '=', $id)->where('user_id', '=', \Auth::user()->id)->first();
@@ -181,7 +185,7 @@ class DelaynotificationsController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\controller;
+use App\Http\Controllers\Controller;
 use App\Models\Mytasks;
 use App\Models\Contracts;
 use Illuminate\Http\Request;
@@ -21,11 +21,14 @@ class MytasksController extends Controller {
     public function __construct() {
 
         date_default_timezone_set("Africa/Cairo");
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Mytasks();
 
         $this->info = $this->model->makeInfo($this->module);
-        $this->access = $this->model->validAccess($this->info['id']);
+        $this->middleware(function ($request, $next) {
+            $this->access = $this->model->validAccess($this->info['id']);
+            return $next($request);
+        });
 
         $this->data = array(
             'pageTitle' => $this->info['title'],
@@ -43,11 +46,11 @@ class MytasksController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
-        // to add condition in index view for sximo 
+        // to add condition in index view for sximo
         $userId = \Auth::user()->id;
         $filter .= " AND assign_to_id =  '{$userId}' ";
         if ($request->contract) {
@@ -62,7 +65,7 @@ class MytasksController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -71,20 +74,20 @@ class MytasksController extends Controller {
         $pagination->setPath('mytasks');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mytasks.index', $this->data);
@@ -173,7 +176,7 @@ class MytasksController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
@@ -305,7 +308,7 @@ class MytasksController extends Controller {
         $allovertasks = $contract_progress['alltasks'];
         $completedovertasks = $contract_progress['completedtasks'];
         if ($allovertasks == $completedovertasks) {
-            // send SMS TO task_management                
+            // send SMS TO task_management
             $employee = \App\User::where('group_id', 10)->first();
             $phone = $employee->phone_number;
             $subject = 'All Tasks Finished In Project ' . $contract->title;
@@ -317,9 +320,9 @@ class MytasksController extends Controller {
 
     public function getProjects(Request $request) {
         $Cmodel = new Contracts();
-        
+
         $this->info = $Cmodel->makeInfo('contracts');
-       
+
         $this->access = $Cmodel->validAccess($this->info['id']);
 
         $this->data = array(
@@ -334,8 +337,8 @@ class MytasksController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
          $userId = \Auth::user()->id;
         $filter .= " AND id IN (select contract_id from tb_commitments where tb_commitments.id IN (select commitment_id from tb_tasks where assign_to_id= '{$userId}'))";
@@ -349,7 +352,7 @@ class MytasksController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $Cmodel->getRows($params);
 
         // Build pagination setting
@@ -358,20 +361,20 @@ class MytasksController extends Controller {
         $pagination->setPath('contracts');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mytasks.projects', $this->data);
