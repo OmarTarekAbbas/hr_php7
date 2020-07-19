@@ -263,15 +263,18 @@ class RbtController extends Controller
                 return back()->with(['message' => \SiteHelpers::alert('error', 'Failed To Move File')]);
             }
             $arr_faild = [];
+
             Excel::filter('chunk')->load(base_path() . '/rbt_system/rbt/excel/' . $filename)->chunk(100, function ($results) use ($request, &$counter, &$total_counter, &$arr_faild) {
+                
                 foreach ($results as $row) {
                     $total_counter++;
+                    
                     $rbt = \App\Models\Rbt::where('operator_id', $request->operator_id)->where('code', $row->code)->first();
                     if ($rbt) {
                         array_push($arr_faild, $row);
                         continue;
                     }
-                    if ($row->code == "") {
+                    if (isset($row->code) && $row->code == "") {
                         array_push($arr_faild, $row);
                         continue;
                     }
@@ -314,7 +317,7 @@ class RbtController extends Controller
                         $create = \App\Models\providers::insertGetId($prov);
                         $provider_id = $create;
                     }
-
+                    
                     if ($request['type']) {
                         $rbt['artist_name_en'] = $row->artist_name_english;
                         $rbt['artist_name_ar'] = $row->artist_name_arabic; // not required
@@ -323,7 +326,7 @@ class RbtController extends Controller
                         $rbt['album_name'] = $row->album; // not required
                         $rbt['provider_id'] = $provider_id; //  original content owner = Mashari Al Afasi
                         $rbt['occasion_id'] = $occasion_id;
-                        $rbt['code'] = $row->code;
+                        $rbt['code'] = $row->codes;
                         $rbt['owner'] = $row->provider; // ex:  ARPU
                         $rbt['operator_id'] = $request->operator_id;
                         $rbt['aggregator_id'] = $request->aggregator_id;
