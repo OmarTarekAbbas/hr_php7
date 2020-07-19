@@ -97,7 +97,7 @@
 					 	@if($field['attribute']['image']['active'] =='1')
 						 {{-- {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!} --}}
               <audio id="trackId" width="100%"  controls>
-                  <source src="{{ url('/') }}{{$field['attribute']['image']['path']}}{{ $row->$x }}" >
+                  <source src="{{ url('/') }}{{'/'}}{{ $row->$x }}" >
               </audio>
 						@else
 							{{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
