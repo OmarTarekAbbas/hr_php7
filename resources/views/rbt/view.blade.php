@@ -59,7 +59,7 @@
 						<td width='30%' class='label-view text-right'>Track File</td>
 						<td>
               <audio id="trackId" width="100%"  controls>
-                  <source src="{{ url($row->track_file) }}" >
+                  <source src="{{ url('uploads/track_file/'.$row->track_file) }}" >
               </audio>
               {{-- {!! SiteHelpers::showUploadedFile($row->track_file,'uploads/track_file') !!}  --}}
             </td>

@@ -117,7 +117,7 @@
 									<div class="col-md-6">
 									  <input  type='file' name='track_file' id='track_file' @if($row['track_file'] =='') class='required' @endif style='width:150px !important;'  />
 					 	<div >
-						{!! SiteHelpers::showUploadedFile($row['track_file'],'') !!}
+						{!! SiteHelpers::showUploadedFile($row['track_file'],'uploads/track_file') !!}
 
 						</div>
 
