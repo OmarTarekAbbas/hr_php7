@@ -1053,7 +1053,7 @@ Route::get('rbt/combotablefield', 'RbtController@getCombotablefield');
 Route::get('rbt/excel', 'RbtController@create_excel');
 Route::post('rbt/excel', 'RbtController@excelStore');
 Route::get('rbt/upload_tracks', 'RbtController@multi_upload');
-Route::post('rbt/upload_tracks', 'RbtController@multi_upload');
+Route::post('rbt/save_tracks', 'RbtController@save_tracks');
 Route::get('rbt/file_system', 'RbtController@list_file_system');
 Route::get('rbt/file_system/content', 'RbtController@get_file_system');
 Route::get('rbt/search', 'RbtController@search');
