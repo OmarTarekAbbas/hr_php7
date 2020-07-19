@@ -153,6 +153,9 @@ class RbtController extends Controller
                 if (empty($data[$key])) {
                     $data[$key] = null;
                 }
+                if($key == 'track_file'){
+                    $data[$key] = 'uploads/track_file/'. $value;
+                }
             }
             $id = $this->model->insertRow($data, $request->input('id'));
 
