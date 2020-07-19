@@ -342,7 +342,7 @@ class RbtController extends Controller
                     }
                     $rbt['created_at'] = \Carbon\Carbon::now();
                     $rbt['updated_at'] = \Carbon\Carbon::now();
-                    $rbt['track_file'] = "uploads/track_file/rbt_system/" . date('Y-m-d') . "/" . $rbt['track_title_en'] . ".wav";
+                    $rbt['track_file'] = "rbt_system/" . date('Y-m-d') . "/" . $rbt['track_title_en'] . ".wav";
                     $check = \App\Models\Rbt::insert($rbt);
                     if ($check) {
                         $counter++;
