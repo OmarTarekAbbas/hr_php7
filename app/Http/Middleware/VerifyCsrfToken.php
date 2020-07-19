@@ -46,5 +46,6 @@ class VerifyCsrfToken extends Middleware
         'notifications/upnotifications',
         'rbt/search',
         'report/search',
+        'rbt/save_tracks',
     ];
 }
