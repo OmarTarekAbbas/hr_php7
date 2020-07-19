@@ -110,8 +110,8 @@ if (isset($_REQUEST['search'])) {
                              {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
 
                          @else
-                       @if($row->$x  == "track_path"  &&  $row->$x !==  NULL  )
-                           <audio src="{{url($row->track_path)}}" autobuffer autoloop loop controls> </audio>
+                       @if($x  == "track_path"  &&  $row->$x !==  NULL  )
+                           <audio src="{{url($row->$x)}}" autobuffer autoloop loop controls> </audio>
 
                           @else
 
