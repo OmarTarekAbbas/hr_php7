@@ -57,8 +57,11 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Sample Path</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->track_sample_path,'/uploads/media/') !!} </td>
-
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->track_sample_path,'/uploads/media/') !!} </td> --}}
+						<td><audio controls>
+							<source src="{{url("uploads/media/$row->track_sample_path")}}" type="audio/ogg">
+							<source src="{{url("uploads/media/$row->track_sample_path")}}" type="audio/mpeg">
+						</audio></td>
 					</tr>
 				
 					<tr>
