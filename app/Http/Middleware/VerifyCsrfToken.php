@@ -48,5 +48,6 @@ class VerifyCsrfToken extends Middleware
         'report/search',
         'rbt/save_tracks',
         'countryperdiem/comboselect',
+        'contracts/comboselect',
     ];
 }
