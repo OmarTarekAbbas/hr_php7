@@ -1101,6 +1101,7 @@ Route::get('campaignalbums/add/track/{id}', 'CampaignalbumsController@get_track_
 Route::get('contracts', 'ContractsController@getIndex');
 Route::get('contracts/approve', 'ContractsController@getApprove');
 Route::get('contracts/update', 'ContractsController@getUpdate');
+Route::get('contracts/update/{id}', 'ContractsController@getUpdate');
 Route::get('contracts/show/{id}', 'ContractsController@getShow');
 Route::post('contracts/save', 'ContractsController@postSave');
 Route::get('contracts/trashed', 'ContractsController@getTrashed');
@@ -1116,7 +1117,9 @@ Route::post('contracts/delete', 'ContractsController@postDelete');
 
 //contractsrenew
 Route::get('contractsrenew', 'ContractsrenewController@getIndex');
+Route::get('contractsrenew/index', 'ContractsrenewController@getIndex');
 Route::get('contractsrenew/approve', 'ContractsrenewController@getApprove');
+Route::get('contractsrenew/renew', 'ContractsrenewController@getRenew');
 Route::get('contractsrenew/update', 'ContractsrenewController@getUpdate');
 Route::get('contractsrenew/show/{id}', 'ContractsrenewController@getShow');
 Route::post('contractsrenew/save', 'ContractsrenewController@postSave');
