@@ -576,19 +576,19 @@ Route::get('employeestravelling/combotablefield', 'EmployeestravellingController
 
 
 //mycommitments
-Route::get('mycommitments', 'EmployeestravellingController@getIndex');
-Route::get('mycommitments/update', 'EmployeestravellingController@getUpdate');
-Route::get('mycommitments/update/{id}', 'EmployeestravellingController@getUpdate');
-Route::get('mycommitments/show/{id}', 'EmployeestravellingController@getShow');
-Route::post('mycommitments/save', 'EmployeestravellingController@postSave');
-Route::post('mycommitments/delete', 'EmployeestravellingController@postDelete');
-Route::post('mycommitments/multisearch', 'EmployeestravellingController@postMultisearch');
-Route::post('mycommitments/filter', 'EmployeestravellingController@postFilter');
-Route::get('mycommitments/download', 'EmployeestravellingController@getDownload');
-Route::post('mycommitments/comboselect', 'EmployeestravellingController@postComboselect');
-Route::post('mycommitments/comboselectuser', 'EmployeestravellingController@postComboselectuser');
-Route::get('mycommitments/combotable', 'EmployeestravellingController@getCombotable');
-Route::get('mycommitments/combotablefield', 'EmployeestravellingController@getCombotablefield');
+Route::get('mycommitments', 'MycommitmentsController@getIndex');
+Route::get('mycommitments/update', 'MycommitmentsController@getUpdate');
+Route::get('mycommitments/update/{id}', 'MycommitmentsController@getUpdate');
+Route::get('mycommitments/show/{id}', 'MycommitmentsController@getShow');
+Route::post('mycommitments/save', 'MycommitmentsController@postSave');
+Route::post('mycommitments/delete', 'MycommitmentsController@postDelete');
+Route::post('mycommitments/multisearch', 'MycommitmentsController@postMultisearch');
+Route::post('mycommitments/filter', 'MycommitmentsController@postFilter');
+Route::get('mycommitments/download', 'MycommitmentsController@getDownload');
+Route::post('mycommitments/comboselect', 'MycommitmentsController@postComboselect');
+Route::post('mycommitments/comboselectuser', 'MycommitmentsController@postComboselectuser');
+Route::get('mycommitments/combotable', 'MycommitmentsController@getCombotable');
+Route::get('mycommitments/combotablefield', 'MycommitmentsController@getCombotablefield');
 
 
 //employeestasks
@@ -1119,8 +1119,9 @@ Route::post('contracts/delete', 'ContractsController@postDelete');
 Route::get('contractsrenew', 'ContractsrenewController@getIndex');
 Route::get('contractsrenew/index', 'ContractsrenewController@getIndex');
 Route::get('contractsrenew/approve', 'ContractsrenewController@getApprove');
-Route::get('contractsrenew/renew', 'ContractsrenewController@getRenew');
+Route::get('contractsrenew/renew/{id}', 'ContractsrenewController@getRenew');
 Route::get('contractsrenew/update', 'ContractsrenewController@getUpdate');
+Route::get('contractsrenew/update/{id}', 'ContractsrenewController@getUpdate');
 Route::get('contractsrenew/show/{id}', 'ContractsrenewController@getShow');
 Route::post('contractsrenew/save', 'ContractsrenewController@postSave');
 Route::get('contractsrenew/trashed', 'ContractsrenewController@getTrashed');
@@ -1129,7 +1130,7 @@ Route::get('contractsrenew/provider', 'ContractsrenewController@get_provider');
 Route::get('contractsrenew/download', 'ContractsrenewController@getDownload');
 Route::get('contractsrenew/cancel', 'ContractsrenewController@getCancel');
 Route::get('contractsrenew/chart', 'ContractsrenewController@getChart');
-Route::get('contractsrenew/comboselect', 'ContractsrenewController@postComboselect');
+Route::post('contractsrenew/comboselect', 'ContractsrenewController@postComboselect');
 Route::post('contractsrenew/multisearch', 'ContractsrenewController@postMultisearch');
 Route::post('contractsrenew/filter', 'ContractsrenewController@postFilter');
 Route::post('contractsrenew/delete', 'ContractsrenewController@postDelete');
@@ -1153,6 +1154,7 @@ Route::post('commitments/delete', 'CommitmentsController@postDelete');
 
 //Tasks
 Route::get('tasks', 'TasksController@getIndex');
+Route::get('tasks/index', 'EmployeestasksController@getIndex');
 Route::get('tasks/approve', 'TasksController@getApprove');
 Route::get('tasks/update/{id?}', 'TasksController@getUpdate');
 Route::get('tasks/show/{id}', 'TasksController@getShow');
@@ -1163,7 +1165,7 @@ Route::get('tasks/provider', 'TasksController@get_provider');
 Route::get('tasks/download', 'TasksController@getDownload');
 Route::get('tasks/cancel', 'TasksController@getCancel');
 Route::get('tasks/chart', 'TasksController@getChart');
-Route::get('tasks/comboselect', 'TasksController@postComboselect');
+Route::post('tasks/comboselect', 'TasksController@postComboselect');
 Route::post('tasks/multisearch', 'TasksController@postMultisearch');
 Route::post('tasks/filter', 'TasksController@postFilter');
 Route::post('tasks/delete', 'TasksController@postDelete');
@@ -1180,7 +1182,7 @@ Route::get('template/provider', 'TemplateController@get_provider');
 Route::get('template/download', 'TemplateController@getDownload');
 Route::get('template/cancel', 'TemplateController@getCancel');
 Route::get('template/chart', 'TemplateController@getChart');
-Route::get('template/comboselect', 'TemplateController@postComboselect');
+Route::post('template/comboselect', 'TemplateController@postComboselect');
 Route::post('template/multisearch', 'TemplateController@postMultisearch');
 Route::post('template/filter', 'TemplateController@postFilter');
 Route::post('template/delete', 'TemplateController@postDelete');
@@ -1197,13 +1199,15 @@ Route::get('acquisitions/provider', 'AcquisitionsController@get_provider');
 Route::get('acquisitions/download', 'AcquisitionsController@getDownload');
 Route::get('acquisitions/cancel', 'AcquisitionsController@getCancel');
 Route::get('acquisitions/chart', 'AcquisitionsController@getChart');
-Route::get('acquisitions/comboselect', 'AcquisitionsController@postComboselect');
+Route::post('acquisitions/comboselect', 'AcquisitionsController@postComboselect');
 Route::post('acquisitions/multisearch', 'AcquisitionsController@postMultisearch');
 Route::post('acquisitions/filter', 'AcquisitionsController@postFilter');
 Route::post('acquisitions/delete', 'AcquisitionsController@postDelete');
 
 //notifications
 Route::post('notifications/upnotifications', 'NotificationsController@postUpnotifications');
+Route::get('template_download_pdf/{id}', 'TemplateController@download_pdf');
+Route::get('template_download_word/{id}', 'TemplateController@download_word');
 
 Route::get('hr', function () {
     return redirect('dashboard');

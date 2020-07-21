@@ -43,7 +43,7 @@
 
                                 </div>
                             </div>
-                        @if($contract_id)                            
+                        @if(isset($contract_id))
                             <div class="form-group hidethis " style="display:none;" >
                                 <label for="Contract Id" class=" control-label col-md-4 text-left"> Contract <span class="asterix"> * </span></label>
                                 <div class="col-md-6">

@@ -55,7 +55,7 @@
             <div class="modal-body">
                  <form class="form-horizontal" id="addItem" method="post"> 
                     {!!Form::token()!!}
-                    {!! Form::hidden('template_id',$row->id,'') !!} 
+                    {!! Form::hidden('template_id',$row->id) !!} 
                     {!! Form::hidden('id','',['id'=>'id']) !!} 
 
                     <div class="form-group  " >                               
