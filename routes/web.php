@@ -299,19 +299,19 @@ Route::get('vacations/makepdfvacation', 'VacationsController@getMakepdfvacation'
 
 
 //vacationtypes
-Route::get('vacationtypes', 'VacationsController@getIndex');
-Route::get('vacationtypes/update', 'VacationsController@getUpdate');
-Route::get('vacationtypes/update/{id}', 'VacationsController@getUpdate');
-Route::get('vacationtypes/show/{id}', 'VacationsController@getShow');
-Route::post('vacationtypes/save', 'VacationsController@postSave');
-Route::post('vacationtypes/delete', 'VacationsController@postDelete');
-Route::post('vacationtypes/multisearch', 'VacationsController@postMultisearch');
-Route::post('vacationtypes/filter', 'VacationsController@postFilter');
-Route::get('vacationtypes/download', 'VacationsController@getDownload');
-Route::post('vacationtypes/comboselect', 'VacationsController@postComboselect');
-Route::post('vacationtypes/comboselectuser', 'VacationsController@postComboselectuser');
-Route::get('vacationtypes/combotable', 'VacationsController@getCombotable');
-Route::get('vacationtypes/combotablefield', 'VacationsController@getCombotablefield');
+Route::get('vacationtypes', 'VacationtypesController@getIndex');
+Route::get('vacationtypes/update', 'VacationtypesController@getUpdate');
+Route::get('vacationtypes/update/{id}', 'VacationtypesController@getUpdate');
+Route::get('vacationtypes/show/{id}', 'VacationtypesController@getShow');
+Route::post('vacationtypes/save', 'VacationtypesController@postSave');
+Route::post('vacationtypes/delete', 'VacationtypesController@postDelete');
+Route::post('vacationtypes/multisearch', 'VacationtypesController@postMultisearch');
+Route::post('vacationtypes/filter', 'VacationtypesController@postFilter');
+Route::get('vacationtypes/download', 'VacationtypesController@getDownload');
+Route::post('vacationtypes/comboselect', 'VacationtypesController@postComboselect');
+Route::post('vacationtypes/comboselectuser', 'VacationtypesController@postComboselectuser');
+Route::get('vacationtypes/combotable', 'VacationtypesController@getCombotable');
+Route::get('vacationtypes/combotablefield', 'VacationtypesController@getCombotablefield');
 
 
 //employeesvacations

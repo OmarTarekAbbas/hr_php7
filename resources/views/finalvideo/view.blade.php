@@ -57,7 +57,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Path</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->video_path,'/uploads/media/') !!} </td>
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->video_path,'/uploads/media/') !!} </td> --}}
+						<td><video src="{{url("/uploads/media/$row->video_path")}}" controls width="300px"></video></td>
 
 					</tr>
 				

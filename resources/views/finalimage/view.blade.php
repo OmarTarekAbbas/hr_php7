@@ -57,8 +57,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Path</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->image_path,'/uploads/media/') !!} </td>
-
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->image_path,'/uploads/media/') !!} </td> --}}
+						<td><img src="{{url("/uploads/media/$row->image_path")}}" alt="" width="100px	"></td>
 					</tr>
 				
 		</tbody>	

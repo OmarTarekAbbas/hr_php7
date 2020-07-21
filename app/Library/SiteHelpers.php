@@ -999,6 +999,7 @@ class SiteHelpers {
     public static function showUploadedFile($file, $path, $width = 50) {
 
         $files = public_path() . $path . $file;
+        // dd($files);
         if (file_exists($files) && $file != "") {
             //	echo $files ;
             $info = pathinfo($files);

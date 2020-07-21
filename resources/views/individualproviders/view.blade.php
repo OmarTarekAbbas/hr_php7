@@ -118,8 +118,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Identity File</td>
-						{{-- <td>{!! SiteHelpers::showUploadedFile($row->provider_identity_file,'/uploads/media/') !!} </td> --}}
-						<td><img height="100px" src="{{url("uploads/media/$row->provider_identity_file")}}" alt=""></td>
+						<td>{!! SiteHelpers::showUploadedFile($row->provider_identity_file,'/uploads/media/', 100) !!} </td>
+						{{-- <td><img height="100px" src="{{url("uploads/media/$row->provider_identity_file")}}" alt=""></td> --}}
 
 					</tr>
 				
