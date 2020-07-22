@@ -577,6 +577,8 @@ Route::get('employeestravelling/combotablefield', 'EmployeestravellingController
 
 //mycommitments
 Route::get('mycommitments', 'MycommitmentsController@getIndex');
+Route::get('mycommitments/approve/{id}', 'MycommitmentsController@getApprove');
+Route::get('mycommitmentusers/{id}', 'EmployeestasksController@getUsers');
 Route::get('mycommitments/update', 'MycommitmentsController@getUpdate');
 Route::get('mycommitments/update/{id}', 'MycommitmentsController@getUpdate');
 Route::get('mycommitments/show/{id}', 'MycommitmentsController@getShow');
@@ -593,6 +595,7 @@ Route::get('mycommitments/combotablefield', 'MycommitmentsController@getCombotab
 
 //employeestasks
 Route::get('employeestasks', 'EmployeestasksController@getIndex');
+Route::get('employeestasks/index', 'EmployeestasksController@getIndex');
 Route::get('employeestasks/update', 'EmployeestasksController@getUpdate');
 Route::get('employeestasks/update/{id}', 'EmployeestasksController@getUpdate');
 Route::get('employeestasks/show/{id}', 'EmployeestasksController@getShow');
@@ -1206,8 +1209,13 @@ Route::post('acquisitions/delete', 'AcquisitionsController@postDelete');
 
 //notifications
 Route::post('notifications/upnotifications', 'NotificationsController@postUpnotifications');
+Route::post('notifications/seennotification', 'NotificationsController@postSeennotification');
 Route::get('template_download_pdf/{id}', 'TemplateController@download_pdf');
 Route::get('template_download_word/{id}', 'TemplateController@download_word');
+Route::get('items/get/{id}', 'TemplateitemsController@get_items');
+Route::get('provider_info/{id}', 'ContractsController@get_provider');
+Route::get('contracts/operator', 'ContractsController@getOperator');
+Route::get('contract_download_pdf/{id}', 'ContractsController@download_pdf');
 
 Route::get('hr', function () {
     return redirect('dashboard');

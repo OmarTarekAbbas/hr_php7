@@ -86,13 +86,18 @@
                                 @if($field['field']=='assign_to_id')                                     
                                     
                                 @if($field['view'] =='1')
+                                @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                                @endphp
+
                               <td>					 
                                     @if($field['attribute']['image']['active'] =='1')
-                                    {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
+                                    {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
                                     @else	
                                     {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
                               
-                                    {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}	
+                                    {!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}	
                                     @endif						 
                                    					 
                                 </td>

@@ -50,5 +50,6 @@ class VerifyCsrfToken extends Middleware
         'countryperdiem/comboselect',
         'contracts/comboselect',
         'acquisitions/comboselect',
+        'notifications/seennotification'
     ];
 }
