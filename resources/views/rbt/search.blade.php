@@ -313,7 +313,7 @@
           if(record.track_file)
           {
               track_path = '<audio id="trackId" width="100%"  controls>'+
-                            '<source src="'+path+'uploads/track_file/'+record.track_file+'" >'+
+                            '<source src="'+path+record.track_file+'" >'+
                            ' </audio>' ;
           }
 

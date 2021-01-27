@@ -129,7 +129,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Commercial Register File</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->provider_commercial_register_file,'/uploads/images/') !!} </td>
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->provider_commercial_register_file,'/uploads/images/') !!} </td> --}}
+						<td><img height="100px" src="{{url("uploads/images/$row->provider_commercial_register_file")}}" alt=""></td>
 
 					</tr>
 				
@@ -141,7 +142,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>TC File</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->provider_tax_card_file,'/uploads/images/') !!} </td>
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->provider_tax_card_file,'/uploads/images/') !!} </td> --}}
+						<td><img height="100px" src="{{url("uploads/images/$row->provider_tax_card_file")}}" alt=""></td>
 
 					</tr>
 				
@@ -153,7 +155,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Agent File</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->provider_agent_file,'/uploads/images/') !!} </td>
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->provider_agent_file,'/uploads/images/') !!} </td> --}}
+						<td><img height="100px" src="{{url("uploads/images/$row->provider_agent_file")}}" alt=""></td>
 
 					</tr>
 				

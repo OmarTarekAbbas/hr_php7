@@ -141,6 +141,7 @@ class ContractsController extends Controller {
 
         $this->data['operators_except'] = \App\Models\operator::where('name', '!=', 'All')->get();
         $this->data['services'] = \App\Models\service::all();
+        // dd($this->data['services'][0]->id);
         $this->data['id'] = $id;
         $this->data['acquisition_id'] = $request->acquisition_id;
 

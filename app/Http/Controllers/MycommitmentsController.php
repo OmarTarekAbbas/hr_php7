@@ -118,6 +118,7 @@ class MycommitmentsController extends Controller {
             $this->data['row'] = $this->model->getColumnTable('tb_commitments');
         }
 
+        $this->data['contract_id'] = $request->contract_id;
 
         $this->data['id'] = $id;
         return view('mycommitments.form', $this->data);

@@ -39,7 +39,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Logo</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->provider_logo,'/uploads/media/') !!} </td>
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->provider_logo,'/uploads/media/') !!} </td> --}}
+						<td><img height="100px" src="{{url("uploads/media/$row->provider_logo")}}" alt=""></td>
 
 					</tr>
 				
@@ -117,7 +118,8 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Identity File</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->provider_identity_file,'/uploads/media/') !!} </td>
+						<td>{!! SiteHelpers::showUploadedFile($row->provider_identity_file,'/uploads/media/', 100) !!} </td>
+						{{-- <td><img height="100px" src="{{url("uploads/media/$row->provider_identity_file")}}" alt=""></td> --}}
 
 					</tr>
 				
@@ -129,8 +131,9 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>TC File</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->provider_tax_card_file,'/uploads/media/') !!} </td>
-
+						
+						<td><img height="100px" src="{{url("uploads/media/$row->provider_tax_card_file")}}" alt=""></td>
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->provider_tax_card_file,'/uploads/media/') !!} </td> --}}
 					</tr>
 				
 					<tr>

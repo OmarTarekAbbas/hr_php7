@@ -479,7 +479,7 @@
                             <div class="col-md-6">
                                 <select name='service_id[]' rows='5' required  class='select2 services' multiple >
                                     @foreach ($services as $key => $val)
-                                    <option  value ='{{$val->id}}' @if($contract_service && in_array($val->id, $contract_service)) selected @endif > {{$val->name }}</option>
+                                    <option  value ='{{$val->id}}' @if($contract_service) @foreach($contract_service as $CSid) @if($CSid == $val->id) selected @endif @endforeach @endif> {{$val->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

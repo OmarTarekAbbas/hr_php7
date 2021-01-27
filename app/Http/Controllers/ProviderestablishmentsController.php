@@ -126,15 +126,17 @@ class ProviderestablishmentsController extends Controller {
 		if($this->access['is_detail'] ==0)
 			return Redirect::to('dashboard')
 				->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus','error');
+		// $row = $this->model->getRow($id);
+		// if($row)
+		// {
+		// 	$this->data['row'] =  $row;
+		// } else {
+		// 	$this->data['row'] = $this->model->getColumnTable('providers');
+		// }
 
-		$row = $this->model->getRow($id);
-		if($row)
-		{
-			$this->data['row'] =  $row;
-		} else {
-			$this->data['row'] = $this->model->getColumnTable('providers');
-		}
+		$row = providerestablishments::where('id', $id)->first();
 
+		$this->data['row'] = $row;
 		$this->data['id'] = $id;
 		$this->data['access']		= $this->access;
 		return view('providerestablishments.view',$this->data);

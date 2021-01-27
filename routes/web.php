@@ -299,19 +299,19 @@ Route::get('vacations/makepdfvacation', 'VacationsController@getMakepdfvacation'
 
 
 //vacationtypes
-Route::get('vacationtypes', 'VacationsController@getIndex');
-Route::get('vacationtypes/update', 'VacationsController@getUpdate');
-Route::get('vacationtypes/update/{id}', 'VacationsController@getUpdate');
-Route::get('vacationtypes/show/{id}', 'VacationsController@getShow');
-Route::post('vacationtypes/save', 'VacationsController@postSave');
-Route::post('vacationtypes/delete', 'VacationsController@postDelete');
-Route::post('vacationtypes/multisearch', 'VacationsController@postMultisearch');
-Route::post('vacationtypes/filter', 'VacationsController@postFilter');
-Route::get('vacationtypes/download', 'VacationsController@getDownload');
-Route::post('vacationtypes/comboselect', 'VacationsController@postComboselect');
-Route::post('vacationtypes/comboselectuser', 'VacationsController@postComboselectuser');
-Route::get('vacationtypes/combotable', 'VacationsController@getCombotable');
-Route::get('vacationtypes/combotablefield', 'VacationsController@getCombotablefield');
+Route::get('vacationtypes', 'VacationtypesController@getIndex');
+Route::get('vacationtypes/update', 'VacationtypesController@getUpdate');
+Route::get('vacationtypes/update/{id}', 'VacationtypesController@getUpdate');
+Route::get('vacationtypes/show/{id}', 'VacationtypesController@getShow');
+Route::post('vacationtypes/save', 'VacationtypesController@postSave');
+Route::post('vacationtypes/delete', 'VacationtypesController@postDelete');
+Route::post('vacationtypes/multisearch', 'VacationtypesController@postMultisearch');
+Route::post('vacationtypes/filter', 'VacationtypesController@postFilter');
+Route::get('vacationtypes/download', 'VacationtypesController@getDownload');
+Route::post('vacationtypes/comboselect', 'VacationtypesController@postComboselect');
+Route::post('vacationtypes/comboselectuser', 'VacationtypesController@postComboselectuser');
+Route::get('vacationtypes/combotable', 'VacationtypesController@getCombotable');
+Route::get('vacationtypes/combotablefield', 'VacationtypesController@getCombotablefield');
 
 
 //employeesvacations
@@ -576,23 +576,26 @@ Route::get('employeestravelling/combotablefield', 'EmployeestravellingController
 
 
 //mycommitments
-Route::get('mycommitments', 'EmployeestravellingController@getIndex');
-Route::get('mycommitments/update', 'EmployeestravellingController@getUpdate');
-Route::get('mycommitments/update/{id}', 'EmployeestravellingController@getUpdate');
-Route::get('mycommitments/show/{id}', 'EmployeestravellingController@getShow');
-Route::post('mycommitments/save', 'EmployeestravellingController@postSave');
-Route::post('mycommitments/delete', 'EmployeestravellingController@postDelete');
-Route::post('mycommitments/multisearch', 'EmployeestravellingController@postMultisearch');
-Route::post('mycommitments/filter', 'EmployeestravellingController@postFilter');
-Route::get('mycommitments/download', 'EmployeestravellingController@getDownload');
-Route::post('mycommitments/comboselect', 'EmployeestravellingController@postComboselect');
-Route::post('mycommitments/comboselectuser', 'EmployeestravellingController@postComboselectuser');
-Route::get('mycommitments/combotable', 'EmployeestravellingController@getCombotable');
-Route::get('mycommitments/combotablefield', 'EmployeestravellingController@getCombotablefield');
+Route::get('mycommitments', 'MycommitmentsController@getIndex');
+Route::get('mycommitments/approve/{id}', 'MycommitmentsController@getApprove');
+Route::get('mycommitmentusers/{id}', 'EmployeestasksController@getUsers');
+Route::get('mycommitments/update', 'MycommitmentsController@getUpdate');
+Route::get('mycommitments/update/{id}', 'MycommitmentsController@getUpdate');
+Route::get('mycommitments/show/{id}', 'MycommitmentsController@getShow');
+Route::post('mycommitments/save', 'MycommitmentsController@postSave');
+Route::post('mycommitments/delete', 'MycommitmentsController@postDelete');
+Route::post('mycommitments/multisearch', 'MycommitmentsController@postMultisearch');
+Route::post('mycommitments/filter', 'MycommitmentsController@postFilter');
+Route::get('mycommitments/download', 'MycommitmentsController@getDownload');
+Route::post('mycommitments/comboselect', 'MycommitmentsController@postComboselect');
+Route::post('mycommitments/comboselectuser', 'MycommitmentsController@postComboselectuser');
+Route::get('mycommitments/combotable', 'MycommitmentsController@getCombotable');
+Route::get('mycommitments/combotablefield', 'MycommitmentsController@getCombotablefield');
 
 
 //employeestasks
 Route::get('employeestasks', 'EmployeestasksController@getIndex');
+Route::get('employeestasks/index', 'EmployeestasksController@getIndex');
 Route::get('employeestasks/update', 'EmployeestasksController@getUpdate');
 Route::get('employeestasks/update/{id}', 'EmployeestasksController@getUpdate');
 Route::get('employeestasks/show/{id}', 'EmployeestasksController@getShow');
@@ -1053,6 +1056,7 @@ Route::get('rbt/combotablefield', 'RbtController@getCombotablefield');
 Route::get('rbt/excel', 'RbtController@create_excel');
 Route::post('rbt/excel', 'RbtController@excelStore');
 Route::get('rbt/upload_tracks', 'RbtController@multi_upload');
+Route::post('rbt/save_tracks', 'RbtController@save_tracks');
 Route::get('rbt/file_system', 'RbtController@list_file_system');
 Route::get('rbt/file_system/content', 'RbtController@get_file_system');
 Route::get('rbt/search', 'RbtController@search');
@@ -1100,6 +1104,7 @@ Route::get('campaignalbums/add/track/{id}', 'CampaignalbumsController@get_track_
 Route::get('contracts', 'ContractsController@getIndex');
 Route::get('contracts/approve', 'ContractsController@getApprove');
 Route::get('contracts/update', 'ContractsController@getUpdate');
+Route::get('contracts/update/{id}', 'ContractsController@getUpdate');
 Route::get('contracts/show/{id}', 'ContractsController@getShow');
 Route::post('contracts/save', 'ContractsController@postSave');
 Route::get('contracts/trashed', 'ContractsController@getTrashed');
@@ -1108,15 +1113,18 @@ Route::get('contracts/provider', 'ContractsController@get_provider');
 Route::get('contracts/download', 'ContractsController@getDownload');
 Route::get('contracts/cancel', 'ContractsController@getCancel');
 Route::get('contracts/chart', 'ContractsController@getChart');
-Route::get('contracts/comboselect', 'ContractsController@postComboselect');
+Route::post('contracts/comboselect', 'ContractsController@postComboselect');
 Route::post('contracts/multisearch', 'ContractsController@postMultisearch');
 Route::post('contracts/filter', 'ContractsController@postFilter');
 Route::post('contracts/delete', 'ContractsController@postDelete');
 
 //contractsrenew
 Route::get('contractsrenew', 'ContractsrenewController@getIndex');
+Route::get('contractsrenew/index', 'ContractsrenewController@getIndex');
 Route::get('contractsrenew/approve', 'ContractsrenewController@getApprove');
+Route::get('contractsrenew/renew/{id}', 'ContractsrenewController@getRenew');
 Route::get('contractsrenew/update', 'ContractsrenewController@getUpdate');
+Route::get('contractsrenew/update/{id}', 'ContractsrenewController@getUpdate');
 Route::get('contractsrenew/show/{id}', 'ContractsrenewController@getShow');
 Route::post('contractsrenew/save', 'ContractsrenewController@postSave');
 Route::get('contractsrenew/trashed', 'ContractsrenewController@getTrashed');
@@ -1125,7 +1133,7 @@ Route::get('contractsrenew/provider', 'ContractsrenewController@get_provider');
 Route::get('contractsrenew/download', 'ContractsrenewController@getDownload');
 Route::get('contractsrenew/cancel', 'ContractsrenewController@getCancel');
 Route::get('contractsrenew/chart', 'ContractsrenewController@getChart');
-Route::get('contractsrenew/comboselect', 'ContractsrenewController@postComboselect');
+Route::post('contractsrenew/comboselect', 'ContractsrenewController@postComboselect');
 Route::post('contractsrenew/multisearch', 'ContractsrenewController@postMultisearch');
 Route::post('contractsrenew/filter', 'ContractsrenewController@postFilter');
 Route::post('contractsrenew/delete', 'ContractsrenewController@postDelete');
@@ -1142,13 +1150,14 @@ Route::get('commitments/provider', 'CommitmentsController@get_provider');
 Route::get('commitments/download', 'CommitmentsController@getDownload');
 Route::get('commitments/cancel', 'CommitmentsController@getCancel');
 Route::get('commitments/chart', 'CommitmentsController@getChart');
-Route::get('commitments/comboselect', 'CommitmentsController@postComboselect');
+Route::post('commitments/comboselect', 'CommitmentsController@postComboselect');
 Route::post('commitments/multisearch', 'CommitmentsController@postMultisearch');
 Route::post('commitments/filter', 'CommitmentsController@postFilter');
 Route::post('commitments/delete', 'CommitmentsController@postDelete');
 
 //Tasks
 Route::get('tasks', 'TasksController@getIndex');
+Route::get('tasks/index', 'EmployeestasksController@getIndex');
 Route::get('tasks/approve', 'TasksController@getApprove');
 Route::get('tasks/update/{id?}', 'TasksController@getUpdate');
 Route::get('tasks/show/{id}', 'TasksController@getShow');
@@ -1159,7 +1168,7 @@ Route::get('tasks/provider', 'TasksController@get_provider');
 Route::get('tasks/download', 'TasksController@getDownload');
 Route::get('tasks/cancel', 'TasksController@getCancel');
 Route::get('tasks/chart', 'TasksController@getChart');
-Route::get('tasks/comboselect', 'TasksController@postComboselect');
+Route::post('tasks/comboselect', 'TasksController@postComboselect');
 Route::post('tasks/multisearch', 'TasksController@postMultisearch');
 Route::post('tasks/filter', 'TasksController@postFilter');
 Route::post('tasks/delete', 'TasksController@postDelete');
@@ -1176,7 +1185,7 @@ Route::get('template/provider', 'TemplateController@get_provider');
 Route::get('template/download', 'TemplateController@getDownload');
 Route::get('template/cancel', 'TemplateController@getCancel');
 Route::get('template/chart', 'TemplateController@getChart');
-Route::get('template/comboselect', 'TemplateController@postComboselect');
+Route::post('template/comboselect', 'TemplateController@postComboselect');
 Route::post('template/multisearch', 'TemplateController@postMultisearch');
 Route::post('template/filter', 'TemplateController@postFilter');
 Route::post('template/delete', 'TemplateController@postDelete');
@@ -1193,13 +1202,20 @@ Route::get('acquisitions/provider', 'AcquisitionsController@get_provider');
 Route::get('acquisitions/download', 'AcquisitionsController@getDownload');
 Route::get('acquisitions/cancel', 'AcquisitionsController@getCancel');
 Route::get('acquisitions/chart', 'AcquisitionsController@getChart');
-Route::get('acquisitions/comboselect', 'AcquisitionsController@postComboselect');
+Route::post('acquisitions/comboselect', 'AcquisitionsController@postComboselect');
 Route::post('acquisitions/multisearch', 'AcquisitionsController@postMultisearch');
 Route::post('acquisitions/filter', 'AcquisitionsController@postFilter');
 Route::post('acquisitions/delete', 'AcquisitionsController@postDelete');
 
 //notifications
 Route::post('notifications/upnotifications', 'NotificationsController@postUpnotifications');
+Route::post('notifications/seennotification', 'NotificationsController@postSeennotification');
+Route::get('template_download_pdf/{id}', 'TemplateController@download_pdf');
+Route::get('template_download_word/{id}', 'TemplateController@download_word');
+Route::get('items/get/{id}', 'TemplateitemsController@get_items');
+Route::get('provider_info/{id}', 'ContractsController@get_provider');
+Route::get('contracts/operator', 'ContractsController@getOperator');
+Route::get('contract_download_pdf/{id}', 'ContractsController@download_pdf');
 
 Route::get('hr', function () {
     return redirect('dashboard');
@@ -1219,4 +1235,34 @@ define('DEV_SMS_HR_PUNCH', 'http://sms.ivashosting.com/hr_punch');
 
 define('ContractMonthCheck', 4);
 
-require base_path('setting.php');
+define('CNF_APPNAME','HR System');
+define('CNF_APPDESC','HR System');
+define('CNF_COMNAME','');
+define('CNF_EMAIL','');
+define('CNF_METAKEY','');
+define('CNF_METADESC','');
+define('CNF_GROUP','3');
+define('CNF_ACTIVATION','confirmation');
+define('CNF_MULTILANG','0');
+define('CNF_LANG','');
+define('CNF_REGIST','false');
+define('CNF_FRONT','false');
+define('CNF_RECAPTCHA','false');
+define('CNF_THEME','sximone');
+define('CNF_RECAPTCHAPUBLICKEY','');
+define('CNF_RECAPTCHAPRIVATEKEY','');
+define('CNF_MODE','development');
+define('CNF_LOGO','backend-logo.png');
+define('CNF_ALLOWIP','');
+define('CNF_RESTRICIP','192.116.134 , 194.111.606.21 ');
+define('CNF_VACATION','');
+define('CNF_START_HOUR','');
+define('CNF_END_HOUR','');
+define('CNF_TOLERANCE','');
+define('VACATIONS_PER_YEAR','21');
+define('PERMISSIONS_PER_MONTH','2');
+define('PERMISSIONS_Hours_PER_MONTH','4');
+define('CNF_BUILDER_TOOL','1');
+define('delay_notifications_email','hr@ivas.com.eg');
+define('SEND_SMS','0');
+define('DELAY_TIME_IN_HOURS','1');

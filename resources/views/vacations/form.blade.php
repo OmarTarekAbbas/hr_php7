@@ -26,7 +26,7 @@
         <div class="sbox animated fadeInRight">
             <div class="sbox-title"> <h4> <i class="fa fa-table"></i> </h4></div>
             <div class="sbox-content"> 	
-
+                {{-- {{dd($row)}} --}}
                 {!! Form::open(array('url'=>'vacations/save?return='.$return, 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ')) !!}
                 <div class="col-md-12">
                     <fieldset><legend> Vacations</legend>

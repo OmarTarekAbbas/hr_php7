@@ -350,8 +350,7 @@ class TrackController extends Controller {
 
     function postDownloadinf(Request $request) {
 
-
-        if (count($request->input('id')) >= 1) {
+        if ($request->has('id')) {
 
             $ids_arr = $request->input('id');
             $today = date("Y-m-d");
@@ -360,14 +359,11 @@ class TrackController extends Controller {
             $arr2 = array();
             $arr3 = array();
 
-
-/*
+            /*
             $tracks = \DB::table('tb_tracks')
                 ->whereIn('album_id', $ids_arr)->orderBy('id', 'desc')
                 ->get();
-
             */
-
 
             if ($request->input('albumId') !== NULL) { // download selected album tracks
                 $tracks = \DB::table('tb_tracks')
@@ -375,10 +371,9 @@ class TrackController extends Controller {
                 ->get();
             } else { // download mutli albums
                 $tracks = \DB::table('tb_tracks')
-                ->whereIn('id', $ids_arr)->orderBy('id', 'desc')
+                ->whereIn('album_id', $ids_arr)->orderBy('id', 'desc')
                 ->get();
             }
-
 
             foreach ($tracks as $row) {
                 $arr2['web_audition_preview'] = $row->web_audition_preview;
@@ -415,7 +410,6 @@ class TrackController extends Controller {
 
                 $arr3[] = $arr2;
 
-
                 $albumId = $row->album_id;
                 $Album = Album::findOrFail($albumId);
 
@@ -448,14 +442,11 @@ class TrackController extends Controller {
                 \File::delete('uploads/etisalat_upload/tracks_' . date('Y-m-d') . '.zip');
             }
 
-// the old cpmpress
-         //   \Zipper::make('uploads/' . $Album->name . '_' . date('Y-m-d') . '.zip')->add(public_path($filename))->add($files)->close();
+            // the old cpmpress
+            //   \Zipper::make('uploads/' . $Album->name . '_' . date('Y-m-d') . '.zip')->add(public_path($filename))->add($files)->close();
 
-          //    $album_tracks =    \Zipper::make('uploads/' . $Album->name . '_' . date('Y-m-d') . '.zip')->add(public_path($filename))->add($files)->close();
-        //      $inf_file  = \Zipper::make('uploads/' . $Album->name. '.zip')->add(public_path($filename))->close();
-
-
-
+            //    $album_tracks =    \Zipper::make('uploads/' . $Album->name . '_' . date('Y-m-d') . '.zip')->add(public_path($filename))->add($files)->close();
+            //      $inf_file  = \Zipper::make('uploads/' . $Album->name. '.zip')->add(public_path($filename))->close();
 
             $zip = new ZipArchive();
             $zip_tracks = 'uploads/etisalat_upload/tracks_' . date('Y-m-d').".zip"; // Zip name
@@ -471,7 +462,6 @@ class TrackController extends Controller {
             }
             $zip->close();
 
-
             $zip = new ZipArchive();
             $zip_album = 'uploads/etisalat_upload/tracks_'. date('Y-m-d').".zip"; // Zip name
             $zip->open($zip_album,  ZipArchive::CREATE);
@@ -486,9 +476,6 @@ class TrackController extends Controller {
             }
 
             $zip->close();
-
-
-
 
             return response()->download('uploads/etisalat_upload/tracks_'. date('Y-m-d') . '.zip');
             // return response()->download(public_path($filename));

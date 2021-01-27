@@ -46,6 +46,7 @@
 					<tr>
 						<td width='30%' class='label-view text-right'>Type</td>
 						<td>{!! SiteHelpers::gridDisplayView($row->content_type_id,'content_type_id','1:cont_types:id:cont_type_title') !!} </td>
+						{{-- <td>{!! $row->content_type_id !!} </td> --}}
 
 					</tr>
 				
@@ -57,8 +58,19 @@
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>File Path</td>
-						<td>{!! SiteHelpers::showUploadedFile($row->original_path,'/uploads/media/') !!} </td>
-
+						{{-- <td>{!! SiteHelpers::showUploadedFile($row->original_path,'/uploads/media/') !!} </td> --}}
+						{{-- 
+							3/ image
+							2/ video
+							1/audio
+						--}}
+						@if ($row->content_type_id == 3)
+							<td><img src="{{url("uploads/media/$row->original_path")}}" height="200px" alt=""></td>
+						@elseif($row->content_type_id == 2)
+							<td><video src="{{url("uploads/media/$row->original_path")}}" width="300px" controls></video></td>
+						@elseif($row->content_type_id == 1)
+							<td><audio src="{{url("uploads/media/$row->original_path")}}" controls></audio></td>
+						@endif
 					</tr>
 				
 		</tbody>	

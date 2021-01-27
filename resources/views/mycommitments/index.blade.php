@@ -85,6 +85,10 @@
                                 <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>									
                                 @foreach ($tableGrid as $field)
                                 @if($field['view'] =='1')
+                                @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                                @endphp
                                 <td>					 
                                     @if($field['attribute']['image']['active'] =='1')
                                     {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
@@ -93,11 +97,11 @@
                                     <?php $working_hours = explode('.', $row->working_hours) ?>
                                     <?= $working_hours[0] != 0 ? $working_hours[0] . ' Hour  ' : '' ?><?= $working_hours[1] != 0 ? ltrim($working_hours[1], '0') . ' Min.  ' : '' ?>
                                      @elseif($field['field']=='commitment')
-                                        {!! strip_tags(\Illuminate\Support\Str::words($row->$field['field'],10))!!}
+                                        {!! strip_tags(\Illuminate\Support\Str::words($row->$x,10))!!}
                                        
                                     @else
                                     {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-                                    {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}	
+                                    {!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}	
                                     @endif						 
                                     @endif						 
                                 </td>
