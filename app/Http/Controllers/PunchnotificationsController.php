@@ -153,9 +153,14 @@ class PunchnotificationsController extends Controller {
             $subject = $data['subject'];
             $punch_mesage = $data['message'];
             $link = 'punchnotifications/show/' . $id;
-            $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-            \SiteHelpers::addNotificationDelay($HR->id, $User->id, $subject, $link, $punch_mesage);
-
+            // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+            $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+            foreach ($HRS as $HR) {
+                \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                // send SMS
+                // $phone = $HR->phone_number;
+                // $this->send_sms($phone,$hr_subject, $hr_link);
+            }
 
             if (!is_null($request->input('apply'))) {
                 $return = 'punchnotifications/update/' . $id . '?return=' . self::returnUrl();
