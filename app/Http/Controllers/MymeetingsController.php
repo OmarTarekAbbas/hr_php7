@@ -166,9 +166,11 @@ class MymeetingsController extends Controller {
                 // send notification to hr to can approve or refuse
                  $subject = "New meeting request from manager:  " . $user->first_name . ' ' . $user->last_name;
                  $link = 'meetings/update/' . $id;
-                $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-                \SiteHelpers::addNotification($user->id, $HR->id, $subject, $link);
-
+                // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+                $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                foreach ($HRS as $HR) {
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                }
             }
 
             // send notification to manager if empployee request meeting from his manager

@@ -189,12 +189,15 @@ class EmployeestravellingController extends Controller
                 $admin_subject = "Travelling for " . $Employee->first_name . " " . $Employee->last_name . " is approved by his manager " . $user->first_name . " " . $user->last_name;
                 $admin_link = "mytravelling/admin/" . $id;
                 //  notification to hr
-                $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-                \SiteHelpers::addNotification(\Auth::user()->id, ADMIN_USER_ID, $admin_subject, $admin_link);
-                   // send SMS TO admin
-                $admin = User::where('id', ADMIN_USER_ID)->first();
-                $phone = $admin->phone_number;
-                $this->send_sms($phone,$admin_subject, $admin_link);
+                // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+                $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                foreach ($HRS as $HR) {
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                }
+                // send SMS TO admin
+                // $admin = User::where('id', ADMIN_USER_ID)->first();
+                // $phone = $admin->phone_number;
+                // $this->send_sms($phone,$admin_subject, $admin_link);
 
             }
             $link = 'mytravelling/show/' . $id;

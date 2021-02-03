@@ -46,8 +46,8 @@ class MypermissionsController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
 
@@ -60,7 +60,7 @@ class MypermissionsController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -69,20 +69,20 @@ class MypermissionsController extends Controller {
         $pagination->setPath('mypermissions');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mypermissions.index', $this->data);
@@ -101,7 +101,7 @@ class MypermissionsController extends Controller {
         }
 
 
-       
+
 
         // make limit to permissions to be 2 per month   // here 2 is PERMISSIONS_PER_MONTH as constant and can chnaged from setting by our HR
         // to make permission from 21 prev month to 20 current month  ( HR cycle is :  21 to 20)
@@ -157,7 +157,7 @@ class MypermissionsController extends Controller {
         $currentUserId = \Auth::user()->id;
 
 
-        // get hours of all permission of user except  manager not approve        
+        // get hours of all permission of user except  manager not approve
         $permissionsHours = \DB::select(\DB::raw("SELECT SUM(hours) AS All_permission_Hours FROM tb_permissions WHERE  employee_id = {$currentUserId} AND  (manager_approved  !=  0 OR manager_approved IS NULL ) AND  (date BETWEEN '{$start_date}' AND '{$end_date}') "));  // SNUM()  return float No#
 
 
@@ -185,7 +185,7 @@ class MypermissionsController extends Controller {
             return Redirect::to('dashboard')
                             ->with('messagetext', Lang::get('core.note_restric'))->with('msgstatus', 'error');
 
-        // to let each employees see his vacation only 
+        // to let each employees see his vacation only
         $MyPermission = Mypermissions::where('id', '=', $id)->where('employee_id', '=', \Auth::user()->id)->first();
         if ($MyPermission === NULL) {
             return Redirect::to('dashboard')
@@ -215,12 +215,12 @@ class MypermissionsController extends Controller {
            if ($type == 1) {
                if($data['from'] != "09:00am")
                 return Redirect::back()->with('messagetext', \Lang::get('core.note_error'))->with('msgstatus', 'error')->withErrors('Morning Permission Should Start At 9:00 AM')->withInput();
-               
-            } 
+
+            }
            elseif ($type == 2) {
                if($data['to'] != "05:00pm")
                 return Redirect::back()->with('messagetext', \Lang::get('core.note_error'))->with('msgstatus', 'error')->withErrors('Evening Permission Should End At 5:00 PM')->withInput();
-             
+
             }
             else{
                 return Redirect::back()->with('messagetext', \Lang::get('core.note_error'))->with('msgstatus', 'error')->withErrors('You Should Select Permission Type')->withInput();
@@ -339,26 +339,26 @@ class MypermissionsController extends Controller {
 
             $id = $this->model->insertRow2($data, $request->input('id'));
 
-            // mean that department manager make permission   ... so hr can approve to this 
+            // mean that department manager make permission   ... so hr can approve to this
             if ($mangerId == $user->id) {
                 //$data['manager_approved'] = 1;
-                // send notification to hr to can approve or refuse 
+                // send notification to hr to can approve or refuse
                 $subject = "New permission request from :  " . $user->first_name . ' ' . $user->last_name;
                 $link = 'permissions/update/' . $id;
-                $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-                \SiteHelpers::addNotification($user->id, $HR->id, $subject, $link);
-
-
-                // send SMS
-                $phone = $HR->phone_number;
-                $this->send_sms($phone,$subject, $link); 
-        
+                // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+                $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                foreach ($HRS as $HR) {
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                    // send SMS
+                    // $phone = $HR->phone_number;
+                    // $this->send_sms($phone,$hr_subject, $hr_link);
+                }
             }
 
 
 
-            // send notification to manager 
-            if ($mangerId != $user->id) {  // employee make permission and send notification to his manager 
+            // send notification to manager
+            if ($mangerId != $user->id) {  // employee make permission and send notification to his manager
                 $subject = "New permission request from " . $user->first_name . ' ' . $user->last_name;
                 $link = 'employeespermissions/update/' . $id;
                 \SiteHelpers::addNotification($user->id, $mangerId, $subject, $link);
@@ -366,8 +366,8 @@ class MypermissionsController extends Controller {
 
                 // send SMS
                 $phone = $manger->phone_number;
-                $this->send_sms($phone,$subject,$link); 
-        
+                $this->send_sms($phone,$subject,$link);
+
             }
 
 
@@ -397,7 +397,7 @@ class MypermissionsController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 

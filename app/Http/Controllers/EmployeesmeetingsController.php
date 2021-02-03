@@ -170,8 +170,11 @@ class EmployeesmeetingsController extends Controller {
                 $hr_subject = "Meeting for " . $Employee->first_name . " " . $Employee->last_name . " is approved by his manager " . $user->first_name . " " . $user->last_name;
                 $hr_link = "meetings/show/" . $id;
                 //  notification to hr
-                $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-                \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+                $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                foreach ($HRS as $HR) {
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                }
             }
             $link = 'mymeetings/show/' . $id;
             \SiteHelpers::addNotification(\Auth::user()->id, $Meeting->employee_id, $subject, $link);  //  notification to employee under current manager

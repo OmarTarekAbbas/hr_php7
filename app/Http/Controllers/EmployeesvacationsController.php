@@ -189,12 +189,14 @@ class EmployeesvacationsController extends Controller {
                 $hr_subject = "Vacation for " . $Employee->first_name . " " . $Employee->last_name . " is approved by  " . $user->first_name . " " . $user->last_name;
                 $hr_link = "vacations/show/" . $id;
                 //  notification to hr
-                $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-                \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
-
-                 // send SMS
-               $phone = $HR->phone_number;
-               $this->send_sms($phone,$hr_subject, $hr_link);
+                // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+                $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                foreach ($HRS as $HR) {
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                    // send SMS
+                    // $phone = $HR->phone_number;
+                    // $this->send_sms($phone,$hr_subject, $hr_link);
+                }
 
                 //  notification to ceo if employee is in managers department
                 if ($vacation->department_id == MANAGER_DEPARTMENT_ID) {

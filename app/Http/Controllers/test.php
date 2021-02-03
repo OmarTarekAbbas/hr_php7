@@ -42,8 +42,8 @@ class MytravellingController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
 
@@ -56,7 +56,7 @@ class MytravellingController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -65,20 +65,20 @@ class MytravellingController extends Controller {
         $pagination->setPath('mytravelling');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('mytravelling.index', $this->data);
@@ -116,7 +116,7 @@ class MytravellingController extends Controller {
 
 
 
-        // to let each employees see his travelling only 
+        // to let each employees see his travelling only
         $Mytravelling = Mytravelling::where('id', '=', $id)->where('employee_id', '=', \Auth::user()->id)->first();
         if ($Mytravelling === NULL) {
             return Redirect::to('dashboard')
@@ -143,7 +143,7 @@ class MytravellingController extends Controller {
         if ($validator->passes()) {
             $data = $this->validatePost('tb_mytravelling');
 
-          
+
             // to let employee create new meeting  "Mymeetings module"
             $user = User::find(\Auth::user()->id);
             if ($user) {
@@ -155,28 +155,33 @@ class MytravellingController extends Controller {
             $data['department_id'] = $departmentId;
             $data['manager_id'] = $mangerId;
             $data['date'] = date("Y-m-d");
-    
+
             $id = $this->model->insertRow2($data, $request->input('id'));
-            
-            
-              // mean that department manager make meeting ... so hr can approve to this 
-            if ($mangerId == $user->id) { 
+
+
+              // mean that department manager make meeting ... so hr can approve to this
+            if ($mangerId == $user->id) {
                 //$data['manager_approved'] = 1;
-                // send notification to hr to can approve or refuse 
+                // send notification to hr to can approve or refuse
                  $subject = "New travelling request from manager:  " . $user->first_name . ' ' . $user->last_name;
                  $link = 'travelling/update/' . $id;
-                $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
-                \SiteHelpers::addNotification($user->id, $HR->id, $subject, $link);
-                
+                // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
+                $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                foreach ($HRS as $HR) {
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                    // send SMS
+                    // $phone = $HR->phone_number;
+                    // $this->send_sms($phone,$hr_subject, $hr_link);
+                }
             }
 
-            // send notification to manager if empployee request travelling from his manager 
-            if ($mangerId != $user->id) {  // employee make overtime and send notification to his manager 
+            // send notification to manager if empployee request travelling from his manager
+            if ($mangerId != $user->id) {  // employee make overtime and send notification to his manager
                 $subject = "New travelling request from " . $user->first_name . ' ' . $user->last_name;
                 $link = 'employeestravelling/update/' . $id;
                 \SiteHelpers::addNotification($user->id, $mangerId, $subject, $link);
             }
-            
+
 
             if (!is_null($request->input('apply'))) {
                 $return = 'mytravelling/update/' . $id . '?return=' . self::returnUrl();
@@ -204,7 +209,7 @@ class MytravellingController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
