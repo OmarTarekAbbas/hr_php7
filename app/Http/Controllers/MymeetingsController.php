@@ -168,6 +168,8 @@ class MymeetingsController extends Controller {
                  $link = 'meetings/update/' . $id;
                 // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
                 $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
+                $hr_subject = '';
+                $hr_link = '';
                 foreach ($HRS as $HR) {
                     \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
                 }
