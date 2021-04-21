@@ -15,7 +15,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Input;
 use Redirect;
 use Symfony\Component\HttpFoundation\Response;
-
+use PDF;
 // note to add this
 
 abstract class Controller extends BaseController
@@ -1511,7 +1511,7 @@ abstract class Controller extends BaseController
         //  $contents = \View::make('pdf_print')->with('all', $all)->with('rows', $rows);
         //  echo $contents ; die ;
 
-        $pdf = new \PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = new PDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf::SetTitle($all['title']);
 
         // set some language dependent data:
