@@ -21,7 +21,7 @@ class EmployeesvacationsController extends Controller {
 
     public function __construct() {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        // $this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Employeesvacations();
 
         $this->info = $this->model->makeInfo($this->module);
@@ -41,6 +41,7 @@ class EmployeesvacationsController extends Controller {
     }
 
     public function getIndex(Request $request) {
+
 
         if ($this->access['is_view'] == 0)
             return Redirect::to('dashboard')
@@ -94,7 +95,6 @@ class EmployeesvacationsController extends Controller {
     }
 
     function getUpdate(Request $request, $id = null) {
-
         if ($id == '') {
             if ($this->access['is_add'] == 0)
                 return Redirect::to('dashboard')->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
@@ -104,8 +104,9 @@ class EmployeesvacationsController extends Controller {
             if ($this->access['is_edit'] == 0)
                 return Redirect::to('dashboard')->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
         }
-
+// dd(\Auth::user()->id);
         $EmVacation = Employeesvacations::where('id', '=', $id)->where('manager_id', '=', \Auth::user()->id)->whereNull('manager_approved')->first();
+        // dd($EmVacation);
         if ($EmVacation === NULL) {
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');

@@ -15,12 +15,12 @@ class months extends Sximo  {
 
 	public static function querySelect(  ){
 		
-		return "  SELECT tb_months.* FROM tb_months  ";
+		return " SELECT tb_months.* FROM tb_months ";
 	}	
 
 	public static function queryWhere(  ){
 		
-		return "  WHERE tb_months.id IS NOT NULL ";
+		return " WHERE tb_months.id IS NOT NULL ";
 	}
 	
 	public static function queryGroup(){

@@ -12,37 +12,37 @@
         <ul class="breadcrumb">
             <li><a href="{{ URL::to('dashboard') }}"> Dashboard </a></li>
             <li class="active">{{ $pageTitle }}</li>
-        </ul>	  
+        </ul>
 
     </div>
 
 
-    <div class="page-content-wrapper m-t">	 	
+    <div class="page-content-wrapper m-t">
 
         <div class="sbox animated fadeInRight">
             <div class="sbox-title"> <h5> <i class="fa fa-table"></i> </h5>
                 <div class="sbox-tools" >
                     @if(Session::get('gid') ==1)
                     <a href="{{ URL::to('sximo/module/config/'.$pageModule) }}" class="btn btn-xs btn-white tips" title=" {{ Lang::get('core.btn_config') }}" ><i class="fa fa-cog"></i></a>
-                    @endif 
+                    @endif
                 </div>
             </div>
-            <div class="sbox-content"> 	
+            <div class="sbox-content">
                 <div class="toolbar-line ">
-                    @if($access['is_add'] ==1)
+                    <!-- @if($access['is_add'] ==1)
                     <a href="{{ URL::to('employeesvacations/update') }}" class="tips btn btn-sm btn-white"  title="{{ Lang::get('core.btn_create') }}">
                         <i class="fa fa-plus-circle "></i>&nbsp;{{ Lang::get('core.btn_create') }}</a>
-                    @endif  
+                    @endif -->
                     @if($access['is_remove'] ==1)
                     <a href="javascript://ajax"  onclick="SximoDelete();" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_remove') }}">
                         <i class="fa fa-minus-circle "></i>&nbsp;{{ Lang::get('core.btn_remove') }}</a>
-                    @endif 		
+                    @endif
                     @if($access['is_excel'] ==1)
                     <a href="{{ URL::to('employeesvacations/download') }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
                         <i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
-                    @endif			
+                    @endif
 
-                </div> 		
+                </div>
 
 
 
@@ -69,15 +69,15 @@
                                 <td> </td>
                                 @foreach ($tableGrid as $t)
                                 @if($t['view'] =='1')
-                                <td>						
-                                    {!! SiteHelpers::transForm($t['field'] , $tableForm) !!}								
+                                <td>
+                                    {!! SiteHelpers::transForm($t['field'] , $tableForm) !!}
                                 </td>
                                 @endif
                                 @endforeach
                                 <td >
                                     <input type="hidden"  value="Search">
                                     <button type="button"  class=" do-quick-search btn btn-xs btn-info"> GO</button></td>
-                            </tr>	
+                            </tr>
 
 
 
@@ -85,33 +85,31 @@
                             @foreach ($rowData as $row)
                             <tr>
                                 <td width="30"> {{ ++$i }} </td>
-                                <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>									
+                                <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />  </td>
                                 @foreach ($tableGrid as $field)
                                 @if($field['view'] =='1')
-                                <td>					 
-                                    @if($field['attribute']['image']['active'] =='1')
-                                    {!! SiteHelpers::showUploadedFile($row->$field['field'],$field['attribute']['image']['path']) !!}
-                                    @else	
 
-                                    <?php
-                                    if ($field['field'] == 'manager_approved' AND $row->$field['field'] == 1) {
-                                        echo 'Yes';
-                                    } elseif ($field['field'] == "manager_approved" && $row->$field['field'] == 0  && is_int($row->$field['field'])) {
-                                        echo 'No';
-                                    } else {
-                                        ?>
+                            @php
+                                $conn = (isset($field['conn']) ? $field['conn'] : array() );
+                                $x = $field['field'];
+                            @endphp
+
+                            <td>
+                                @if($field['attribute']['image']['active'] =='1')
+                                    {!! SiteHelpers::showUploadedFile($row->$x,$field['attribute']['image']['path']) !!}
+                                @else
+                                    @if($field['field'] == 'manager_approved' &&  $row->$x == '1'  )
+                                        Yes
+                                    @elseif( $field['field'] == "manager_approved" && $row->$x == 0  && is_int($row->$x) )
+                                        No
+                                    @else
                                         {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
-                                        {!! SiteHelpers::gridDisplay($row->$field['field'],$field['field'],$conn) !!}
+                                        {!! SiteHelpers::gridDisplay($row->$x,$field['field'],$conn) !!}
+                                    @endif
+                                @endif
+                            </td>
 
-
-                                        <?php
-                                    }
-                                    ?>
-
-
-                                    @endif						 
-                                </td>
-                                @endif					 
+                        @endif
                                 @endforeach
                                 <td width="150">
                                     @if($access['is_detail'] ==1)
@@ -121,14 +119,14 @@
                                     <a  href="{{ URL::to('employeesvacations/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
                                     @endif
 
-<!--                                    @if($row->manager_approved == 0    &&    strlen(trim($row->manager_reason)) == 0 )   
-                                    <a  class="btn btn-success" role="button"   href="{{ URL::to('approved/'.$row->id.'?return='.$return) }}"  title="{{ Lang::get('core.btn_approved') }}"> 
-                                       Approve   
+<!--                                    @if($row->manager_approved == 0    &&    strlen(trim($row->manager_reason)) == 0 )
+                                    <a  class="btn btn-success" role="button"   href="{{ URL::to('approved/'.$row->id.'?return='.$return) }}"  title="{{ Lang::get('core.btn_approved') }}">
+                                       Approve
                                     </a>
                                     @endif-->
 
 
-                                </td>				 
+                                </td>
                             </tr>
 
                             @endforeach
@@ -141,9 +139,9 @@
                 {!! Form::close() !!}
                 @include('footer')
             </div>
-        </div>	
-    </div>	  
-</div>	
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
 
@@ -153,5 +151,5 @@
         });
 
     });
-</script>		
+</script>
 @stop

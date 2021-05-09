@@ -315,19 +315,19 @@ Route::get('vacationtypes/combotablefield', 'VacationtypesController@getCombotab
 
 
 //employeesvacations
-Route::get('employeesvacations', 'VacationsController@getIndex');
-Route::get('employeesvacations/update', 'VacationsController@getUpdate');
-Route::get('employeesvacations/update/{id}', 'VacationsController@getUpdate');
-Route::get('employeesvacations/show/{id}', 'VacationsController@getShow');
-Route::post('employeesvacations/save', 'VacationsController@postSave');
-Route::post('employeesvacations/delete', 'VacationsController@postDelete');
-Route::post('employeesvacations/multisearch', 'VacationsController@postMultisearch');
-Route::post('employeesvacations/filter', 'VacationsController@postFilter');
-Route::get('employeesvacations/download', 'VacationsController@getDownload');
-Route::post('employeesvacations/comboselect', 'VacationsController@postComboselect');
-Route::post('employeesvacations/comboselectuser', 'VacationsController@postComboselectuser');
-Route::get('employeesvacations/combotable', 'VacationsController@getCombotable');
-Route::get('employeesvacations/combotablefield', 'VacationsController@getCombotablefield');
+Route::get('employeesvacations', 'EmployeesvacationsController@getIndex');
+Route::get('employeesvacations/update', 'EmployeesvacationsController@getUpdate');
+Route::get('employeesvacations/update/{id}', 'EmployeesvacationsController@getUpdate');
+Route::get('employeesvacations/show/{id}', 'EmployeesvacationsController@getShow');
+Route::post('employeesvacations/save', 'EmployeesvacationsController@postSave');
+Route::post('employeesvacations/delete', 'EmployeesvacationsController@postDelete');
+Route::post('employeesvacations/multisearch', 'EmployeesvacationsController@postMultisearch');
+Route::post('employeesvacations/filter', 'EmployeesvacationsController@postFilter');
+Route::get('employeesvacations/download', 'EmployeesvacationsController@getDownload');
+Route::post('employeesvacations/comboselect', 'EmployeesvacationsController@postComboselect');
+Route::post('employeesvacations/comboselectuser', 'EmployeesvacationsController@postComboselectuser');
+Route::get('employeesvacations/combotable', 'EmployeesvacationsController@getCombotable');
+Route::get('employeesvacations/combotablefield', 'EmployeesvacationsController@getCombotablefield');
 
 //occationscategories
 Route::get('occationscategories', 'OccationscategoriesController@getIndex');
@@ -1216,6 +1216,25 @@ Route::get('items/get/{id}', 'TemplateitemsController@get_items');
 Route::get('provider_info/{id}', 'ContractsController@get_provider');
 Route::get('contracts/operator', 'ContractsController@getOperator');
 Route::get('contract_download_pdf/{id}', 'ContractsController@download_pdf');
+
+
+//months
+Route::get('months', 'MonthsController@getIndex');
+Route::get('months/approve', 'MonthsController@getApprove');
+Route::get('months/update/{id?}', 'MonthsController@getUpdate');
+Route::get('months/show/{id}', 'MonthsController@getShow');
+Route::post('months/save', 'MonthsController@postSave');
+Route::get('months/trashed', 'MonthsController@getTrashed');
+Route::get('months/teamapprove', 'MonthsController@getTeamapprove');
+Route::get('months/provider', 'MonthsController@get_provider');
+Route::get('months/download', 'MonthsController@getDownload');
+Route::get('months/cancel', 'MonthsController@getCancel');
+Route::get('months/chart', 'MonthsController@getChart');
+Route::post('months/comboselect', 'MonthsController@postComboselect');
+Route::post('months/multisearch', 'MonthsController@postMultisearch');
+Route::post('months/filter', 'MonthsController@postFilter');
+Route::post('months/delete', 'MonthsController@postDelete');
+
 
 Route::get('hr', function () {
     return redirect('dashboard');

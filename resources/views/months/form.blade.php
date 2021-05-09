@@ -30,27 +30,27 @@
 		 {!! Form::open(array('url'=>'months/save?return='.$return, 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ')) !!}
 <div class="col-md-12">
 						<fieldset><legend> Months</legend>
-									
+				
 								  <div class="form-group  " >
 									<label for="Id" class=" control-label col-md-4 text-left"> Id </label>
 									<div class="col-md-6">
-									  {!! Form::text('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
-									 </div> 
+									  {!! Form::text('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!}
+									 </div>
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div> 
 								  <div class="form-group  " >
 									<label for="Month" class=" control-label col-md-4 text-left"> Month <span class="asterix"> * </span></label>
 									<div class="col-md-6">
-									  {!! Form::text('month', $row['month'],array('class'=>'form-control', 'placeholder'=>'', 'required'=>'true'  )) !!} 
-									 </div> 
+									  {!! Form::text('month', $row['month'],array('class'=>'form-control', 'placeholder'=>'', 'required'=>'true'  )) !!}
+									 </div>
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> </fieldset>
 			</div>
-			
+
 			
 
 		

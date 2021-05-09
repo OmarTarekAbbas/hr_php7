@@ -34,13 +34,13 @@
 					<tr>
 						<td width='30%' class='label-view text-right'>Id</td>
 						<td>{{ $row->id }} </td>
-						
+
 					</tr>
 				
 					<tr>
 						<td width='30%' class='label-view text-right'>Month</td>
 						<td>{{ $row->month }} </td>
-						
+
 					</tr>
 				
 		</tbody>	

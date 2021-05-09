@@ -28,7 +28,6 @@ class VacationsController extends Controller {
         $this->middleware(function ($request, $next) {
 
             $this->access = $this->model->validAccess($this->info['id']);
-
             return $next($request);
         });
         $this->data = array(

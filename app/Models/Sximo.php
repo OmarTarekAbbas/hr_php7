@@ -727,6 +727,7 @@ class Sximo extends Model {
         $row = \DB::table('tb_groups_access')->where('module_id', '=', $id)
                 ->where('group_id', '=', \Session::get('gid'))
                 ->get();
+                // dd($row);
 
         if (count($row) >= 1) {
             $row = $row[0];
