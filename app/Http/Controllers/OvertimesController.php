@@ -201,6 +201,37 @@ class OvertimesController extends Controller {
         }
     }
 
+    public function getEmployeeOvertimes(Request $request)
+    {
+        $employee = User::where('id', $request->employee_id)->first();
+        $employee_name = $employee->first_name . ' ' . $employee->last_name;
+
+        $overtimes = Overtimes::query()->where('employee_id', $request->employee_id);
+        if ($request->has('date_from') && $request->date_from != '') {
+            $overtimes = $overtimes->whereDate('date', '>=', $request->date_from);
+        } else {
+            $first_overtime = Overtimes::where('employee_id', $request->employee_id)->first();
+            $request->date_from = isset($first_overtime) && $first_overtime != null ? $first_overtime->date : null;
+        }
+
+        if ($request->has('date_to') && $request->date_to != '') {
+            $overtimes = $overtimes->whereDate('date', '<=', $request->date_to);
+        } else {
+            $request->date_to = date('Y-m-d');
+        }
+
+        $overtimes = $overtimes->get();
+
+        $total_overtimes_hours = 0;
+        if (isset($overtimes) && $overtimes != null && count($overtimes)) {
+            foreach ($overtimes as $overtime) {
+                $total_overtimes_hours = $total_overtimes_hours + $overtime->no_hours;
+            }
+        }
+
+        return Redirect::to('overtimes')->with('employee_name', $employee_name)->with('date_from', $request->date_from)->with('date_to', $request->date_to)->with('total_overtimes_hours', $total_overtimes_hours);
+    }
+
 	/*
 	  // to replace : with .
     public function getModify() {

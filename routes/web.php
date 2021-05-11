@@ -361,6 +361,7 @@ Route::post('overtimes/comboselectuser', 'OvertimesController@postComboselectuse
 Route::get('overtimes/combotable', 'OvertimesController@getCombotable');
 Route::get('overtimes/combotablefield', 'OvertimesController@getCombotablefield');
 Route::get('overtimes/makepdfvacation', 'OvertimesController@getMakepdfvacation');
+Route::post('overtimes/employee-overtimes', 'OvertimesController@getEmployeeOvertimes')->name("employee.overtimes");
 
 
 
