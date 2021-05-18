@@ -67,11 +67,11 @@ if (isset($_REQUEST['search'])) {
                                 @endif
                                 @endforeach
                                 <td>
-                                    <input type="text" name="date_from" class="date_lang form-control input-sm" value=""
+                                    <input type="text" name="date_from" class="date_lang form-control input-sm" value="{{old('date_from') ? old('date_from'): Session::get('date_from')}}"
                                         autocomplete="off">
                                 </td>
                                 <td>
-                                    <input type="text" name="date_to" class="date_lang form-control input-sm" value=""
+                                    <input type="text" name="date_to" class="date_lang form-control input-sm" value="{{old('date_to') ? old('date_to'): Session::get('date_to')}}"
                                         autocomplete="off">
                                 </td>
                                 <td>
