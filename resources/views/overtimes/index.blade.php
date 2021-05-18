@@ -3,12 +3,12 @@
 @section('content')
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
 <style>
-    .alert-success {
-        margin: 20px;
-        color: #fff;
-        background-color: #89c4f4;
-        border-color: #72b8f2;
-    }
+.alert-success {
+    margin: 20px;
+    color: #fff;
+    background-color: #89c4f4;
+    border-color: #72b8f2;
+}
 </style>
 
 
@@ -41,7 +41,8 @@ if (isset($_REQUEST['search'])) {
                 <h5> <i class="fa fa-table"></i> Employee Overtime </h5>
             </div>
             <div class="sbox-content">
-                {!! Form::open(array('url'=>'overtimes/employee-overtimes', 'class'=>'form-horizontal' ,'id' =>'EmployeeOvertimesHoursTable' )) !!}
+                {!! Form::open(array('url'=>'overtimes/employee-overtimes', 'class'=>'form-horizontal' ,'id'
+                =>'EmployeeOvertimesHoursTable' )) !!}
                 <div class="table-responsive">
                     <table class="table table-striped ">
                         <thead>
@@ -66,14 +67,17 @@ if (isset($_REQUEST['search'])) {
                                 @endif
                                 @endforeach
                                 <td>
-                                    <input type="text" name="date_from" class="date_lang form-control input-sm" value="" autocomplete="off">
+                                    <input type="text" name="date_from" class="date_lang form-control input-sm" value=""
+                                        autocomplete="off">
                                 </td>
                                 <td>
-                                    <input type="text" name="date_to" class="date_lang form-control input-sm" value="" autocomplete="off">
+                                    <input type="text" name="date_to" class="date_lang form-control input-sm" value=""
+                                        autocomplete="off">
                                 </td>
                                 <td>
                                     <input type="hidden" value="Search">
-                                    <button type="button" class="do-employee-overtimes-search btn btn-xs btn-info"> GO </button>
+                                    <button type="button" class="do-employee-overtimes-search btn btn-xs btn-info"> GO
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -81,13 +85,22 @@ if (isset($_REQUEST['search'])) {
                 </div>
                 {!! Form::close() !!}
             </div>
+            @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             @if(Session::has('total_overtimes_hours'))
-                <div class="alert alert-success" role="alert">
-                    <p> <strong>Employee Full Name: {{ Session::get('employee_name') }}</strong> </p>
-                    <p> <strong>Date From: {{ Session::get('date_from') }}</strong> </p>
-                    <p> <strong>Date To: {{ Session::get('date_to') }}</strong> </p>
-                    <p> <strong>Employee overTime hours: {{ Session::get('total_overtimes_hours') }} hour</strong> </p>
-                </div>
+            <div class="alert alert-success" role="alert">
+                <p> <strong>Employee Full Name: {{ Session::get('employee_name') }}</strong> </p>
+                <p> <strong>Date From: {{ Session::get('date_from') }}</strong> </p>
+                <p> <strong>Date To: {{ Session::get('date_to') }}</strong> </p>
+                <p> <strong>Employee overTime hours: {{ Session::get('total_overtimes_hours') }} hour</strong> </p>
+            </div>
             @endif
         </div>
     </div>
@@ -99,22 +112,26 @@ if (isset($_REQUEST['search'])) {
                 <h5> <i class="fa fa-table"></i> </h5>
                 <div class="sbox-tools">
                     @if(Session::get('gid') ==1)
-                    <a href="{{ URL::to('sximo/module/config/'.$pageModule) }}" class="btn btn-xs btn-white tips" title=" {{ Lang::get('core.btn_config') }}"><i class="fa fa-cog"></i></a>
+                    <a href="{{ URL::to('sximo/module/config/'.$pageModule) }}" class="btn btn-xs btn-white tips"
+                        title=" {{ Lang::get('core.btn_config') }}"><i class="fa fa-cog"></i></a>
                     @endif
                 </div>
             </div>
             <div class="sbox-content">
                 <div class="toolbar-line ">
                     @if($access['is_add'] ==1)
-                    <a href="{{ URL::to('overtimes/update') }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_create') }}">
+                    <a href="{{ URL::to('overtimes/update') }}" class="tips btn btn-sm btn-white"
+                        title="{{ Lang::get('core.btn_create') }}">
                         <i class="fa fa-plus-circle "></i>&nbsp;{{ Lang::get('core.btn_create') }}</a>
                     @endif
                     @if($access['is_remove'] ==1)
-                    <a href="javascript://ajax" onclick="SximoDelete();" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_remove') }}">
+                    <a href="javascript://ajax" onclick="SximoDelete();" class="tips btn btn-sm btn-white"
+                        title="{{ Lang::get('core.btn_remove') }}">
                         <i class="fa fa-minus-circle "></i>&nbsp;{{ Lang::get('core.btn_remove') }}</a>
                     @endif
                     @if($access['is_excel'] ==1)
-                    <a href="{{ URL::to('overtimes/download'.$search) }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
+                    <a href="{{ URL::to('overtimes/download'.$search) }}" class="tips btn btn-sm btn-white"
+                        title="{{ Lang::get('core.btn_download') }}">
                         <i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
                     @endif
 
@@ -159,7 +176,8 @@ if (isset($_REQUEST['search'])) {
                             @foreach ($rowData as $row)
                             <tr>
                                 <td width="30"> {{ ++$i }} </td>
-                                <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" /> </td>
+                                <td width="50"><input type="checkbox" class="ids" name="id[]" value="{{ $row->id }}" />
+                                </td>
                                 @foreach ($tableGrid as $field)
                                 @if($field['view'] =='1')
 
@@ -174,7 +192,8 @@ if (isset($_REQUEST['search'])) {
                                     @else
                                     @if($field['field'] == 'manager_approved' && $row->$x == '1' )
                                     Yes
-                                    @elseif( $field['field'] == "manager_approved" && $row->$x == 0 && is_int($row->$x) )
+                                    @elseif( $field['field'] == "manager_approved" && $row->$x == 0 && is_int($row->$x)
+                                    )
                                     No
                                     @else
                                     {{--*/ $conn = (isset($field['conn']) ? $field['conn'] : array() ) /*--}}
@@ -186,13 +205,20 @@ if (isset($_REQUEST['search'])) {
                                 @endforeach
                                 <td width="100">
                                     @if($access['is_detail'] ==1)
-                                    <a href="{{ URL::to('overtimes/show/'.$row->id.'?return='.$return)}}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_view') }}"><i class="fa  fa-search "></i></a>
+                                    <a href="{{ URL::to('overtimes/show/'.$row->id.'?return='.$return)}}"
+                                        class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_view') }}"><i
+                                            class="fa  fa-search "></i></a>
                                     @endif
                                     @if($access['is_edit'] ==1 && $row->manager_approved === NULL )
-                                    <a href="{{ URL::to('overtimes/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
+                                    <a href="{{ URL::to('overtimes/update/'.$row->id.'?return='.$return) }}"
+                                        class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_edit') }}"><i
+                                            class="fa fa-edit "></i></a>
                                     @endif
 
-                                    <a href="{{ URL::to('overtimes/makepdfvacation?id='.$row->id) }}" class="tips btn btn-xs btn-white" title="{{ Lang::get('core.btn_preview_as_pdf') }}"><i class="fa fa-arrows-alt "></i></a>
+                                    <a href="{{ URL::to('overtimes/makepdfvacation?id='.$row->id) }}"
+                                        class="tips btn btn-xs btn-white"
+                                        title="{{ Lang::get('core.btn_preview_as_pdf') }}"><i
+                                            class="fa fa-arrows-alt "></i></a>
 
                                 </td>
                             </tr>
@@ -211,18 +237,19 @@ if (isset($_REQUEST['search'])) {
     </div>
 </div>
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 
-        $('.do-quick-search').click(function() {
-            $('#SximoTable').attr('action', '{{ URL::to("overtimes/multisearch")}}');
-            $('#SximoTable').submit();
-        });
-
-        $('.do-employee-overtimes-search').click(function() {
-            $('#EmployeeOvertimesHoursTable').attr('action', '{{ URL::to("overtimes/employee-overtimes")}}');
-            $('#EmployeeOvertimesHoursTable').submit();
-        });
-
+    $('.do-quick-search').click(function() {
+        $('#SximoTable').attr('action', '{{ URL::to("overtimes/multisearch")}}');
+        $('#SximoTable').submit();
     });
+
+    $('.do-employee-overtimes-search').click(function() {
+        $('#EmployeeOvertimesHoursTable').attr('action',
+        '{{ URL::to("overtimes/employee-overtimes")}}');
+        $('#EmployeeOvertimesHoursTable').submit();
+    });
+
+});
 </script>
 @stop

@@ -203,6 +203,15 @@ class OvertimesController extends Controller {
 
     public function getEmployeeOvertimes(Request $request)
     {
+            $validator = Validator::make($request->all(), [
+                'employee_id' => 'required',
+                'date_from' => 'required',
+                'date_to' => 'required|after_or_equal:date_from',
+            ]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+
         $employee = User::where('id', $request->employee_id)->first();
         $employee_name = $employee->first_name . ' ' . $employee->last_name;
 
