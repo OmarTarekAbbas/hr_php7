@@ -767,6 +767,7 @@ Route::get('track/combotable', 'TrackController@getCombotable');
 Route::get('track/combotablefield', 'TrackController@getCombotablefield');
 Route::get('track/combotablefield', 'TrackController@getCombotablefield');
 Route::post('track/downloadinf', 'TrackController@postDownloadinf');
+Route::post('sximo/module/saveformfield/tracks', 'Sximo\ModuleController@postSaveformfield');
 
 
 //providertypes
