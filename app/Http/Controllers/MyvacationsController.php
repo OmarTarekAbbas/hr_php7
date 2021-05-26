@@ -171,7 +171,7 @@ class MyvacationsController extends Controller
             $data = $this->validatePost('tb_myvacations');
 
             $user = User::find(\Auth::user()->id);
-
+// dd($user);
             if ($user) {
                 $departmentId = $user->department_id;
                 $department = \DB::table('tb_departments')->where('id', $departmentId)->first();
@@ -233,10 +233,10 @@ class MyvacationsController extends Controller
                     $date1 = new \DateTime();
                     $date2 = new \DateTime($data['from']);
                     $sub = $date1->diff($date2)->invert;
-                    if ($sub != 0) {
-                        return Redirect::back()
-                            ->with('messagetext', \Lang::get("You must request Annual vacation before one day at least !"))->with('msgstatus', 'error');
-                    }
+                    // if ($sub != 0) {
+                    //     return Redirect::back()
+                    //         ->with('messagetext', \Lang::get("You must request Annual vacation before one day at least !"))->with('msgstatus', 'error');
+                    // }
 
                 }
             }
