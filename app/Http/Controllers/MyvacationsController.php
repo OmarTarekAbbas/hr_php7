@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Core\Config;
 use App\Models\Myvacations;
 use App\User;
 use Illuminate\Http\Request;
@@ -219,11 +220,16 @@ class MyvacationsController extends Controller
                                 return Redirect::back()
                                     ->with('messagetext', \Lang::get(" You Can't request more than 2 days Emergency on one time!"))->with('msgstatus', 'error');
                             } else {
-                                $dateForm = date('l', strtotime($data['from']));
-                                if ($dateForm == "Thursday" || $dateForm == "Sunday") {
-                                    return Redirect::back()
-                                        ->with('messagetext', \Lang::get(" You Can't request emergency on Sunday OR Thursday !"))->with('msgstatus', 'error');
+                                $enable_vacation_all_days = Config::where('cnf_id', 1)->first(); //enable_vacation_all_days
+                                if($enable_vacation_all_days->enable_vacation_all_days == 0){
+                                    $dateForm = date('l', strtotime($data['from']));
+                                    if ($dateForm == "Thursday" || $dateForm == "Sunday") {
+                                        return Redirect::back()
+                                            ->with('messagetext', \Lang::get(" You Can't request emergency on Sunday OR Thursday !"))->with('msgstatus', 'error');
+                                    }
                                 }
+
+
                             }
                         }
                     }

@@ -148,6 +148,16 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="ipt" class=" control-label col-md-4"> Enable Vacation All Days </label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" name="enable_vacation_all_days">
+                                            <option value="1"  @if($tb_config->enable_vacation_all_days ==1) selected @endif>Enable</option>
+                                            <option value="0"  @if($tb_config->enable_vacation_all_days ==0) selected @endif>Disable</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <!-- <div class="form-group">
                                     <label for="ipt" class=" control-label col-md-4">Delay Time In Hours</label>
                                     <div class="col-md-8">

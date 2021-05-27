@@ -136,6 +136,7 @@ class ConfigController extends Controller
             $tb_config->permissions_hours_per_month = $request->input('permissions_hours_per_month');
             $tb_config->cnf_show_builder_tool = $request->input('cnf_show_builder_tool');
             $tb_config->delay_notifications_email = $request->input('delay_notifications_email');
+            $tb_config->enable_vacation_all_days = $request->input('enable_vacation_all_days');
             $tb_config->sms = $request->input('sms');
             $tb_config->save();
 
