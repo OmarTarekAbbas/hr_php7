@@ -223,8 +223,8 @@
                                         <input type="file" name="logo">
                                         <p> <i>{{ Lang::get('core.logo_dimension') }}</i> </p>
                                         <div style="padding:5px; border:solid 1px #ddd; background:#f5f5f5; width:auto;">
-                                            @if(file_exists(public_path().'/sximo/images/'.CNF_LOGO) && CNF_LOGO !='')
-                                            <img src="{{ asset('sximo/images/'.CNF_LOGO)}}" alt="{{ CNF_APPNAME }}" />
+                                            @if(file_exists(public_path().'/sximo/images/'.$tb_config->cnf_logo) && $tb_config->cnf_logo !='')
+                                            <img src="{{ asset('sximo/images/'.$tb_config->cnf_logo)}}" alt="{{ CNF_APPNAME }}" />
                                             @else
                                             <img src="{{ asset('sximo/images/logo.png')}}" alt="{{ CNF_APPNAME }}" />
                                             @endif

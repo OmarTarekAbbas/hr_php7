@@ -46,12 +46,12 @@ class ConfigController extends Controller
         if (!$validator->fails()) {
             $logo = '';
             if (!is_null(Input::file('logo'))) {
-
+// dd("logo");
                 $file = Input::file('logo');
                 $destinationPath = public_path() . '/sximo/images/';
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                $logo = 'backend-logo.' . $extension;
+                $logo = 'backend-logo_' .time().'.'. $extension;
                 $uploadSuccess = $file->move($destinationPath, $logo);
             }
 
@@ -138,6 +138,7 @@ class ConfigController extends Controller
             $tb_config->delay_notifications_email = $request->input('delay_notifications_email');
             $tb_config->enable_vacation_all_days = $request->input('enable_vacation_all_days');
             $tb_config->sms = $request->input('sms');
+            $tb_config->cnf_logo = $logo;
             $tb_config->save();
 
 
