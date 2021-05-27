@@ -204,7 +204,6 @@ class MypermissionsController extends Controller {
     }
 
     function postSave(Request $request) {
-
         $rules = $this->validateForm();
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
@@ -217,8 +216,8 @@ class MypermissionsController extends Controller {
 
             }
            elseif ($type == 2) {
-               if($data['to'] != "05:00pm")
-                return Redirect::back()->with('messagetext', \Lang::get('core.note_error'))->with('msgstatus', 'error')->withErrors('Evening Permission Should End At 5:00 PM')->withInput();
+               if($data['to'] != "07:00pm")
+                return Redirect::back()->with('messagetext', \Lang::get('core.note_error'))->with('msgstatus', 'error')->withErrors('Evening Permission Should End At 7:00 PM')->withInput();
 
             }
             else{
