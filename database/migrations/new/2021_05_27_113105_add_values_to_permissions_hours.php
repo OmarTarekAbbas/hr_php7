@@ -19,6 +19,7 @@ class AddValuesToPermissionsHours extends Migration
 
 
         DB::statement("ALTER TABLE `tb_config` ADD `created_at` TIMESTAMP NULL DEFAULT NULL AFTER `permissions_hours_per_month`, ADD `updated_at` TIMESTAMP NULL DEFAULT NULL AFTER `created_at`");
+        DB::statement("ALTER TABLE `tb_config` ADD `sms` INT(10) NOT NULL AFTER `permissions_hours_per_month`;");
     }
 
     /**
