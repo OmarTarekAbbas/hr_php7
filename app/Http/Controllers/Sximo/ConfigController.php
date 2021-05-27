@@ -46,7 +46,6 @@ class ConfigController extends Controller
         if (!$validator->fails()) {
             $logo = '';
             if (!is_null(Input::file('logo'))) {
-// dd("logo");
                 $file = Input::file('logo');
                 $destinationPath = public_path() . '/sximo/images/';
                 $filename = $file->getClientOriginalName();
