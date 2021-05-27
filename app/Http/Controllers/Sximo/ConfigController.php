@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\sximo;
 
 use App\Http\Controllers\Controller;
+use App\Models\Core\Config;
 use App\Models\Core\Groups;
 use Illuminate\Http\Request;
 use Input;
@@ -23,35 +24,35 @@ class ConfigController extends Controller
 
     public function getIndex()
     {
-        $this->data['active'] = '';
-        $this->data['cnf_weekdays'] = \DB::table('tb_config')->value('cnf_weekdays');
-        return view('sximo.config.index', $this->data);
+        $active = '';
+        $cnf_weekdays  = \DB::table('tb_config')->value('cnf_weekdays');
+        $tb_config = Config::where('cnf_id', 1)->first();
+
+        return view('sximo.config.index', compact('tb_config','active','cnf_weekdays'));
     }
 
-    public static function postSave(Request $request)
-    {
-
+    public static function postSave(Request $request) {
         $rules = array(
             'cnf_appname' => 'required|min:2',
             'cnf_appdesc' => 'required|min:2',
-            // 'logo' => 'dimensions:max_width=155,max_height=30',
-            // 'cnf_comname' => 'required|min:2',
-            // 'cnf_email' => 'required|email',
-            // 'vacations_per_year' => 'required|integer',
-            // 'permissions_per_month' => 'required|integer',
+            //   'cnf_comname' => 'required|min:2',
+          //  'cnf_email' => 'required|email',
+            'vacations_per_year' => 'required|integer',
+            'permissions_per_month' => 'required|integer',
+            'delay_notifications_email' => 'required|email',
         );
-        // $weekdays= implode(",",$request->cnf_weekdays);
+		// $weekdays= implode(",",$request->cnf_weekdays);
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
             $logo = '';
             if (!is_null(Input::file('logo'))) {
+
                 $file = Input::file('logo');
-                $destinationPath = base_path() . '/sximo/images/';
+                $destinationPath = public_path() . '/sximo/images/';
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                 $logo = 'backend-logo.' . $extension;
                 $uploadSuccess = $file->move($destinationPath, $logo);
-                // dd($destinationPath.$filename);
             }
 
             $val = "<?php \n";
@@ -63,7 +64,7 @@ class ConfigController extends Controller
             $val .= "define('CNF_METADESC','" . $request->input('cnf_metadesc') . "');\n";
             $val .= "define('CNF_GROUP','" . CNF_GROUP . "');\n";
             $val .= "define('CNF_ACTIVATION','" . CNF_ACTIVATION . "');\n";
-            $val .= "define('CNF_MULTILANG','" . (!is_null($request->input('cnf_multilang')) ? 1 : 0) . "');\n";
+            $val .= "define('CNF_MULTILANG','" . (!is_null($request->input('cnf_multilang')) ? 1 : 0 ) . "');\n";
             $val .= "define('CNF_LANG','" . $request->input('cnf_lang') . "');\n";
             $val .= "define('CNF_REGIST','" . CNF_REGIST . "');\n";
             $val .= "define('CNF_FRONT','" . CNF_FRONT . "');\n";
@@ -71,19 +72,23 @@ class ConfigController extends Controller
             $val .= "define('CNF_THEME','" . $request->input('cnf_theme') . "');\n";
             $val .= "define('CNF_RECAPTCHAPUBLICKEY','" . CNF_RECAPTCHAPUBLICKEY . "');\n";
             $val .= "define('CNF_RECAPTCHAPRIVATEKEY','" . CNF_RECAPTCHAPRIVATEKEY . "');\n";
-            $val .= "define('CNF_MODE','" . (!is_null($request->input('cnf_mode')) ? 'production' : 'development') . "');\n";
-            // dd($logo);
-            $val .= "define('CNF_LOGO','" . ($logo != '' ? $logo : CNF_LOGO) . "');\n";
+            $val .= "define('CNF_MODE','" . (!is_null($request->input('cnf_mode')) ? 'production' : 'development' ) . "');\n";
+            $val .= "define('CNF_LOGO','" . ($logo != '' ? $logo : CNF_LOGO ) . "');\n";
             $val .= "define('CNF_ALLOWIP','" . CNF_ALLOWIP . "');\n";
             $val .= "define('CNF_RESTRICIP','" . CNF_RESTRICIP . "');\n";
-            // $val .= "define('CNF_VACATION','" . $request->input('cnf_vacation_days') . "');\n";
-            // $val .= "define('CNF_START_HOUR','" . $request->input('cnf_start_hour') . "');\n";
-            // $val .= "define('CNF_END_HOUR','" . $request->input('cnf_end_hour') . "');\n";
-            // $val .= "define('CNF_WEEKDAYS','" . $weekdays . "');\n";
-            // $val .= "define('CNF_TOLERANCE','" . $request->input('cnf_tolerance') . "');\n";
-            // $val .= "define('VACATIONS_PER_YEAR','" . $request->input('vacations_per_year') . "');\n";
-            // $val .= "define('PERMISSIONS_PER_MONTH','" . $request->input('permissions_per_month') . "');\n";
-            $val .= "define('CNF_BUILDER_TOOL','" . (!is_null($request->input('cnf_show_builder_tool')) ? 1 : 0) . "');\n";
+            $val .= "define('CNF_VACATION','" . $request->input('cnf_vacation_days') . "');\n";
+            $val .= "define('CNF_START_HOUR','" . $request->input('cnf_start_hour') . "');\n";
+            $val .= "define('CNF_END_HOUR','" . $request->input('cnf_end_hour') . "');\n";
+		//	$val .= "define('CNF_WEEKDAYS','" . $weekdays . "');\n";
+            $val .= "define('CNF_TOLERANCE','" . $request->input('cnf_tolerance') . "');\n";
+             $val .= "define('VACATIONS_PER_YEAR','" . $request->input('vacations_per_year') . "');\n";
+             $val .= "define('PERMISSIONS_PER_MONTH','" . $request->input('permissions_per_month') . "');\n";
+             $val .= "define('PERMISSIONS_Hours_PER_MONTH','" . $request->input('permissions_hours_per_month') . "');\n";
+            $val .= "define('CNF_BUILDER_TOOL','" . (!is_null($request->input('cnf_show_builder_tool')) ? 1 : 0 ) . "');\n";
+            $val .= "define('delay_notifications_email','" . $request->input('delay_notifications_email') . "');\n";
+            // $val .= "define('SEND_SMS','" . $request->input('sms') . "');\n";
+            // $val .= "define('DELAY_TIME_IN_HOURS','" . $request->input('delay_time_in_hours') . "');\n";
+
 
             $val .= "?>";
 
@@ -99,20 +104,46 @@ class ConfigController extends Controller
                 'cnf_metakey' => $request->input('cnf_metakey'),
                 'cnf_metadesc' => $request->input('cnf_metadesc'),
                 'cnf_logo' => $logo != '' ? $logo : CNF_LOGO,
-                // 'cnf_vacation_days' => $request->input('cnf_vacation_days'),
-                // 'cnf_start_hour' => $request->input('cnf_start_hour'),
-                // 'cnf_end_hour' => $request->input('cnf_end_hour'),
-                // 'cnf_weekdays' => $weekdays,
-                // 'cnf_tolerance' => $request->input('cnf_tolerance'),
-                // 'vacations_per_year' => $request->input('vacations_per_year'),
-                // 'permissions_per_month' => $request->input('permissions_per_month'),
-                'cnf_show_builder_tool' => (!is_null($request->input('cnf_show_builder_tool')) ? 1 : 0),
+                'cnf_vacation_days' => $request->input('cnf_vacation_days'),
+                'cnf_start_hour' => $request->input('cnf_start_hour'),
+                'cnf_end_hour' => $request->input('cnf_end_hour'),
+              //  'cnf_weekdays' => $weekdays,
+                'cnf_tolerance' => $request->input('cnf_tolerance'),
+                'vacations_per_year' => $request->input('vacations_per_year'),
+               'permissions_per_month' => $request->input('permissions_per_month'),
+               'permissions_hours_per_month' => $request->input('permissions_hours_per_month'),
+                'cnf_show_builder_tool' => (!is_null($request->input('cnf_show_builder_tool')) ? 1 : 0 ),
+                 'delay_notifications_email' => $request->input('delay_notifications_email'),
+                //  'send_sms' => $request->input('sms'),
+                //  'delay_time_in_hours' => $request->input('delay_time_in_hours'),
             );
-            \DB::table('tb_config')->where('cnf_id', 1)->update($data);
+
+            // \DB::table('tb_config')->where('cnf_id', 1)->update($data);
+
+            $tb_config = Config::where('cnf_id', 1)->first();
+            $tb_config->cnf_appname = $request->input('cnf_appname');
+            $tb_config->cnf_appdesc = $request->input('cnf_appdesc');
+            $tb_config->cnf_comname = $request->input('cnf_comname');
+            $tb_config->cnf_email = $request->input('cnf_email');
+            $tb_config->cnf_metakey = $request->input('cnf_metakey');
+            $tb_config->cnf_metadesc = $request->input('cnf_metadesc');
+            $tb_config->cnf_vacation_days = $request->input('cnf_vacation_days');
+            $tb_config->cnf_start_hour = $request->input('cnf_start_hour');
+            $tb_config->cnf_end_hour = $request->input('cnf_end_hour');
+            $tb_config->cnf_tolerance = $request->input('cnf_tolerance');
+            $tb_config->vacations_per_year = $request->input('vacations_per_year');
+            $tb_config->permissions_per_month = $request->input('permissions_per_month');
+            $tb_config->permissions_hours_per_month = $request->input('permissions_hours_per_month');
+            $tb_config->cnf_show_builder_tool = $request->input('cnf_show_builder_tool');
+            $tb_config->delay_notifications_email = $request->input('delay_notifications_email');
+            $tb_config->sms = $request->input('sms');
+            $tb_config->save();
+
+
             return Redirect::to('sximo/config')->with('messagetext', 'Setting Has Been Save Successful')->with('msgstatus', 'success');
         } else {
             return Redirect::to('sximo/config')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'success')
-                ->withErrors($validator)->withInput();
+                            ->withErrors($validator)->withInput();
         }
     }
 
