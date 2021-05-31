@@ -187,12 +187,12 @@ class EmployeestravellingController extends Controller
             } elseif ($Travelling->manager_approved == 1) { // if manager is approved then send notification to admin
                 $subject = "Your travelling is approved by " . $user->first_name . " " . $user->last_name;
                 $admin_subject = "Travelling for " . $Employee->first_name . " " . $Employee->last_name . " is approved by his manager " . $user->first_name . " " . $user->last_name;
-                $admin_link = "mytravelling/admin/" . $id;
+                $admin_link = "travelling/show/" . $id;
                 //  notification to hr
                 // $HR = \DB::table('tb_users')->where('group_id', 3)->first();  // first hr in system
                 $HRS = \DB::table('tb_users')->where('group_id', 3)->get();  // first hr in system
                 foreach ($HRS as $HR) {
-                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $hr_subject, $hr_link);
+                    \SiteHelpers::addNotification(\Auth::user()->id, $HR->id, $admin_subject, $admin_link);
                 }
                 // send SMS TO admin
                 // $admin = User::where('id', ADMIN_USER_ID)->first();
