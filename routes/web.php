@@ -52,6 +52,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/core/users/show/{id}', 'Core\UsersController@getShow');
     Route::get('/core/users/update/{id}', 'Core\UsersController@getUpdate');
 
+    Route::post('core/users/search', 'Core\UsersController@postSearch');
+    Route::get('searchTables/', 'SearchTablesController@index');
+    Route::get('searchTables/search', 'SearchTablesController@search');
+    Route::get('searchTables/download', 'SearchTablesController@download');
+    Route::get('provider_info/{id}','ContractsController@get_provider');
+
+
     //'core/groups'         => 'Core\GroupsController',
     Route::get('/core/groups', 'Core\GroupsController@getIndex');
     Route::post('/core/groups/filter', 'Core\GroupsController@postFilter');

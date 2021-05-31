@@ -62,6 +62,26 @@
 					@endif --}}
 
 				</div>
+				<?php
+                    $search = isset($_REQUEST['search']) ? $_REQUEST['search'] : "";
+                    ?>
+
+
+                    {!! Form::open(array('url'=>'core/users/search', 'class'=>'form-horizontal' ,'id' =>'searchUser' )) !!}
+                    <div class="form-group  " >
+                        <label for="Username" class=" control-label col-md-2 text-left">Search by Email <span class="asterix"> * </span></label>
+                        <div class="col-md-6">
+                            {!! Form::text('search', null,array('class'=>'form-control', 'placeholder'=>'', 'required'=>'true'  )) !!} 
+                        </div> 
+                        <div class="col-md-2">
+                            <button type="submit"   class="btn btn-success btn-sm "><i class="fa  fa-arrow-circle-left "></i>  {{ Lang::get('core.search') }} </button>
+
+                        </div>
+                    </div> 
+
+
+                    {!! Form::close() !!}
+
 
 
 
