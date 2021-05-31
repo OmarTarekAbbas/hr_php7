@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Socialize;
 use Illuminate\Http\Request;
+use App\Models\Core\Config;
+
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
     Input,
@@ -123,6 +125,7 @@ class UserController extends Controller {
             return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
             $this->data['socialize'] = config('services');
+             $this->data['tb_config']= Config::where('cnf_id', 1)->first();
             return View('user.login', $this->data);
         }
     }
