@@ -1,4 +1,4 @@
-<?php
+<?php 
 define('CNF_APPNAME','HR System');
 define('CNF_APPDESC','HR System');
 define('CNF_COMNAME','');
@@ -16,7 +16,7 @@ define('CNF_THEME','sximone');
 define('CNF_RECAPTCHAPUBLICKEY','');
 define('CNF_RECAPTCHAPRIVATEKEY','');
 define('CNF_MODE','development');
-define('CNF_LOGO','backend-logo_1622542712.png');
+define('CNF_LOGO','backend-logo_1622544791.png');
 define('CNF_ALLOWIP','');
 define('CNF_RESTRICIP','192.116.134 , 194.111.606.21 ');
 define('CNF_VACATION','');

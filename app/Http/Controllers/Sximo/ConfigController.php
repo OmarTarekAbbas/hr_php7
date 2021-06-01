@@ -42,6 +42,7 @@ class ConfigController extends Controller
             'delay_notifications_email' => 'required|email',
         );
 		// $weekdays= implode(",",$request->cnf_weekdays);
+        $tb_config = Config::where('cnf_id', 1)->first();
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
             // $logo = '';
@@ -55,7 +56,8 @@ class ConfigController extends Controller
                 $uploadSuccess = $file->move($destinationPath, $logo);
             }else{
                 // $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                // $logo = 'backend-logo_' .time().'.'. $extension;
+                $logo = $tb_config->cnf_logo;
+                // dd($logo);
             }
 
             $val = "<?php \n";
@@ -123,7 +125,6 @@ class ConfigController extends Controller
 
             // \DB::table('tb_config')->where('cnf_id', 1)->update($data);
 
-            $tb_config = Config::where('cnf_id', 1)->first();
             $tb_config->cnf_appname = $request->input('cnf_appname');
             $tb_config->cnf_appdesc = $request->input('cnf_appdesc');
             $tb_config->cnf_comname = $request->input('cnf_comname');
