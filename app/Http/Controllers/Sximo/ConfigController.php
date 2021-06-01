@@ -55,9 +55,7 @@ class ConfigController extends Controller
                 $logo = 'backend-logo_' .time().'.'. $extension;
                 $uploadSuccess = $file->move($destinationPath, $logo);
             }else{
-                // $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                 $logo = $tb_config->cnf_logo;
-                // dd($logo);
             }
 
             $val = "<?php \n";
