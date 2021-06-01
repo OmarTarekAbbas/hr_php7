@@ -1,7 +1,7 @@
 <?php
 
 return array(
-// General 
+// General
     "norecord" => "No Record Found",
     "create" => "Create New",
     "upload_albums_from_excel" => "upload from excel",
@@ -22,7 +22,7 @@ return array(
     "forgotpassword" => "Forgot Password",
     "newpassword" => "New Password",
     "conewpassword" => "Confirm Password",
-    "notepassword" => "Leave blank if you don't want to change current password", // updated apidevlab	
+    "notepassword" => "Leave blank if you don't want to change current password", // updated apidevlab
     "submit" => "Submit",
     "signin" => "Sign In",
     "signup" => "Sign Up",
@@ -173,7 +173,7 @@ return array(
     "btn_delete" => "Delete",
     "btn_download" => "Download",
     "btn_config" => "Configuration",
-    "btn_copy" => "Copy", // Ajax 
+    "btn_copy" => "Copy", // Ajax
     "btn_print" => "Print",
     "btn_create" => "Create",
     "btn_install" => "Install",
@@ -182,7 +182,7 @@ return array(
     "btn_remove" => "Remove",
     "btn_edit" => "Edit",
     "btn_view" => "View",
-    "btn_typesearch" => "Type & Enter", // updated apidevlab	
+    "btn_typesearch" => "Type & Enter", // updated apidevlab
     "reset_mobile_token" => "Reset Mobile Token",
     "are_you_sure_to_reset_mobile_token" => "Are you sure to reset mobile token?",
     /* Core Module */
@@ -205,11 +205,11 @@ return array(
     "fr_munconfirmed" => "Unconfirmed",
     "fr_mallstatus" => "All Status",
     "sb_send_mail" => "Send Mail",
-    "fr_maccess" => "Access", // updated apidevlab	
+    "fr_maccess" => "Access", // updated apidevlab
     "fr_miconclass" => "Icon Class",
     "fr_mpublic" => "Public",
     "fr_mexample" => "Example",
-    "fr_musage" => "Usage", // updated apidevlab	
+    "fr_musage" => "Usage", // updated apidevlab
 
     /* Code BuilderModule */
     "t_module" => "Module",
@@ -532,7 +532,7 @@ return array(
     "employee_vactaions" => "Employee Vactaions",
     "Department_manager" => "Department Manager",
     "handle_exception" => "Handle Exception",
-    // ================== pdf  ====================// 
+    // ================== pdf  ====================//
     "btn_filter" => "Attendance Filter",
     "btn_download_as_pdf" => "Download as pdf",
     "btn_download_excel_all" => "Download all as excel",
@@ -757,7 +757,7 @@ return array(
     "The following errors occurred" => "The following errors occurred",
     "Your username/password combination was incorrect" => "Your username/password combination was incorrect",
     "field_is_required" => "Field is required",
-    // contracts peroid 
+    // contracts peroid
     "Contract Periods" => "Contract Periods",
     "contract periods" => "contract periods",
     "ContractTypes" => "Contract Types",
@@ -786,7 +786,11 @@ return array(
     "Contract Total cost BY CEO" => "Contract Total cost BY CEO",
     "Expire within 1 month" => "Expire within 1 month",
     "Expire within 3 months" => "Expire within 3 months",
-    
-    
+    "Employee Finger Id" => "Employee Finger Id",
+    "Cv" => "Cv",
+    "Phone Number" => "Phone Number",
+    "search" => "Search ",
+
+
     "btn_upload" => "Upload",
 );
