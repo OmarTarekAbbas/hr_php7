@@ -55,7 +55,7 @@ class ConfigController extends Controller
                 $uploadSuccess = $file->move($destinationPath, $logo);
             }else{
                 // $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                $logo = 'backend-logo_' .time().'.'. $extension;
+                // $logo = 'backend-logo_' .time().'.'. $extension;
             }
 
             $val = "<?php \n";
