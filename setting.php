@@ -1,4 +1,4 @@
-<?php 
+<?php
 define('CNF_APPNAME','HR System');
 define('CNF_APPDESC','HR System');
 define('CNF_COMNAME','');
