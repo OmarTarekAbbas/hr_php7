@@ -44,7 +44,8 @@ class ConfigController extends Controller
 		// $weekdays= implode(",",$request->cnf_weekdays);
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
-            $logo = '';
+            // $logo = '';
+            // dd(Input::file('logo'));
             if (!is_null(Input::file('logo'))) {
                 $file = Input::file('logo');
                 $destinationPath = public_path() . '/sximo/images/';
@@ -52,6 +53,9 @@ class ConfigController extends Controller
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                 $logo = 'backend-logo_' .time().'.'. $extension;
                 $uploadSuccess = $file->move($destinationPath, $logo);
+            }else{
+                // $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $logo = 'backend-logo_' .time().'.'. $extension;
             }
 
             $val = "<?php \n";
