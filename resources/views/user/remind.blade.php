@@ -6,11 +6,15 @@
 <div class="sbox">
     <div class="sbox-title">
         <span class="text-semibold"><i class="icon-user-plus"></i> {{ CNF_APPNAME}}</span>
-    </div>	
+    </div>
     <div class="sbox-content">
         <div class="text-center">
                 <!--<img src="{{ asset('sximo/images/logo-sximo.png')}}" width="90" height="90" />-->
-            <img src="{{ asset('sximo/images/'.CNF_LOGO)}}" alt="{{ CNF_APPNAME }}"    style="opacity: 1.0;" />
+                @if(file_exists(public_path().'/sximo/images/'.$tb_config->cnf_logo) && $tb_config->cnf_logo !='')
+                <img src="{{ asset('sximo/images/'.$tb_config->cnf_logo)}}" alt="{{ CNF_APPNAME }}" />
+                @else
+                <img src="{{ asset('sximo/images/logo.png')}}" alt="{{ CNF_APPNAME }}" />
+                @endif
         </div>
         {!! Form::open(array('url' => 'user/doreset/'.$verCode, 'class'=>'form-vertical')) !!}
 
@@ -26,8 +30,8 @@
                 @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
                 @endforeach
-            </ul>			
-        </div>			
+            </ul>
+        </div>
 
         <div class="form-group has-feedback">
             <label>New Password </label>
@@ -50,7 +54,7 @@
 
         {!! Form::close() !!}
     </div>
-</div> 
+</div>
 </div>
 <!-- /login wrapper -->
 
