@@ -12,6 +12,7 @@
  */
 
  Route::get('/user/reset/{token?}', 'UserController@getReset');
+ Route::POST('/user/doreset/{token?}', 'UserController@postDoreset');
 
 // Route::resource('/home', 'HomeController');
 Route::get('home', 'HomeController@index');
