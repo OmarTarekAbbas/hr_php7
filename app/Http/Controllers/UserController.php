@@ -114,12 +114,12 @@ class UserController extends Controller {
     }
 
     public function getLogin() {
-        
+
         $lang = "en";
         \App::setLocale($lang);
 
         \Session::put('lang', $lang);
-  
+
 
         if (\Auth::check()) {
             return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
@@ -149,7 +149,7 @@ class UserController extends Controller {
                     $row = User::find(\Auth::user()->id);
 
                     if ($row->active == '0') {
-                        // inactive 
+                        // inactive
                         \Auth::logout();
                         return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is not active'));
                     } else if ($row->active == '2') {
@@ -161,18 +161,18 @@ class UserController extends Controller {
                         \DB::table('tb_users')->where('id', '=', $row->id)->update(array('last_login' => date("Y-m-d H:i:s")));
                         // to get last login true after first login
                          $row = User::find(\Auth::user()->id);
-                         
+
                         \Session::put('uid', $row->id);
                         \Session::put('gid', $row->group_id);
                         \Session::put('eid', $row->email);
                         \Session::put('ll', $row->last_login);
                         \Session::put('fid', $row->first_name . ' ' . $row->last_name);
-                        
+
                            // to handle chat
                         session_start();
                         $_SESSION['userid'] = $row->id;
-                        
-                        
+
+
                         if (!is_null($request->input('language'))) {
                             \Session::put('lang', $request->input('language'));
                         } else {
@@ -185,7 +185,7 @@ class UserController extends Controller {
                         endif;
                     }
                 }
-            } else {  
+            } else {
                 return Redirect::to('user/login')
                                 ->with('message', \SiteHelpers::alert('error', \Lang::get('core.Your username/password combination was incorrect')))
                                 ->withInput();
@@ -216,12 +216,12 @@ class UserController extends Controller {
     }
 
     public function postSaveprofile(Request $request) {
-       
+
         if (!\Auth::check())
             return Redirect::to('user/login');
-        
+
          $user = User::find(\Session::get('uid'));
-         
+
         $rules = array(
                 // 'first_name'=>'required|alpha_num|min:2',
                 // 'last_name'=>'required|alpha_num|min:2',
@@ -249,7 +249,7 @@ class UserController extends Controller {
                 }
             }
 
-           
+
 
 //            $user->first_name = $request->input('first_name');
 //            $user->last_name = $request->input('last_name');
@@ -321,19 +321,19 @@ class UserController extends Controller {
                // echo $request->user()->id; die ;
                 if (\Auth::check()) {
                     return Redirect::back()->with('messagetext',\Lang::get('core.note_success_rest_user_password'))->with('msgstatus','success');  // this make flash
-                    
+
                 } else
                     return Redirect::to('user/login')->with('message', \SiteHelpers::alert('success',\Lang::get('core.Please check your email'))); // this not make flah
             } else {
-                return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', \Lang::get('core.Cant find email address')));  
+                return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', \Lang::get('core.Cant find email address')));
             }
         } else {
             return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', \Lang::get('core.The following errors occurred'))
-                    )->withErrors($validator)->withInput();  
+                    )->withErrors($validator)->withInput();
         }
     }
 
-  
+
 
     public function getReset($token = '') {
         if (\Auth::check())
@@ -401,7 +401,7 @@ class UserController extends Controller {
                 $row = User::find(\Auth::user()->id);
 
                 if ($row->active == '0') {
-                    // inactive 
+                    // inactive
                     Auth::logout();
                     return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is not active'));
                 } else if ($row->active == '2') {
@@ -413,11 +413,11 @@ class UserController extends Controller {
                     Session::put('gid', $row->group_id);
                     Session::put('eid', $row->group_email);
                     Session::put('fid', $row->first_name . ' ' . $row->last_name);
-                    
+
                     // to handle chat
                         session_start();
                         $_SESSION['userid'] = $row->id;
-                        
+
                     if (CNF_FRONT == 'false') :
                         return Redirect::to('dashboard');
                     else :

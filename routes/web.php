@@ -11,6 +11,8 @@
 |
  */
 
+ Route::get('/user/reset/{token?}', 'UserController@getReset');
+
 // Route::resource('/home', 'HomeController');
 Route::get('home', 'HomeController@index');
 Route::get('home/lang/{one?}/{two?}/{three?}/{four?}/{five?}', 'HomeController@getLang');
