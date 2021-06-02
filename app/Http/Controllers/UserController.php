@@ -342,7 +342,8 @@ class UserController extends Controller {
         $user = User::where('reminder', '=', $token);
         if ($user->count() >= 1) {
             $data = array('verCode' => $token);
-            return view('user.remind', $data);
+            $tb_config= Config::where('cnf_id', 1)->first();
+            return view('user.remind', compact('data','tb_config'));
         } else {
             return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Cant find your reset code'));
         }
