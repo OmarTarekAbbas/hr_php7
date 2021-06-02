@@ -357,6 +357,7 @@ class UserController extends Controller {
         if ($validator->passes()) {
 
             $user = User::where('reminder', '=', $token);
+            dd($user);
             if ($user->count() >= 1) {
                 $data = $user->get();
                 $user = User::find($data[0]->id);
