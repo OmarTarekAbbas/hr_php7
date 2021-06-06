@@ -64,7 +64,17 @@ class DashboardController extends Controller {
     public function getTest(Request $request) {
 
         $user = app('session')->get('gid');
-        dd($user );
+
+
+
+        if( $user == null){
+           //  redirect("/user/login") ;
+           echo "yes" ;
+
+        }else{
+            echo "no" ;
+        }
+        dd( $user) ;
     }
 
     public function check(Request $request) {
