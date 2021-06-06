@@ -26,7 +26,7 @@ class DashboardController extends Controller {
 
         $user = app('session')->get('gid');
 
-        if( ! $user){
+        if( $user == null){
             redirect("/user/login") ;
 
         }
