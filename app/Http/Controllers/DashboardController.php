@@ -68,7 +68,7 @@ class DashboardController extends Controller {
 
 
         if( $user == null){
-             redirect("/user/login") ;
+           return   redirect("/user/login") ;
            echo "yes" ;
 
         }else{
