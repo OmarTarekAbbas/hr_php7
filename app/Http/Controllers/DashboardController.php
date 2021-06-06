@@ -59,6 +59,14 @@ class DashboardController extends Controller {
         echo "true";
     }
 
+
+
+    public function getTest(Request $request) {
+
+        $user = app('session')->get('gid');
+        dd($user );
+    }
+
     public function check(Request $request) {
         $check = 0;
         if ($request->url() != "http://10.2.10.10/~hrivashosting/check") {

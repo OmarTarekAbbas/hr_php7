@@ -77,6 +77,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+
+Route::get('/test', 'DashboardController@getTest');
+
 Route::group(['middleware' => 'auth', 'middleware' => 'sximoauth'], function () {
 
     //'sximo/config'         => 'Sximo\ConfigController',
