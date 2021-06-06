@@ -120,8 +120,10 @@ class UserController extends Controller {
 
         \Session::put('lang', $lang);
 
+        $user = app('session')->get('gid');
 
-        if (\Auth::check()) {
+
+        if (\Auth::check() && isset($user) &&  $user != null) {
             return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
             $this->data['socialize'] = config('services');
