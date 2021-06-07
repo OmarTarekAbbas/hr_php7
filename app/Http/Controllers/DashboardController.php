@@ -24,14 +24,10 @@ class DashboardController extends Controller {
 
     public function getIndex(Request $request) {
 
+        // make check
+        $fid =    Session::get('fid') ;
+        if( $fid == null)  return   redirect("/user/login") ;
 
-
-        $user = app('session')->get('gid');
-
-        if( $user == null){
-            redirect("/user/login") ;
-
-        }
 
         $data = \Auth::user()->id;
         $method = "aes-128-cbc"; // in java   AES+Base64
