@@ -24,6 +24,8 @@ class DashboardController extends Controller {
 
     public function getIndex(Request $request) {
 
+
+
         $user = app('session')->get('gid');
 
         if( $user == null){
@@ -62,6 +64,11 @@ class DashboardController extends Controller {
 
 
     public function getTest(Request $request) {
+
+
+        $user =   Auth::user() ;
+
+        dd( $user ) ;
 
         $user = app('session')->get('gid');
 
