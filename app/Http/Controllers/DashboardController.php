@@ -66,24 +66,16 @@ class DashboardController extends Controller {
     public function getTest(Request $request) {
 
 
-
      $fid =    Session::get('fid') ;
-     dd($fid);
 
-
-
-        $user = app('session')->get('gid');
-
-
-
-        if( $user == null){
-           return   redirect("/user/login") ;
+        if( $fid == null){
+          // return   redirect("/user/login") ;
            echo "yes" ;
 
         }else{
             echo "no" ;
         }
-        dd( $user) ;
+        dd($fid);
     }
 
     public function check(Request $request) {
