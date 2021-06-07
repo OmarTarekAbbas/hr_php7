@@ -66,9 +66,11 @@ class DashboardController extends Controller {
     public function getTest(Request $request) {
 
 
-        $user =   Auth::user() ;
 
-        dd( $user ) ;
+     $fid =    Session::get('fid') ;
+     dd($fid);
+
+
 
         $user = app('session')->get('gid');
 
