@@ -69,7 +69,7 @@ class DashboardController extends Controller {
      $fid =    Session::get('fid') ;
 
         if( $fid == null){
-          // return   redirect("/user/login") ;
+           return   redirect("/user/login") ;
            echo "yes" ;
 
         }else{
