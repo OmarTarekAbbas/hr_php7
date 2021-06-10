@@ -24,6 +24,10 @@ class ConfigController extends Controller
 
     public function getIndex()
     {
+
+        if(\Auth::user()->group_id != 1){
+            return redirect('dashboard')->with('msgstatus','error')->with('messagetext','You Have No permission');
+        }
         $active = '';
         $cnf_weekdays  = \DB::table('tb_config')->value('cnf_weekdays');
         $tb_config = Config::where('cnf_id', 1)->first();
