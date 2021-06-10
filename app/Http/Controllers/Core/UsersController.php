@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\core;
 
 use App\Http\Controllers\Controller;
+use App\Models\Core\Config;
 use App\Models\Core\Users;
 use Illuminate\Http\Request;
 use App\Models\Core\Groups;
@@ -53,8 +54,8 @@ class UsersController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'Desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         // $filter = (!is_null($request->input('search')) ? '': '');
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
@@ -76,7 +77,7 @@ class UsersController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
@@ -85,20 +86,20 @@ class UsersController extends Controller {
         $pagination->setPath('users');
 
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
         return view('core.users.index', $this->data);
@@ -113,6 +114,7 @@ class UsersController extends Controller {
         } else {
             $groups = Groups::pluck('name', 'group_id');
         }
+
 
 
         $Perdiempositions = Perdiempositions::pluck('position', 'id');
@@ -144,6 +146,7 @@ class UsersController extends Controller {
         $this->data['id'] = $id;
         $this->data['groups'] = $groups;
         $this->data['Perdiempositions'] = $Perdiempositions;
+        $this->data['tb_config']= Config::where('cnf_id', 1)->first();
         return view('core.users.form', $this->data);
     }
 
@@ -250,7 +253,7 @@ class UsersController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('id')) >= 1) {
             $this->model->destroy($request->input('id'));
 
@@ -360,7 +363,7 @@ class UsersController extends Controller {
                 $sheet->row(1, $arr);
                 $sheet->freezeFirstRow();
                 $sheet->cell('A1', function ($cell) {
-                    
+
                 });
             });
         })->download('xlsx');
@@ -394,18 +397,18 @@ class UsersController extends Controller {
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
-            // insert employees attendance from excel sheet 
+            // insert employees attendance from excel sheet
             if ($request->file('users_sheet') != NULL) {
 
-                $file = $request->file('users_sheet');  // to get image 
+                $file = $request->file('users_sheet');  // to get image
                 $destionPath = "users_sheet";  // destion path inside "public"
                 $fileName = $file->getClientOriginalName();  // to get the name of uploaded file by build-in class  getClientOriginalName()
 
                 $rand = rand(1000, 100000000);
                 $newfilename = strtotime(date('Y-m-d H:i:s')) . '-' . $rand . '-' . $fileName;
-                $file->move($destionPath, $newfilename);  // to move file to destion path 
+                $file->move($destionPath, $newfilename);  // to move file to destion path
 
-                $objPHPExcel = \PHPExcel_IOFactory::load("users_sheet/" . $newfilename);   // this can read excel file or  csv file 
+                $objPHPExcel = \PHPExcel_IOFactory::load("users_sheet/" . $newfilename);   // this can read excel file or  csv file
                 $objWorksheet = $objPHPExcel->getActiveSheet();
                 $Rows = $objWorksheet->toArray();
 

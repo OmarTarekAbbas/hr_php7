@@ -38,7 +38,7 @@
                 <li @if(Request::segment(1) == $menu['module']) class="active" @endif>
                      <a
                         @if($menu['menu_type'] =='external')
-                        href="{{ $menu['url'] }}" 
+                        href="{{ $menu['url'] }}"
                         @else
                         href="{{ URL::to($menu['module'])}}"
                         @endif

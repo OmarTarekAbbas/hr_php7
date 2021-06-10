@@ -139,6 +139,7 @@ class ConfigController extends Controller
             $tb_config->cnf_show_builder_tool = $request->input('cnf_show_builder_tool');
             $tb_config->delay_notifications_email = $request->input('delay_notifications_email');
             $tb_config->enable_vacation_all_days = $request->input('enable_vacation_all_days');
+            $tb_config->enable_annual_input = $request->input('enable_annual_input');
             $tb_config->sms = $request->input('sms');
             $tb_config->cnf_logo = $logo;
             $tb_config->save();

@@ -4,7 +4,7 @@
 @section('content')
 
 
-<?php // session_start(); session_destroy();   
+<?php // session_start(); session_destroy();
  $_SESSION["check"] = false; ?>
 
 

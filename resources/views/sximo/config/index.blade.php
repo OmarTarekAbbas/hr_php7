@@ -158,6 +158,16 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="ipt" class=" control-label col-md-4"> Enable Annual Input </label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" name="enable_annual_input">
+                                            <option value="1"  @if($tb_config->enable_annual_input ==1) selected @endif>Enable</option>
+                                            <option value="0"  @if($tb_config->enable_annual_input ==0) selected @endif>Disable</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <!-- <div class="form-group">
                                     <label for="ipt" class=" control-label col-md-4">Delay Time In Hours</label>
                                     <div class="col-md-8">
