@@ -637,6 +637,6 @@ return array(
     "permissions per month" => "أذونات في الشهر",
     "permissions Hours per month" => "ساعات الأذونات في الشهر
     ",
-    "delay_notifications_email" => "تأخير إخطارات البريد الإلكتروني
+    "delay_notifications_email" => "ايميل تاخيرات
     ",
 );
