@@ -477,7 +477,7 @@ return array(
     "employee_vactaions" => "اجازات الموظف",
     "Department_manager" => "مدير القسم",
     "handle_exception" => "التعامل مع الإستثناء",
-    // ================== pdf  ====================// 
+    // ================== pdf  ====================//
     "btn_filter" => "فلترة الحضور",
     "btn_download_as_pdf" => "pdf تحميل",
     "btn_download_excel_all" => "excel تحميل الكل",
@@ -603,7 +603,7 @@ return array(
     "The following errors occurred" => "وقعت الأخطاء التالية",
     "Your username/password combination was incorrect" => "اسم المستخدم أو كلمة المرور غير صحيحة",
     "field_is_required" => "هذا الحقل مطلوب",
-    // contracts peroid 
+    // contracts peroid
     "Contract Periods" => "مدد العقد",
     "contract periods" => "مدد العقد",
     "ContractTypes" => "انواع العقود",
@@ -634,4 +634,9 @@ return array(
     "Contract Total cost BY CEO" => "التكلفة الكلية بواسطة CEO",
     "Expire within 1 month" => "انتهاء خلال شهر",
     "Expire within 3 months" => "انتهاء خلال ثلاث شهور",
+    "permissions per month" => "أذونات في الشهر",
+    "permissions Hours per month" => "ساعات الأذونات في الشهر
+    ",
+    "delay_notifications_email" => "تأخير إخطارات البريد الإلكتروني
+    ",
 );

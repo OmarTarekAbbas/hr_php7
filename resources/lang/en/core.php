@@ -790,6 +790,9 @@ return array(
     "Cv" => "Cv",
     "Phone Number" => "Phone Number",
     "search" => "Search ",
+    "permissions per month" => "Permissions Per Month ",
+    "permissions Hours per month" => "Permissions Hours Per Month ",
+    "delay_notifications_email" => "Delay Notifications Email",
 
 
     "btn_upload" => "Upload",
