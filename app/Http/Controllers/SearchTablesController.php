@@ -27,7 +27,7 @@ class SearchTablesController extends Controller {
     public function search(Request $request) {
 
         $from = Carbon::createFromFormat('d/m/Y', $request->start)->toDateString();
-        $to = Carbon::createFromFormat('d/m/Y', $request->end)->toDateString();      
+        $to = Carbon::createFromFormat('d/m/Y', $request->end)->toDateString();
         $table = $request->TableName;
         $Data = DB::table($table)->whereBetween('date', [$from, $to])->paginate(25);
         $this->data['requestInput'] = request()->input();
@@ -50,9 +50,9 @@ class SearchTablesController extends Controller {
     }
 
     function download(Request $request) {
-        
+
         $from = Carbon::createFromFormat('d/m/Y', $request->start)->toDateString();
-        $to = Carbon::createFromFormat('d/m/Y', $request->end)->toDateString();      
+        $to = Carbon::createFromFormat('d/m/Y', $request->end)->toDateString();
         $table = $request->TableName;
         $Data = DB::table($table)->whereBetween('date', [$from, $to])->get();
         if ($table == 'tb_travellings')
@@ -68,18 +68,20 @@ class SearchTablesController extends Controller {
             return Redirect::to('')->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
 
         $arr2 = array();
+
         foreach ($Data as $row) {
             foreach ($tableGrid as $f) {
-                if ($f['download'] == '1') {                   
-                    // fix 0 , 1 for manager_approved to be read as No , Yes 
-                    if ($f['field'] == 'manager_approved' && $row->$f['field'] === 1) {
-                        $row->$f['field'] = 'Yes';
-                    } elseif ($f['field'] == 'manager_approved' && $row->$f['field'] === 0) {
-                        $row->$f['field'] = 'No';
+                $x = $f['field'];
+                if ($f['download'] == '1') {
+                    // fix 0 , 1 for manager_approved to be read as No , Yes
+                    if ($x == 'manager_approved' && $row->$x === 1) {
+                        $row->$x = 'Yes';
+                    } elseif ($x == 'manager_approved' && $row->$x === 0) {
+                        $row->$x = 'No';
                     }
 
                     $conn = (isset($f['conn']) ? $f['conn'] : array() );
-                    $arr2[$f['label']] = \SiteHelpers::gridDisplay($row->$f['field'], $f['field'], $conn);
+                    $arr2[$f['label']] = \SiteHelpers::gridDisplay($row->$x, $x, $conn);
                     // }
                 }
             }
@@ -87,7 +89,7 @@ class SearchTablesController extends Controller {
         }
         if (isset($arr3) && count($arr3) > 0) {
             \Excel::create($module . ' From Date ' . $request->start . ' To Date ' . $request->end, function($excel)use($request,$module, $from, $to, $arr3) {
-              
+
                 $excel->sheet($module . '_' . date("d-m-Y"), function ($sheet) use ($arr3) {
                     $sheet->setOrientation('landscape');
                     $sheet->fromArray($arr3);
